@@ -1,6 +1,6 @@
-import { ReactNode } from "react"
+import { HTMLProps, ReactNode } from "react"
 
-export interface TypographyProps {
+export interface TypographyProps extends HTMLProps<HTMLParagraphElement> {
   readonly variant?: TypographyVariants
   readonly children: ReactNode
 }
