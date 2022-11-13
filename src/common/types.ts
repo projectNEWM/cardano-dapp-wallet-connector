@@ -6,7 +6,7 @@ export enum SupportedWallets {
   cardwallet = "cardwallet",
 }
 
-export interface UneabledWallet {
+export interface UnenabledWallet {
   readonly apiVersion: string;
   readonly name: string;
   readonly enable: () => Promise<EnabledWalletApi>;
@@ -56,7 +56,7 @@ export interface EnabledWalletApi {
   readonly submitTx: (tx: Any) => Promise<Any>;
 }
 
-export type EnabledWallet = UneabledWallet & EnabledWalletApi
+export type EnabledWallet = UnenabledWallet & EnabledWalletApi
 
 // TODO: replace usage of this type with actual definitions
 type Any = any;

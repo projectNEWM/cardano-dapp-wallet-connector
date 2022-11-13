@@ -1,10 +1,10 @@
-import { EnabledWallet, SupportedWallet, UneabledWallet } from "hooks/useConnectWallet/types";
+import { EnabledWallet, SupportedWallet, UnenabledWallet } from "hooks/useConnectWallet/types";
 
 export {};
 
 declare global {
   interface Window {
-    readonly cardano?: Record<SupportedWallets, UneabledWallet>,
+    readonly cardano?: Record<SupportedWallets, UnenabledWallet>,
     Wallets?: Record<SupportedWallet, EnabledWallet>,
   }
 }

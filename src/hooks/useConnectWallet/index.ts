@@ -29,7 +29,7 @@ const useConnectWallet = (
 
       if (!window.cardano) {
         throw new Error(
-          `No wallet extenstion have been installed. Please install a wallet
+          `No wallet extensions have been installed. Please install a wallet
           extension and refresh the page.`
         )
       }
@@ -95,7 +95,7 @@ const getExistingEnabledWallet = async (
     return null
   }
   
-  const connectedWallet = window.Wallets && window.Wallets[walletName]
+  const connectedWallet = window.Wallets[walletName]
 
   if (!connectedWallet) {
     return null
