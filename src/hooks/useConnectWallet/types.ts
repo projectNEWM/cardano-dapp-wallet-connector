@@ -6,8 +6,6 @@ export interface UseConnectWalletOptions {
 }
 
 export interface UseConnectWalletResult {
-  /** true if the wallet is being enabled */
-  readonly isLoading: boolean;
   /** error response from connecting and enabling the wallet */
   readonly error: Error | null;
   /** The enabled wallet API */

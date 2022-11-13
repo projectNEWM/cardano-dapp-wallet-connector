@@ -1,7 +1,6 @@
-import { storageKey } from "common/constants";
-import { EnabledWallet, StorageType } from "common/types";
+import { storageKey, EnabledWallet, StorageType } from "common";
 import { useEffect, useState } from "react";
-import { getEnabledWallet } from "utils/getEnabledWallet";
+import { enableWallet, getEnabledWallet } from "utils";
 import { UseConnectWalletOptions, UseConnectWalletResult } from "./types";
 
 /**
@@ -15,31 +14,21 @@ const useConnectWallet = (
 ): UseConnectWalletResult => {
   const initialWalletName = localStorage.getItem(storageKey);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
   const [walletName, setWalletName] = useState<string | null>(
     initialWalletName,
   );
   const [enabledWallet, setEnabledWallet] = useState<EnabledWallet | null>(
     null,
   );
-  const [error, setError] = useState<Error | null>(null);
 
   const connectWallet = (name: string) => {
     setWalletName(name);
   };
 
-  const enableWallet = async () => {
-    if (!walletName) return;
-
+  const enableSelectedWallet = async () => {
     try {
-      setIsLoading(true);
-
-      if (!window.cardano) {
-        throw new Error(
-          `No wallet extensions have been installed. Please install a wallet
-          extension and refresh the page.`,
-        );
-      }
+      if (!walletName) return;
 
       // use existing wallet object if already connected and enabled
       const currentEnabledWallet = await getEnabledWallet(
@@ -51,40 +40,21 @@ const useConnectWallet = (
         return;
       }
 
-      // no existing enabled wallet, enable a new wallet
-      const selectedWallet = window.cardano[walletName];
-      if (!selectedWallet) {
-        throw new Error(
-          `Wallet not found. Please ensure the wallet extension has been
-            installed. If it was recently installed, you may need to refresh 
-            the page and try again.`,
-        );
-      }
-
-      const enabledWalletApi = await selectedWallet.enable();
-      const enabledWallet = {
-        ...selectedWallet,
-        ...enabledWalletApi,
-      };
-
-      window[storageType].setItem(storageKey, walletName);
-      if (!window.Wallets) window.Wallets = {};
-      window.Wallets[walletName] = enabledWallet;
+      // enable a new wallet
+      const enabledWallet = await enableWallet(walletName, storageType);
       setEnabledWallet(enabledWallet);
     } catch (err) {
       if (err instanceof Error) {
         setError(err);
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    enableWallet();
+    enableSelectedWallet();
   }, [walletName]);
 
-  return { wallet: enabledWallet, connectWallet, isLoading, error };
+  return { wallet: enabledWallet, connectWallet, error };
 };
 
 export default useConnectWallet;

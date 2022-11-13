@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import Typography from "../../elements/Typography";
+import { Typography } from "elements";
 import { Wrapper } from "./styled";
 
 const ConnectWallet: FunctionComponent = () => {
