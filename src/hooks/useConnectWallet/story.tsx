@@ -17,9 +17,9 @@ const Demo: FunctionComponent = () => {
 
   return installedWallets.length === 0 ? (  
     <>
-    <Typography>
-      Please install one of the following supported Cardano wallets:
-    </Typography>
+      <Typography>
+        Please install one of the following supported Cardano wallets:
+      </Typography>
 
       <ul>
         {supportedWallets.map((name) => (

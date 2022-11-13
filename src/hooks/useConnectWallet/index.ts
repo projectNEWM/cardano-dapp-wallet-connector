@@ -26,6 +26,8 @@ const useConnectWallet = ({
   }
 
   const enableWallet = async () => {
+    if (!walletName) return
+
     try {
       setIsLoading(true);
 
@@ -35,8 +37,6 @@ const useConnectWallet = ({
           extension and refresh the page.`
         )
       }
-
-      if (!walletName) return
 
       // use existing wallet object if already connected and enabled
       const currentEnabledWallet = await getEnabledWallet(
