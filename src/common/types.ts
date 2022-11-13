@@ -45,23 +45,17 @@ export interface EnabledWalletApi {
   readonly getRewardAddresses: () => Promise<Any>;
   readonly getUnusedAddresses: () => Promise<Any>;
   readonly getUsedAddresses: (paginate: boolean) => Promise<Any>;
-  readonly getUtxos: (
-    amount?: number,
-    paginate?: boolean
-  ) => Promise<Any>;
-  readonly signData: (
-    addr: string,
-    sigStructure: string
-  ) => Promise<Any>;
+  readonly getUtxos: (amount?: number, paginate?: boolean) => Promise<Any>;
+  readonly signData: (addr: string, sigStructure: string) => Promise<Any>;
   readonly signTx: (
     tx: Any,
     partialSign: boolean,
-    createDebugTx: boolean
+    createDebugTx: boolean,
   ) => Promise<Any>;
   readonly submitTx: (tx: Any) => Promise<Any>;
 }
 
-export type EnabledWallet = UnenabledWallet & EnabledWalletApi
+export type EnabledWallet = UnenabledWallet & EnabledWalletApi;
 
 // TODO: replace usage of this type with actual definitions
 type Any = any;

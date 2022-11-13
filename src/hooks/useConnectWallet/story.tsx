@@ -1,21 +1,21 @@
-import React, { FormEvent } from "react"
-import { ComponentMeta } from '@storybook/react'
-import { FunctionComponent } from 'react'
-import Typography from "elements/Typography"
-import { getInstalledWallets } from "utils/getInstalledWallets"
-import { supportedWallets } from "common/constants"
-import useConnectWallet from "./index"
+import React, { FormEvent } from "react";
+import { ComponentMeta } from "@storybook/react";
+import { FunctionComponent } from "react";
+import Typography from "elements/Typography";
+import { getInstalledWallets } from "utils/getInstalledWallets";
+import { supportedWallets } from "common/constants";
+import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
-  const { wallet, connectWallet, error } = useConnectWallet()
+  const { wallet, connectWallet, error } = useConnectWallet();
 
-  const installedWallets = getInstalledWallets()
+  const installedWallets = getInstalledWallets();
 
   const handleChange = (event: FormEvent<HTMLSelectElement>) => {
-    connectWallet((event.target as HTMLSelectElement).value)
-  }
+    connectWallet((event.target as HTMLSelectElement).value);
+  };
 
-  return installedWallets.length === 0 ? (  
+  return installedWallets.length === 0 ? (
     <>
       <Typography>
         Please install one of the following supported Cardano wallets:
@@ -29,10 +29,8 @@ const Demo: FunctionComponent = () => {
     </>
   ) : (
     <>
-      { !!wallet && (
-        <Typography>
-          Currently connected wallet: {wallet.name}
-        </Typography>
+      {!!wallet && (
+        <Typography>Currently connected wallet: {wallet.name}</Typography>
       )}
 
       <Typography>Select an installed wallet:</Typography>
@@ -42,22 +40,20 @@ const Demo: FunctionComponent = () => {
         {installedWallets
           .filter((walletName) => walletName !== wallet?.name)
           .map((option) => {
-            return (
-              <option key={option}>{option}</option>
-            )
-        })}
+            return <option key={option}>{option}</option>;
+          })}
       </select>
 
       {!!error && (
         <Typography style={{ color: "red" }}>{error.message}</Typography>
       )}
     </>
-  )
-}
+  );
+};
 
 export default {
-  title: 'useConnectWallet',
+  title: "useConnectWallet",
   component: Demo,
-} as ComponentMeta<typeof Demo>
+} as ComponentMeta<typeof Demo>;
 
-export const Primary = () => <Demo />
+export const Primary = () => <Demo />;

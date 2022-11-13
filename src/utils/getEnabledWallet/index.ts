@@ -1,5 +1,5 @@
-import { storageKey } from "common/constants"
-import { StorageType } from "common/types"
+import { storageKey } from "common/constants";
+import { StorageType } from "common/types";
 
 /**
  * Helper to get a connected and enabled wallet.
@@ -8,20 +8,20 @@ export const getEnabledWallet = async (
   walletName?: string,
   storageType = StorageType.LocalStorage,
 ) => {
-  const selectedWallet = walletName || window[storageType].getItem(storageKey)
+  const selectedWallet = walletName || window[storageType].getItem(storageKey);
 
-  if (!selectedWallet || !window.Wallets) return
+  if (!selectedWallet || !window.Wallets) return;
 
-  const wallet = window.Wallets[selectedWallet]
+  const wallet = window.Wallets[selectedWallet];
 
-  if (!wallet) return
+  if (!wallet) return;
 
-  const isEnabled = await wallet.isEnabled()
+  const isEnabled = await wallet.isEnabled();
 
   if (isEnabled) {
-    return wallet
+    return wallet;
   } else {
-    delete window.Wallets[selectedWallet]
-    window[storageType].removeItem(storageKey)
+    delete window.Wallets[selectedWallet];
+    window[storageType].removeItem(storageKey);
   }
-}
+};

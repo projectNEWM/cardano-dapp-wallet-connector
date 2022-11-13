@@ -5,28 +5,31 @@ import { getEnabledWallet } from "utils/getEnabledWallet";
 import { UseConnectWalletOptions, UseConnectWalletResult } from "./types";
 
 /**
- * Returns values and helpers for connecting and enabling 
+ * Returns values and helpers for connecting and enabling
  * a Cardano wallet.
  */
-const useConnectWallet = ({ 
-    storageType = StorageType.LocalStorage, 
-  }: UseConnectWalletOptions = { 
+const useConnectWallet = (
+  { storageType = StorageType.LocalStorage }: UseConnectWalletOptions = {
     storageType: StorageType.LocalStorage,
   },
 ): UseConnectWalletResult => {
-  const initialWalletName = localStorage.getItem(storageKey)
+  const initialWalletName = localStorage.getItem(storageKey);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [walletName, setWalletName] = useState<string | null>(initialWalletName)
-  const [enabledWallet, setEnabledWallet] = useState<EnabledWallet | null>(null)
+  const [walletName, setWalletName] = useState<string | null>(
+    initialWalletName,
+  );
+  const [enabledWallet, setEnabledWallet] = useState<EnabledWallet | null>(
+    null,
+  );
   const [error, setError] = useState<Error | null>(null);
 
   const connectWallet = (name: string) => {
-    setWalletName(name)
-  }
+    setWalletName(name);
+  };
 
   const enableWallet = async () => {
-    if (!walletName) return
+    if (!walletName) return;
 
     try {
       setIsLoading(true);
@@ -34,18 +37,18 @@ const useConnectWallet = ({
       if (!window.cardano) {
         throw new Error(
           `No wallet extensions have been installed. Please install a wallet
-          extension and refresh the page.`
-        )
+          extension and refresh the page.`,
+        );
       }
 
       // use existing wallet object if already connected and enabled
       const currentEnabledWallet = await getEnabledWallet(
-        walletName, 
+        walletName,
         storageType,
-      )
+      );
       if (currentEnabledWallet) {
-        setEnabledWallet(currentEnabledWallet)
-        return
+        setEnabledWallet(currentEnabledWallet);
+        return;
       }
 
       // no existing enabled wallet, enable a new wallet
@@ -54,7 +57,7 @@ const useConnectWallet = ({
         throw new Error(
           `Wallet not found. Please ensure the wallet extension has been
             installed. If it was recently installed, you may need to refresh 
-            the page and try again.`
+            the page and try again.`,
         );
       }
 
@@ -62,12 +65,12 @@ const useConnectWallet = ({
       const enabledWallet = {
         ...selectedWallet,
         ...enabledWalletApi,
-      }
+      };
 
       window[storageType].setItem(storageKey, walletName);
-      if (!window.Wallets) window.Wallets = {}
-      window.Wallets[walletName] = enabledWallet
-      setEnabledWallet(enabledWallet)
+      if (!window.Wallets) window.Wallets = {};
+      window.Wallets[walletName] = enabledWallet;
+      setEnabledWallet(enabledWallet);
     } catch (err) {
       if (err instanceof Error) {
         setError(err);
