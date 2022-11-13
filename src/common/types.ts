@@ -6,6 +6,11 @@ export enum SupportedWallets {
   cardwallet = "cardwallet",
 }
 
+export enum StorageType {
+  LocalStorage = "localStorage",
+  SessionStorage = "sessionStorage",
+}
+
 export interface UnenabledWallet {
   readonly apiVersion: string;
   readonly name: string;

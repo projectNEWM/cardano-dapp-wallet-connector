@@ -1,7 +1,10 @@
 import { supportedWallets } from "common/constants"
 import { SupportedWallets } from "common/types"
 
-export const getInstalledWallets = () => {
+/**
+ * @returns a list of installed Cardano wallet extensions.
+ */
+export const getInstalledWallets = (): ReadonlyArray<string> => {
   if (!window.cardano) return []
   
   return Object.keys(window.cardano).filter((walletName) =>

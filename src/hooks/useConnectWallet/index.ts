@@ -1,27 +1,29 @@
 import { storageKey } from "common/constants";
-import { EnabledWallet } from "common/types";
+import { EnabledWallet, StorageType } from "common/types";
 import { useEffect, useState } from "react";
-import {
-  StorageType,
-  UseConnectWalletOptions,
-  UseConnectWalletResult,
-} from "./types";
+import { getEnabledWallet } from "utils/getEnabledWallet";
+import { UseConnectWalletOptions, UseConnectWalletResult } from "./types";
 
 /**
- * Returns an enabled Cardano wallet object. Defaults to previously
- * connected wallet if no walletName argument is passed.
+ * Returns values and helpers for connecting and enabling 
+ * a Cardano wallet.
  */
-const useConnectWallet = (
-  walletName?: string,
-  { 
+const useConnectWallet = ({ 
     storageType = StorageType.LocalStorage, 
   }: UseConnectWalletOptions = { 
     storageType: StorageType.LocalStorage,
   },
 ): UseConnectWalletResult => {
+  const initialWalletName = localStorage.getItem(storageKey)
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [wallet, setWallet] = useState<EnabledWallet | null>(null)
+  const [walletName, setWalletName] = useState<string | null>(initialWalletName)
+  const [enabledWallet, setEnabledWallet] = useState<EnabledWallet | null>(null)
   const [error, setError] = useState<Error | null>(null);
+
+  const connectWallet = (name: string) => {
+    setWalletName(name)
+  }
 
   const enableWallet = async () => {
     try {
@@ -34,21 +36,20 @@ const useConnectWallet = (
         )
       }
 
-      const selectedWalletName = walletName || localStorage.getItem(storageKey)
-      if (!selectedWalletName) return
+      if (!walletName) return
 
       // use existing wallet object if already connected and enabled
-      const currentEnabledWallet = await getExistingEnabledWallet(
-        selectedWalletName, 
+      const currentEnabledWallet = await getEnabledWallet(
+        walletName, 
         storageType,
       )
       if (currentEnabledWallet) {
-        setWallet(currentEnabledWallet)
+        setEnabledWallet(currentEnabledWallet)
         return
       }
 
-      // no existing enabled wallet, enable a new wallet object
-      const selectedWallet = window.cardano[selectedWalletName];
+      // no existing enabled wallet, enable a new wallet
+      const selectedWallet = window.cardano[walletName];
       if (!selectedWallet) {
         throw new Error(
           `Wallet not found. Please ensure the wallet extension has been
@@ -63,10 +64,10 @@ const useConnectWallet = (
         ...enabledWalletApi,
       }
 
-      window[storageType].setItem(storageKey, selectedWalletName);
+      window[storageType].setItem(storageKey, walletName);
       if (!window.Wallets) window.Wallets = {}
-      window.Wallets[selectedWalletName] = enabledWallet
-      setWallet(enabledWallet)
+      window.Wallets[walletName] = enabledWallet
+      setEnabledWallet(enabledWallet)
     } catch (err) {
       if (err instanceof Error) {
         setError(err);
@@ -80,36 +81,7 @@ const useConnectWallet = (
     enableWallet();
   }, [walletName]);
 
-  return { wallet, isLoading, error };
+  return { wallet: enabledWallet, connectWallet, isLoading, error };
 };
-
-/**
- * Checks for an existing enabled wallet. If a wallet is found but is no
- * longer enabled, clears the wallet data.
- */
-const getExistingEnabledWallet = async (
-  walletName: string, 
-  storageType: StorageType,
-) => {
-  if (!window.Wallets) {
-    return null
-  }
-  
-  const connectedWallet = window.Wallets[walletName]
-
-  if (!connectedWallet) {
-    return null
-  }
-
-  const isEnabled = await connectedWallet.isEnabled()
-
-  if (isEnabled) {
-    return connectedWallet
-  }
-
-  delete window.Wallets[walletName]
-  window[storageType].removeItem(storageKey)  
-  return null
-}
 
 export default useConnectWallet;

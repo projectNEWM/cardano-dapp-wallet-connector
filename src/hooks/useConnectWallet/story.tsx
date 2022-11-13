@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react"
+import React, { FormEvent } from "react"
 import { ComponentMeta } from '@storybook/react'
 import { FunctionComponent } from 'react'
 import Typography from "elements/Typography"
@@ -7,14 +7,12 @@ import { supportedWallets } from "common/constants"
 import useConnectWallet from "./index"
 
 const Demo: FunctionComponent = () => {
-  const [walletName, setWalletName] = useState<string>()
-
-  const { wallet, error } = useConnectWallet(walletName)
+  const { wallet, connectWallet, error } = useConnectWallet()
 
   const installedWallets = getInstalledWallets()
 
   const handleChange = (event: FormEvent<HTMLSelectElement>) => {
-    setWalletName((event.target as HTMLSelectElement).value)
+    connectWallet((event.target as HTMLSelectElement).value)
   }
 
   return installedWallets.length === 0 ? (  
@@ -38,9 +36,9 @@ const Demo: FunctionComponent = () => {
       )}
 
       <Typography>Select an installed wallet:</Typography>
-      
+
       <select onChange={handleChange}>
-        <option></option>
+        <option />
         {installedWallets
           .filter((walletName) => walletName !== wallet?.name)
           .map((option) => {
