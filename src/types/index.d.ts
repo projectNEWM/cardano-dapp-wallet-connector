@@ -1,8 +1,4 @@
-import {
-  EnabledWallet,
-  SupportedWallet,
-  UnenabledWallet,
-} from "hooks/useConnectWallet/types";
+import { EnabledWallet, SupportedWallet, UnenabledWallet } from "hooks";
 
 export {};
 

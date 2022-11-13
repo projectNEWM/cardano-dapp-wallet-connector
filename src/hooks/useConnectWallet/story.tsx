@@ -3,7 +3,7 @@ import { ComponentMeta } from "@storybook/react";
 import { FunctionComponent } from "react";
 import Typography from "elements/Typography";
 import { getInstalledWallets } from "utils";
-import { supportedWallets } from "common/constants";
+import { supportedWallets } from "common";
 import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
