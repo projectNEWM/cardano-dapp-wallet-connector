@@ -7,15 +7,13 @@ import { supportedWallets } from "common/constants";
 import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
-  const { wallet, isLoading, connectWallet, error } = useConnectWallet();
+  const { wallet, connectWallet, error } = useConnectWallet();
 
   const installedWallets = getInstalledWallets();
 
   const handleChange = (event: FormEvent<HTMLSelectElement>) => {
     connectWallet((event.target as HTMLSelectElement).value);
   };
-
-  console.log("LOADING: ", isLoading);
 
   return installedWallets.length === 0 ? (
     <>
