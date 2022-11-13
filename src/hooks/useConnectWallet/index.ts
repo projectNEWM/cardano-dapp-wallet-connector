@@ -12,7 +12,7 @@ const useConnectWallet = (
     storageType: StorageType.LocalStorage,
   },
 ): UseConnectWalletResult => {
-  const initialWalletName = localStorage.getItem(storageKey);
+  const initialWalletName = window[storageType].getItem(storageKey);
 
   const [error, setError] = useState<Error | null>(null);
   const [walletName, setWalletName] = useState<string | null>(
