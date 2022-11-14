@@ -15,7 +15,7 @@ const useConnectWallet = (
   const initialWalletName = window[storageType].getItem(storageKey);
 
   const [error, setError] = useState<Error | null>(null);
-  const [walletName, setWalletName] = useState<string | null>(
+  const [selectedWalletName, setSelectedWalletName] = useState<string | null>(
     initialWalletName,
   );
   const [enabledWallet, setEnabledWallet] = useState<EnabledWallet | null>(
@@ -23,16 +23,16 @@ const useConnectWallet = (
   );
 
   const connectWallet = (name: string) => {
-    setWalletName(name);
+    setSelectedWalletName(name);
   };
 
   const enableSelectedWallet = async () => {
     try {
-      if (!walletName) return;
+      if (!selectedWalletName) return;
 
       // use existing wallet object if already connected and enabled
       const currentEnabledWallet = await getEnabledWallet(
-        walletName,
+        selectedWalletName,
         storageType,
       );
       if (currentEnabledWallet) {
@@ -41,7 +41,7 @@ const useConnectWallet = (
       }
 
       // enable a new wallet
-      const enabledWallet = await enableWallet(walletName, storageType);
+      const enabledWallet = await enableWallet(selectedWalletName, storageType);
       setEnabledWallet(enabledWallet);
     } catch (err) {
       if (err instanceof Error) {
@@ -52,7 +52,7 @@ const useConnectWallet = (
 
   useEffect(() => {
     enableSelectedWallet();
-  }, [walletName]);
+  }, [selectedWalletName]);
 
   return { wallet: enabledWallet, connectWallet, error };
 };

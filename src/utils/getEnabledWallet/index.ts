@@ -7,11 +7,11 @@ const getEnabledWallet = async (
   walletName?: string,
   storageType = StorageType.LocalStorage,
 ) => {
-  const selectedWallet = walletName || window[storageType].getItem(storageKey);
+  const selectedWalletName = walletName || window[storageType].getItem(storageKey);
 
-  if (!selectedWallet || !window.Wallets) return;
+  if (!selectedWalletName || !window.Wallets) return;
 
-  const wallet = window.Wallets[selectedWallet];
+  const wallet = window.Wallets[selectedWalletName];
 
   if (!wallet) return;
 
@@ -20,7 +20,7 @@ const getEnabledWallet = async (
   if (isEnabled) {
     return wallet;
   } else {
-    delete window.Wallets[selectedWallet];
+    delete window.Wallets[selectedWalletName];
     window[storageType].removeItem(storageKey);
   }
 };
