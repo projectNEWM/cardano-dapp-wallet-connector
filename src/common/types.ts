@@ -6,6 +6,13 @@ export enum SupportedWallets {
   cardwallet = "cardwallet",
 }
 
+export interface SupportedWalletInfo {
+  name: string;
+  logo: string;
+  extensionUrl: string;
+  websiteUrl: string;
+}
+
 export enum StorageType {
   LocalStorage = "localStorage",
   SessionStorage = "sessionStorage",

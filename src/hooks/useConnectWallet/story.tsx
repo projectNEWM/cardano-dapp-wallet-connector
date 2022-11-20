@@ -11,9 +11,22 @@ const Demo: FunctionComponent = () => {
 
   const installedWallets = getInstalledWallets();
 
+  const walletOptions = installedWallets.filter(
+    (walletName) => walletName !== wallet?.name?.toLowerCase(),
+  );
+
   const handleChange = (event: FormEvent<HTMLSelectElement>) => {
     connect((event.target as HTMLSelectElement).value);
   };
+
+  if (Object.keys(supportedWallets).length === 0) {
+    return (
+      <Typography>
+        Cardano wallet extensions are currently only supported in Chrome and
+        Brave browsers.
+      </Typography>
+    );
+  }
 
   return installedWallets.length === 0 ? (
     <>
@@ -21,9 +34,14 @@ const Demo: FunctionComponent = () => {
         Please install one of the following supported Cardano wallets:
       </Typography>
 
-      <ul>
-        {supportedWallets.map((name) => (
-          <li key={name}>{name}</li>
+      <ul style={{ listStyleType: "none" }}>
+        {Object.values(supportedWallets).map(({ name, logo }) => (
+          <li style={{ display: "flex", alignItems: "center" }} key={name}>
+            <span style={{ marginRight: "1rem" }}>
+              <img style={{ width: "16px", height: "16px" }} src={logo} />
+            </span>
+            {name}
+          </li>
         ))}
       </ul>
     </>
@@ -36,23 +54,31 @@ const Demo: FunctionComponent = () => {
       }}
     >
       {!!wallet && (
-        <Typography>Currently connected wallet: {wallet.name}</Typography>
+        <Typography style={{ marginBottom: "1rem" }}>
+          Currently connected wallet: {wallet.name}
+        </Typography>
       )}
 
-      <Typography>Select an installed wallet:</Typography>
+      {walletOptions.length > 0 && (
+        <>
+          <Typography style={{ marginBottom: "1rem" }}>
+            Select an installed wallet:
+          </Typography>
 
-      <select onChange={handleChange}>
-        <option />
-        {installedWallets
-          .filter((walletName) => walletName !== wallet?.name)
-          .map((option) => {
-            return <option key={option}>{option}</option>;
-          })}
-      </select>
+          <select onChange={handleChange}>
+            <option />
+            {walletOptions.map((option) => {
+              return <option key={option}>{option}</option>;
+            })}
+          </select>
+        </>
+      )}
 
-      <div style={{ margin: "1rem 0" }}>
-        <button onClick={() => disconnect()}>Disconnect wallet</button>
-      </div>
+      {!!wallet && (
+        <div style={{ margin: "1rem 0" }}>
+          <button onClick={() => disconnect()}>Disconnect wallet</button>
+        </div>
+      )}
 
       {!!error && (
         <Typography style={{ color: "red" }}>{error.message}</Typography>

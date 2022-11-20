@@ -7,7 +7,7 @@ const getInstalledWallets = (): ReadonlyArray<string> => {
   if (!window.cardano) return [];
 
   return Object.keys(window.cardano).filter((walletName) =>
-    Object.values(supportedWallets).includes(walletName as SupportedWallets),
+    Object.keys(supportedWallets).includes(walletName as SupportedWallets),
   );
 };
 
