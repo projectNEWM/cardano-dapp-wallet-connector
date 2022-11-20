@@ -1,11 +1,11 @@
 import { storageKey, EnabledWallet, StorageType } from "common";
 import { useEffect, useState } from "react";
-import { enableWallet, getEnabledWallet } from "utils";
+import { disconnectWallet, enableWallet, getEnabledWallet } from "utils";
 import { UseConnectWalletOptions, UseConnectWalletResult } from "./types";
 
 /**
- * Returns values and helpers for connecting and enabling
- * a Cardano wallet.
+ * Returns values and helper functions for connecting, utlizing,
+ * and enabling a Cardano wallet.
  */
 const useConnectWallet = (
   { storageType = StorageType.LocalStorage }: UseConnectWalletOptions = {
@@ -22,23 +22,33 @@ const useConnectWallet = (
     null,
   );
 
-  const connectWallet = (name: string) => {
+  const connect = (name: string) => {
     setSelectedWalletName(name);
+  };
+
+  const disconnect = () => {
+    setSelectedWalletName(null);
+    setEnabledWallet(null);
+    disconnectWallet(storageType, selectedWalletName);
   };
 
   const enableSelectedWallet = async () => {
     try {
       if (!selectedWalletName) return;
 
-      // use existing wallet object if already connected and enabled
       const currentEnabledWallet = await getEnabledWallet(
         selectedWalletName,
         storageType,
       );
+
+      // use existing wallet object if already connected and enabled
       if (currentEnabledWallet) {
         setEnabledWallet(currentEnabledWallet);
         return;
       }
+
+      // if wallet is no longer enabled, disconnect it
+      disconnectWallet(storageType, selectedWalletName);
 
       // enable a new wallet
       const enabledWallet = await enableWallet(selectedWalletName, storageType);
@@ -54,7 +64,7 @@ const useConnectWallet = (
     enableSelectedWallet();
   }, [selectedWalletName]);
 
-  return { wallet: enabledWallet, connectWallet, error };
+  return { wallet: enabledWallet, connect, disconnect, error };
 };
 
 export default useConnectWallet;

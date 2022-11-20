@@ -10,6 +10,8 @@ export interface UseConnectWalletResult {
   readonly error: Error | null;
   /** The enabled wallet API */
   readonly wallet: EnabledWallet | null;
-  /** Function to connect a specific wallet */
-  readonly connectWallet: (walletName: string) => void;
+  /** Connect wallet with the specified key */
+  readonly connect: (walletName: string) => void;
+  /** Disconnect the currently selected wallet */
+  readonly disconnect: () => void;
 }

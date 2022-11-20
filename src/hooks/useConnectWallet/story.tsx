@@ -7,12 +7,12 @@ import { supportedWallets } from "common";
 import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
-  const { wallet, connectWallet, error } = useConnectWallet();
+  const { wallet, connect, disconnect, error } = useConnectWallet();
 
   const installedWallets = getInstalledWallets();
 
   const handleChange = (event: FormEvent<HTMLSelectElement>) => {
-    connectWallet((event.target as HTMLSelectElement).value);
+    connect((event.target as HTMLSelectElement).value);
   };
 
   return installedWallets.length === 0 ? (
@@ -28,7 +28,13 @@ const Demo: FunctionComponent = () => {
       </ul>
     </>
   ) : (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+      }}
+    >
       {!!wallet && (
         <Typography>Currently connected wallet: {wallet.name}</Typography>
       )}
@@ -44,10 +50,14 @@ const Demo: FunctionComponent = () => {
           })}
       </select>
 
+      <div style={{ margin: "1rem 0" }}>
+        <button onClick={() => disconnect()}>Disconnect wallet</button>
+      </div>
+
       {!!error && (
         <Typography style={{ color: "red" }}>{error.message}</Typography>
       )}
-    </>
+    </div>
   );
 };
 
