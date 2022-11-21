@@ -8,8 +8,8 @@ import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
   const { wallet, connect, disconnect, error, getAddress } = useConnectWallet();
-  
-  const [address, setAddress] = useState<string>("")
+
+  const [address, setAddress] = useState<string>("");
 
   const installedWallets = getInstalledWallets();
 
@@ -18,8 +18,8 @@ const Demo: FunctionComponent = () => {
   );
 
   const handleRecieveAddress = (addr: string) => {
-    setAddress(addr)
-  }
+    setAddress(addr);
+  };
 
   const handleChange = (event: FormEvent<HTMLSelectElement>) => {
     connect((event.target as HTMLSelectElement).value);
@@ -87,8 +87,8 @@ const Demo: FunctionComponent = () => {
       )}
 
       {!!wallet && (
-        <div style={{ marginTop: "1rem"}}>
-          <div style={{ marginBottom: "1rem"}}>
+        <div style={{ marginTop: "1rem" }}>
+          <div style={{ marginBottom: "1rem" }}>
             <button onClick={() => getAddress(handleRecieveAddress)}>
               Get address
             </button>

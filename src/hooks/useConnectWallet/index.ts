@@ -15,7 +15,7 @@ const useConnectWallet = (
 ): UseConnectWalletResult => {
   const initialWalletName = window[storageType].getItem(storageKey);
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<any | null>(null);
   const [selectedWalletName, setSelectedWalletName] = useState<string | null>(
     initialWalletName,
@@ -29,7 +29,7 @@ const useConnectWallet = (
   };
 
   const disconnect = () => {
-    setError(null)
+    setError(null);
     setSelectedWalletName(null);
     setEnabledWallet(null);
     disconnectWallet(storageType, selectedWalletName);
@@ -38,22 +38,23 @@ const useConnectWallet = (
   const getAddress = useCallback(
     async (callback: (address: string) => void) => {
       try {
-        setError(null)
-        setIsLoading(true)
+        setError(null);
+        setIsLoading(true);
 
-        const address = await getWalletAddress(enabledWallet)
-        callback(address)
-      } catch(err) {
+        const address = await getWalletAddress(enabledWallet);
+        callback(address);
+      } catch (err) {
         setError(err);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }, [enabledWallet]
-  )
+    },
+    [enabledWallet],
+  );
 
   const enableSelectedWallet = async () => {
     try {
-      setError(null)
+      setError(null);
 
       if (!selectedWalletName) return;
 
@@ -75,7 +76,7 @@ const useConnectWallet = (
       const enabledWallet = await enableWallet(selectedWalletName, storageType);
       setEnabledWallet(enabledWallet);
     } catch (err) {
-      setSelectedWalletName(null)
+      setSelectedWalletName(null);
       setError(err);
     }
   };
@@ -84,7 +85,14 @@ const useConnectWallet = (
     enableSelectedWallet();
   }, [selectedWalletName]);
 
-  return { wallet: enabledWallet, connect, disconnect, isLoading, error, getAddress };
+  return {
+    wallet: enabledWallet,
+    connect,
+    disconnect,
+    isLoading,
+    error,
+    getAddress,
+  };
 };
 
 export default useConnectWallet;

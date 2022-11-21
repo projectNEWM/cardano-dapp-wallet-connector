@@ -5,10 +5,10 @@ import { addressFromHex } from "utils/helpers";
  * @returns a payment address for the wallet
  */
 export const getWalletAddress = async (
-  wallet: EnabledWallet | null
+  wallet: EnabledWallet | null,
 ): Promise<string> => {
   if (!wallet) {
-    throw new Error("No wallet selected")
+    throw new Error("No wallet selected");
   }
 
   let addresses = [];
