@@ -29,6 +29,7 @@ const useConnectWallet = (
   };
 
   const disconnect = () => {
+    setError(null)
     setSelectedWalletName(null);
     setEnabledWallet(null);
     disconnectWallet(storageType, selectedWalletName);
