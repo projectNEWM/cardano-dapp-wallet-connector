@@ -1,6 +1,9 @@
 import { storageKey, StorageType } from "common";
 
-const enableWallet = async (walletName: string, storageType: StorageType) => {
+const enableWallet = async (
+  walletName: string, 
+  storageType = StorageType.LocalStorage,
+) => {
   if (!window.cardano) {
     throw new Error(
       `No wallet extensions have been installed. Please install a wallet

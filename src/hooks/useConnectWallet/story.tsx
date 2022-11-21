@@ -101,7 +101,9 @@ const Demo: FunctionComponent = () => {
       )}
 
       {!!error && (
-        <Typography style={{ color: "red" }}>{error.message}</Typography>
+        <div style={{ marginTop: "1rem" }}>
+          <Typography style={{ color: "red" }}>{error.message}</Typography>
+        </div>
       )}
     </div>
   );

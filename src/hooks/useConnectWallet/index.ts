@@ -29,10 +29,10 @@ const useConnectWallet = (
   };
 
   const disconnect = () => {
-    setError(null);
     setSelectedWalletName(null);
     setEnabledWallet(null);
-    disconnectWallet(storageType, selectedWalletName);
+    disconnectWallet(storageType);
+    setError(null);
   };
 
   const getAddress = useCallback(
@@ -54,12 +54,11 @@ const useConnectWallet = (
 
   const enableSelectedWallet = async () => {
     try {
-      setError(null);
-
       if (!selectedWalletName) return;
 
+      setError(null);
+
       const currentEnabledWallet = await getEnabledWallet(
-        selectedWalletName,
         storageType,
       );
 
@@ -70,7 +69,7 @@ const useConnectWallet = (
       }
 
       // if wallet is no longer enabled, disconnect it
-      disconnectWallet(storageType, selectedWalletName);
+      disconnectWallet(storageType);
 
       // enable a new wallet
       const enabledWallet = await enableWallet(selectedWalletName, storageType);
