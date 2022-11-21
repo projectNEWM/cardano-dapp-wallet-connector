@@ -51,7 +51,7 @@ export interface EnabledWalletApi {
   readonly getNetworkId: () => Promise<Any>;
   readonly getRewardAddresses: () => Promise<Any>;
   readonly getUnusedAddresses: () => Promise<Any>;
-  readonly getUsedAddresses: (paginate: boolean) => Promise<Any>;
+  readonly getUsedAddresses: (paginate?: boolean) => Promise<Any>;
   readonly getUtxos: (amount?: number, paginate?: boolean) => Promise<Any>;
   readonly signData: (addr: string, sigStructure: string) => Promise<Any>;
   readonly signTx: (
@@ -63,6 +63,11 @@ export interface EnabledWalletApi {
 }
 
 export type EnabledWallet = UnenabledWallet & EnabledWalletApi;
+
+export enum NetworkMode {
+  mainNet = 1,
+  testNet = 0,
+}
 
 // TODO: replace usage of this type with actual definitions
 type Any = any;

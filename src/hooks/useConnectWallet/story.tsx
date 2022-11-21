@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { ComponentMeta } from "@storybook/react";
 import { FunctionComponent } from "react";
 import Typography from "elements/Typography";
@@ -7,13 +7,19 @@ import { supportedWallets } from "common";
 import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
-  const { wallet, connect, disconnect, error } = useConnectWallet();
+  const { wallet, connect, disconnect, error, getAddress } = useConnectWallet();
+  
+  const [address, setAddress] = useState<string>("")
 
   const installedWallets = getInstalledWallets();
 
   const walletOptions = installedWallets.filter(
     (walletName) => walletName !== wallet?.name?.toLowerCase(),
   );
+
+  const handleRecieveAddress = (addr: string) => {
+    setAddress(addr)
+  }
 
   const handleChange = (event: FormEvent<HTMLSelectElement>) => {
     connect((event.target as HTMLSelectElement).value);
@@ -59,6 +65,12 @@ const Demo: FunctionComponent = () => {
         </Typography>
       )}
 
+      {!!address && (
+        <Typography style={{ marginBottom: "1rem" }}>
+          Address: {address}
+        </Typography>
+      )}
+
       {walletOptions.length > 0 && (
         <>
           <Typography style={{ marginBottom: "1rem" }}>
@@ -75,8 +87,16 @@ const Demo: FunctionComponent = () => {
       )}
 
       {!!wallet && (
-        <div style={{ margin: "1rem 0" }}>
-          <button onClick={() => disconnect()}>Disconnect wallet</button>
+        <div style={{ marginTop: "1rem"}}>
+          <div style={{ marginBottom: "1rem"}}>
+            <button onClick={() => getAddress(handleRecieveAddress)}>
+              Get address
+            </button>
+          </div>
+
+          <div style={{ marginBottom: "1rem" }}>
+            <button onClick={() => disconnect()}>Disconnect wallet</button>
+          </div>
         </div>
       )}
 

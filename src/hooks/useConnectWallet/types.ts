@@ -6,7 +6,9 @@ export interface UseConnectWalletOptions {
 }
 
 export interface UseConnectWalletResult {
-  /** error response from connecting and enabling the wallet */
+  /** true if an operation is being performed */
+  readonly isLoading: boolean
+  /** Error response from interacting with the wallet */
   readonly error: Error | null;
   /** The enabled wallet API */
   readonly wallet: EnabledWallet | null;
@@ -14,4 +16,6 @@ export interface UseConnectWalletResult {
   readonly connect: (walletName: string) => void;
   /** Disconnect the currently selected wallet */
   readonly disconnect: () => void;
+  /** Get a receive address from the connected wallet */
+  readonly getAddress: (callback: (address: string) => void) => void
 }

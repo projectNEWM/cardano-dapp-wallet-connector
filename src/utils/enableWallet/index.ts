@@ -19,6 +19,7 @@ const enableWallet = async (walletName: string, storageType: StorageType) => {
   }
 
   const enabledWalletApi = await selectedWallet.enable();
+
   const enabledWallet = {
     ...selectedWallet,
     ...enabledWalletApi,
