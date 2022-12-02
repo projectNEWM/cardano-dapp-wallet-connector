@@ -1,5 +1,5 @@
 import { EnabledWallet } from "common";
-import cbor from "cbor"
+import { decode } from "cbor"
 
 /**
  * @returns ADA wallet balance for the wallet
@@ -10,7 +10,7 @@ const getWalletBalance = async (wallet: EnabledWallet | null) => {
   }
 
   const balanceHex = await wallet.getBalance()
-  const decoded = cbor.decode(balanceHex)
+  const decoded = decode(balanceHex)
   const lovelaces = decoded[0]
 
   return lovelaces / 1000000
