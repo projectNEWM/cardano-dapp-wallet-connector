@@ -7,9 +7,10 @@ import { supportedWallets } from "common";
 import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
-  const { wallet, connect, disconnect, error, getAddress } = useConnectWallet();
+  const { wallet, connect, disconnect, error, getAddress, getBalance } = useConnectWallet();
 
   const [address, setAddress] = useState<string>("");
+  const [balance, setBalance] = useState<number | undefined>();
 
   const installedWallets = getInstalledWallets();
 
@@ -19,6 +20,10 @@ const Demo: FunctionComponent = () => {
 
   const handleRecieveAddress = (addr: string) => {
     setAddress(addr);
+  };
+  
+  const handleRecieveBalance = (balance: number) => {
+    setBalance(balance);
   };
 
   const handleChange = (event: FormEvent<HTMLSelectElement>) => {
@@ -70,6 +75,12 @@ const Demo: FunctionComponent = () => {
           Address: {address}
         </Typography>
       )}
+      
+      {!!balance && (
+        <Typography style={{ marginBottom: "1rem" }}>
+          Balance: &#x20B3; {balance}
+        </Typography>
+      )}
 
       {walletOptions.length > 0 && (
         <>
@@ -91,6 +102,12 @@ const Demo: FunctionComponent = () => {
           <div style={{ marginBottom: "1rem" }}>
             <button onClick={() => getAddress(handleRecieveAddress)}>
               Get address
+            </button>
+          </div>
+          
+          <div style={{ marginBottom: "1rem" }}>
+            <button onClick={() => getBalance(handleRecieveBalance)}>
+              Get balance
             </button>
           </div>
 

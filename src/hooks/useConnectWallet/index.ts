@@ -1,7 +1,12 @@
 import { storageKey, EnabledWallet, StorageType } from "common";
 import { useCallback, useEffect, useState } from "react";
-import { disconnectWallet, enableWallet, getEnabledWallet } from "utils";
-import { getWalletAddress } from "utils/getWalletAddress";
+import { 
+  disconnectWallet, 
+  enableWallet, 
+  getEnabledWallet, 
+  getWalletAddress, 
+  getWalletBalance,
+} from "utils";
 import { UseConnectWalletOptions, UseConnectWalletResult } from "./types";
 
 /**
@@ -52,6 +57,21 @@ const useConnectWallet = (
     [enabledWallet],
   );
 
+  const getBalance = useCallback(
+    async (callback: (balance: number) => void) => {
+      try {
+        setError(null)
+        setIsLoading(true)
+        const balance = await getWalletBalance(enabledWallet)
+        callback(balance)
+      } catch (err) {
+        setError(err)
+      } finally {
+        setIsLoading(false)
+      }
+    }, [enabledWallet]
+  )
+
   const enableSelectedWallet = async () => {
     try {
       if (!selectedWalletName) return;
@@ -91,6 +111,7 @@ const useConnectWallet = (
     isLoading,
     error,
     getAddress,
+    getBalance,
   };
 };
 

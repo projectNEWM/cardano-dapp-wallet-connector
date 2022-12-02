@@ -4,21 +4,14 @@ import { addressFromHex } from "utils/helpers";
 /**
  * @returns a payment address for the wallet
  */
-export const getWalletAddress = async (
+const getWalletAddress = async (
   wallet: EnabledWallet | null,
 ): Promise<string> => {
   if (!wallet) {
     throw new Error("No wallet selected");
   }
 
-  let addresses = [];
-
-  // prefer used address, but get unused address as a back-up
-  addresses = await wallet.getUsedAddresses();
-  if (addresses.length === 0) {
-    addresses = await wallet.getUnusedAddresses();
-  }
-
+  const addresses = await wallet.getUsedAddresses();
   const address = addresses[0];
 
   if (!address) {
@@ -27,3 +20,5 @@ export const getWalletAddress = async (
 
   return addressFromHex(address);
 };
+
+export default getWalletAddress
