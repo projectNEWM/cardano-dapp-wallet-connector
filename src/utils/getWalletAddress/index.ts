@@ -21,4 +21,4 @@ const getWalletAddress = async (
   return addressFromHex(address);
 };
 
-export default getWalletAddress
+export default getWalletAddress;

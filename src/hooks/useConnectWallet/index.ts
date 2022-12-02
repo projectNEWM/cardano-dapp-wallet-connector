@@ -1,10 +1,10 @@
 import { storageKey, EnabledWallet, StorageType } from "common";
 import { useCallback, useEffect, useState } from "react";
-import { 
-  disconnectWallet, 
-  enableWallet, 
-  getEnabledWallet, 
-  getWalletAddress, 
+import {
+  disconnectWallet,
+  enableWallet,
+  getEnabledWallet,
+  getWalletAddress,
   getWalletBalance,
 } from "utils";
 import { UseConnectWalletOptions, UseConnectWalletResult } from "./types";
@@ -60,17 +60,18 @@ const useConnectWallet = (
   const getBalance = useCallback(
     async (callback: (balance: number) => void) => {
       try {
-        setError(null)
-        setIsLoading(true)
-        const balance = await getWalletBalance(enabledWallet)
-        callback(balance)
+        setError(null);
+        setIsLoading(true);
+        const balance = await getWalletBalance(enabledWallet);
+        callback(balance);
       } catch (err) {
-        setError(err)
+        setError(err);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }, [enabledWallet]
-  )
+    },
+    [enabledWallet],
+  );
 
   const enableSelectedWallet = async () => {
     try {
@@ -78,9 +79,7 @@ const useConnectWallet = (
 
       setError(null);
 
-      const currentEnabledWallet = await getEnabledWallet(
-        storageType,
-      );
+      const currentEnabledWallet = await getEnabledWallet(storageType);
 
       // use existing wallet object if already connected and enabled
       if (currentEnabledWallet) {

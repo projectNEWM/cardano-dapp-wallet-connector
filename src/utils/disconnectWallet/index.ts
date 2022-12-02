@@ -1,8 +1,6 @@
 import { storageKey, StorageType } from "common";
 
-const disconnectWallet = (
-  storageType = StorageType.LocalStorage,
-) => {
+const disconnectWallet = (storageType = StorageType.LocalStorage) => {
   const selectedWalletName = window[storageType].getItem(storageKey);
 
   if (!selectedWalletName) return;
