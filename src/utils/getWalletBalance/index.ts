@@ -1,6 +1,9 @@
 import { EnabledWallet } from "common";
 import cbor from "cbor"
 
+/**
+ * @returns ADA wallet balance for the wallet
+ */
 const getWalletBalance = async (wallet: EnabledWallet | null) => {
   if (!wallet) {
     throw new Error("No wallet selected");
