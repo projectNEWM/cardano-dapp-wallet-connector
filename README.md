@@ -81,7 +81,7 @@ const Component: FunctionComponent = () => {
 }
 ```
 
-**`wallet: Wallet`**
+**`wallet: Wallet | undefined`**
 
 The "Wallet" is an object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 If the wallet has not been connected yet, it will be undefined.
@@ -131,7 +131,7 @@ the argument.
 
 `true` if the wallet is currently loading (connecting, fetching balance, etc...).
 
-**`error: string`**
+**`error: string | undefined`**
 
 An error message returned from the Cardano wallet, if one exists.
 
