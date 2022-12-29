@@ -81,14 +81,14 @@ const Component: FunctionComponent = () => {
 }
 ```
 
-**`wallet`**
+**`wallet: Wallet`**
 
-The wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
+The "Wallet" is an object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 If the wallet has not been connected yet, it will be undefined.
 
-**`connect: (walletName: string) => undefined`**
+**`connect: (id: string) => undefined`**
 
-Sets the `wallet` value to the CIP 30 wallet interface.
+Sets the `wallet` value for the provided wallet id.
 
 **`disconnect: () => undefined`**
 
