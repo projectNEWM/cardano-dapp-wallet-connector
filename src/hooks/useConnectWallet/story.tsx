@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from "react";
 import { ComponentMeta } from "@storybook/react";
 import { FunctionComponent } from "react";
 import Typography from "elements/Typography";
-import { getInstalledWallets } from "utils";
 import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
@@ -14,6 +13,7 @@ const Demo: FunctionComponent = () => {
     getAddress,
     getBalance,
     getAvailableWallets,
+    getInstalledWallets,
   } = useConnectWallet();
 
   const [address, setAddress] = useState<string>("");
