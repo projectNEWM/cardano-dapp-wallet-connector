@@ -1,4 +1,4 @@
-export enum SupportedWallets {
+export enum SupportedWallet {
   eternl = "eternl",
   flint = "flint",
   gerowallet = "gerowallet",
@@ -6,11 +6,17 @@ export enum SupportedWallets {
   cardwallet = "cardwallet",
 }
 
-export interface SupportedWalletInfo {
-  name: string;
-  logo: string;
-  extensionUrl: string;
-  websiteUrl: string;
+export interface InstalledWalletInfo {
+  readonly id: string;
+  readonly name: string;
+}
+
+export interface AvailableWalletInfo {
+  readonly id: string;
+  readonly name: string;
+  readonly logo: string;
+  readonly extensionUrl: string;
+  readonly websiteUrl: string;
 }
 
 export enum StorageType {

@@ -1,4 +1,9 @@
-import { EnabledWallet, StorageType } from "common/types";
+import {
+  EnabledWallet,
+  StorageType,
+  AvailableWalletInfo,
+  InstalledWalletInfo,
+} from "common/types";
 
 export interface UseConnectWalletOptions {
   /** either local or session storage */
@@ -20,4 +25,8 @@ export interface UseConnectWalletResult {
   readonly getAddress: (callback: (address: string) => void) => void;
   /** Get the ADA balance for the connected wallet */
   readonly getBalance: (callback: (balance: number) => void) => void;
+  /** Get installable wallet extensions for the current browser */
+  readonly getAvailableWallets: () => ReadonlyArray<AvailableWalletInfo>;
+  /** Get currently installed wallet browser extensions */
+  readonly getInstalledWallets: () => ReadonlyArray<InstalledWalletInfo>;
 }

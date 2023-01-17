@@ -10,8 +10,9 @@ const getWalletBalance = async (wallet: EnabledWallet | null) => {
   }
 
   const balanceHex = await wallet.getBalance();
+
   const decoded = decode(balanceHex);
-  const lovelaces = decoded[0];
+  const lovelaces = Array.isArray(decoded) ? decoded[0] : decoded;
 
   return lovelaces / 1000000;
 };

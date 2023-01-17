@@ -3,20 +3,27 @@ import { ComponentMeta } from "@storybook/react";
 import { FunctionComponent } from "react";
 import Typography from "elements/Typography";
 import { getInstalledWallets } from "utils";
-import { supportedWallets } from "common";
 import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
-  const { wallet, connect, disconnect, error, getAddress, getBalance } =
-    useConnectWallet();
+  const {
+    wallet,
+    connect,
+    disconnect,
+    error,
+    getAddress,
+    getBalance,
+    getAvailableWallets,
+  } = useConnectWallet();
 
   const [address, setAddress] = useState<string>("");
   const [balance, setBalance] = useState<number | undefined>();
 
+  const availableWallets = getAvailableWallets();
   const installedWallets = getInstalledWallets();
 
   const walletOptions = installedWallets.filter(
-    (walletName) => walletName !== wallet?.name?.toLowerCase(),
+    (installedWallet) => installedWallet.id !== wallet?.name,
   );
 
   const handleRecieveAddress = (addr: string) => {
@@ -31,7 +38,13 @@ const Demo: FunctionComponent = () => {
     connect((event.target as HTMLSelectElement).value);
   };
 
-  if (Object.keys(supportedWallets).length === 0) {
+  const handleDisconnectWallet = () => {
+    setAddress("");
+    setBalance(undefined);
+    disconnect();
+  };
+
+  if (Object.keys(availableWallets).length === 0) {
     return (
       <Typography>
         Cardano wallet extensions are currently only supported in Chrome and
@@ -47,7 +60,7 @@ const Demo: FunctionComponent = () => {
       </Typography>
 
       <ul style={{ listStyleType: "none" }}>
-        {Object.values(supportedWallets).map(({ name, logo }) => (
+        {availableWallets.map(({ name, logo }) => (
           <li style={{ display: "flex", alignItems: "center" }} key={name}>
             <span style={{ marginRight: "1rem" }}>
               <img style={{ width: "16px", height: "16px" }} src={logo} />
@@ -83,7 +96,7 @@ const Demo: FunctionComponent = () => {
         </Typography>
       )}
 
-      {walletOptions.length > 0 && (
+      {!wallet && walletOptions.length > 0 && (
         <>
           <Typography style={{ marginBottom: "1rem" }}>
             Select an installed wallet:
@@ -91,8 +104,8 @@ const Demo: FunctionComponent = () => {
 
           <select onChange={handleChange}>
             <option />
-            {walletOptions.map((option) => {
-              return <option key={option}>{option}</option>;
+            {walletOptions.map(({ id, name }) => {
+              return <option key={id} value={id} label={name} />;
             })}
           </select>
         </>
@@ -113,7 +126,7 @@ const Demo: FunctionComponent = () => {
           </div>
 
           <div style={{ marginBottom: "1rem" }}>
-            <button onClick={() => disconnect()}>Disconnect wallet</button>
+            <button onClick={handleDisconnectWallet}>Disconnect wallet</button>
           </div>
         </div>
       )}

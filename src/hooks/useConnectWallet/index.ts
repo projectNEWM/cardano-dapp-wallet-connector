@@ -6,6 +6,8 @@ import {
   getEnabledWallet,
   getWalletAddress,
   getWalletBalance,
+  getAvailableWallets,
+  getInstalledWallets,
 } from "utils";
 import { UseConnectWalletOptions, UseConnectWalletResult } from "./types";
 
@@ -111,6 +113,8 @@ const useConnectWallet = (
     error,
     getAddress,
     getBalance,
+    getAvailableWallets,
+    getInstalledWallets,
   };
 };
 
