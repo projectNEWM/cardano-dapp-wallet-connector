@@ -1,7 +1,7 @@
-import { storageKey, StorageType } from "common";
+import { storageKey } from "common";
 
-const disconnectWallet = (storageType = StorageType.LocalStorage) => {
-  const selectedWalletName = window[storageType].getItem(storageKey);
+const disconnectWallet = () => {
+  const selectedWalletName = window.localStorage.getItem(storageKey);
 
   if (!selectedWalletName) return;
 
@@ -9,7 +9,7 @@ const disconnectWallet = (storageType = StorageType.LocalStorage) => {
     delete window.Wallets[selectedWalletName];
   }
 
-  window[storageType].removeItem(storageKey);
+  window.localStorage.removeItem(storageKey);
 };
 
 export default disconnectWallet;

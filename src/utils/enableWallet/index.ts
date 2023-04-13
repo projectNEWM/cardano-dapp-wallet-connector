@@ -1,8 +1,7 @@
-import { storageKey, StorageType } from "common";
+import { storageKey } from "common";
 
 const enableWallet = async (
   walletName: string,
-  storageType = StorageType.LocalStorage,
 ) => {
   if (!window.cardano) {
     throw new Error(
@@ -28,7 +27,8 @@ const enableWallet = async (
     ...enabledWalletApi,
   };
 
-  window[storageType].setItem(storageKey, walletName);
+  window.localStorage.setItem(storageKey, walletName);
+
   if (!window.Wallets) window.Wallets = {};
   window.Wallets[walletName] = enabledWallet;
 

@@ -1,5 +1,6 @@
-import { storageKey, EnabledWallet, StorageType } from "common";
-import { useCallback, useEffect, useState } from "react";
+import { EnabledWallet } from "common";
+import { useCallback, useContext, useEffect } from "react";
+import { StateContext, DispatchContext } from "store";
 import {
   disconnectWallet,
   enableWallet,
@@ -9,36 +10,50 @@ import {
   getAvailableWallets,
   getInstalledWallets,
 } from "utils";
-import { UseConnectWalletOptions, UseConnectWalletResult } from "./types";
+import { UseConnectWalletResult } from "./types";
 
 /**
  * Returns values and helper functions for connecting, utlizing,
  * and enabling a Cardano wallet.
  */
-const useConnectWallet = (
-  { storageType = StorageType.LocalStorage }: UseConnectWalletOptions = {
-    storageType: StorageType.LocalStorage,
-  },
-): UseConnectWalletResult => {
-  const initialWalletName = window[storageType].getItem(storageKey);
+const useConnectWallet = (): UseConnectWalletResult => {
+  const state = useContext(StateContext)
+  const dispatch = useContext(DispatchContext)
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<any | null>(null);
-  const [selectedWalletName, setSelectedWalletName] = useState<string | null>(
-    initialWalletName,
-  );
-  const [enabledWallet, setEnabledWallet] = useState<EnabledWallet | null>(
-    null,
-  );
+  const setIsLoading = (isLoading: boolean) => {
+    if (!dispatch) return
+
+    dispatch({
+      type: "setIsLoading",
+      isLoading,
+    })
+  }
+
+  const setError = (error: string | null) => {
+    if (!dispatch) return
+
+    dispatch({
+      type: "setError",
+      error,
+    })
+  }
+  
+  const setEnabledWallet = (enabledWallet: EnabledWallet | null) => {
+    if (!dispatch) return
+    
+    dispatch({
+      type: "setEnabledWallet",
+      enabledWallet,
+    })
+  }
 
   const connect = (name: string) => {
-    setSelectedWalletName(name);
+    selectWallet(name);
   };
 
   const disconnect = () => {
-    setSelectedWalletName(null);
+    disconnectWallet();
     setEnabledWallet(null);
-    disconnectWallet(storageType);
     setError(null);
   };
 
@@ -48,15 +63,17 @@ const useConnectWallet = (
         setError(null);
         setIsLoading(true);
 
-        const address = await getWalletAddress(enabledWallet);
+        const address = await getWalletAddress(state.enabledWallet);
         callback(address);
       } catch (err) {
-        setError(err);
+        if (err instanceof Error) {
+          setError(err.message);
+        }
       } finally {
         setIsLoading(false);
       }
     },
-    [enabledWallet],
+    [state.enabledWallet],
   );
 
   const getBalance = useCallback(
@@ -64,53 +81,57 @@ const useConnectWallet = (
       try {
         setError(null);
         setIsLoading(true);
-        const balance = await getWalletBalance(enabledWallet);
+        const balance = await getWalletBalance(state.enabledWallet);
         callback(balance);
       } catch (err) {
-        setError(err);
+        if (err instanceof Error) {
+          setError(err.message);
+        }
       } finally {
         setIsLoading(false);
       }
     },
-    [enabledWallet],
+    [state.enabledWallet],
   );
 
-  const enableSelectedWallet = async () => {
+  const selectWallet = async (walletName: string) => {
     try {
-      if (!selectedWalletName) return;
-
       setError(null);
 
-      const currentEnabledWallet = await getEnabledWallet(storageType);
-
       // use existing wallet object if already connected and enabled
+      const currentEnabledWallet = await getEnabledWallet();
       if (currentEnabledWallet) {
         setEnabledWallet(currentEnabledWallet);
         return;
       }
 
       // if wallet is no longer enabled, disconnect it
-      disconnectWallet(storageType);
+      disconnectWallet();
 
       // enable a new wallet
-      const enabledWallet = await enableWallet(selectedWalletName, storageType);
+      const enabledWallet = await enableWallet(walletName);
       setEnabledWallet(enabledWallet);
     } catch (err) {
-      setSelectedWalletName(null);
-      setError(err);
+      if (err instanceof Error) {
+        setError(err.message);
+      }
     }
   };
 
   useEffect(() => {
-    enableSelectedWallet();
-  }, [selectedWalletName]);
+    if (!dispatch) {
+      throw new Error(
+        "No context found, did you wrap your app in the Provider?"
+      );
+    }
+  }, [dispatch])
 
   return {
-    wallet: enabledWallet,
+    wallet: state.enabledWallet,
     connect,
     disconnect,
-    isLoading,
-    error,
+    isLoading: state.isLoading,
+    error: state.error,
     getAddress,
     getBalance,
     getAvailableWallets,

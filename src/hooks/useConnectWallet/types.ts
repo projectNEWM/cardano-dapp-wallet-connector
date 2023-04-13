@@ -1,20 +1,14 @@
 import {
   EnabledWallet,
-  StorageType,
   AvailableWalletInfo,
   InstalledWalletInfo,
 } from "common/types";
-
-export interface UseConnectWalletOptions {
-  /** either local or session storage */
-  readonly storageType?: StorageType;
-}
 
 export interface UseConnectWalletResult {
   /** true if an operation is being performed */
   readonly isLoading: boolean;
   /** Error response from interacting with the wallet */
-  readonly error: Error | null;
+  readonly error: string | null;
   /** The enabled wallet API */
   readonly wallet: EnabledWallet | null;
   /** Connect wallet with the specified key */

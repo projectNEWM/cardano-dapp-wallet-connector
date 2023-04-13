@@ -19,11 +19,6 @@ export interface AvailableWalletInfo {
   readonly websiteUrl: string;
 }
 
-export enum StorageType {
-  LocalStorage = "localStorage",
-  SessionStorage = "sessionStorage",
-}
-
 export interface UnenabledWallet {
   readonly apiVersion: string;
   readonly name: string;

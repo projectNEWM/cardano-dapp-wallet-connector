@@ -1,12 +1,10 @@
-import { EnabledWallet, storageKey, StorageType } from "common";
+import { EnabledWallet, storageKey } from "common";
 
 /**
  * Helper to get a connected and enabled wallet.
  */
-const getEnabledWallet = async (
-  storageType = StorageType.LocalStorage,
-): Promise<EnabledWallet | undefined> => {
-  const selectedWalletName = window[storageType].getItem(storageKey);
+const getEnabledWallet = async (): Promise<EnabledWallet | undefined> => {
+  const selectedWalletName = window.localStorage.getItem(storageKey);
 
   if (!selectedWalletName || !window.Wallets) return;
 

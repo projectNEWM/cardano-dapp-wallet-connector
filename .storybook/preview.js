@@ -1,3 +1,6 @@
+import React from "react";
+import { Provider } from "../src/store";
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -7,3 +10,11 @@ export const parameters = {
     },
   },
 };
+
+export const decorators = [
+  (Story) => (
+    <Provider>
+      <Story />
+    </Provider>
+  ),
+];
