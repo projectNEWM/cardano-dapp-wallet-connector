@@ -12,6 +12,8 @@ const Typography: FunctionComponent<TypographyProps> = ({
       marginRight: 0,
       marginBottom: 0,
       marginLeft: 0,
+      fontFamily: "Arial",
+      fontSize: "1.2rem",
       ...style,
     },
     ...rest,

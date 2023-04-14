@@ -10,7 +10,7 @@ export const useStore = () => {
   }
 
   useEffect(() => {
-    store.subscribe(setInternalState);
+    return store.subscribe(setInternalState);
   }, []);
 
   return {

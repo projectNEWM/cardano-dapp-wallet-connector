@@ -9,6 +9,7 @@ export enum SupportedWallet {
 export interface InstalledWalletInfo {
   readonly id: string;
   readonly name: string;
+  readonly icon: string;
 }
 
 export interface AvailableWalletInfo {
@@ -63,7 +64,10 @@ export interface EnabledWalletApi {
   readonly submitTx: (tx: Any) => Promise<Any>;
 }
 
-export type EnabledWallet = UnenabledWallet & EnabledWalletApi;
+type FullWalletAPI = UnenabledWallet & EnabledWalletApi
+export interface EnabledWallet extends FullWalletAPI {
+  readonly id: string;
+}
 
 export enum NetworkMode {
   mainNet = 1,

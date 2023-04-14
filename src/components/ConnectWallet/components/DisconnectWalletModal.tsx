@@ -16,7 +16,13 @@ const DisconnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
 
   return (
     <Modal onClose={onClose}>
-      <Button onClick={handleClose}>Disconnect</Button>
+      <Button 
+        onClick={handleClose}
+        style={{ padding: "1rem", justifyContent: "center" }}
+        isFullWidth
+      >
+        Disconnect
+      </Button>
     </Modal>
   )
 }

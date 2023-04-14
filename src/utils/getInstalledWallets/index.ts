@@ -27,9 +27,13 @@ const supportedWallets = [
  * @returns a list of installed Cardano wallet extensions.
  */
 const getInstalledWallets = (): ReadonlyArray<InstalledWalletInfo> => {
-  return supportedWallets.filter(
-    (supportedWallet) => !!window.cardano && window.cardano[supportedWallet.id],
-  );
+  return supportedWallets
+    .filter((wallet) => !!window.cardano && window.cardano[wallet.id])
+    .map(({ id, name }) => ({ 
+      ...(window.cardano && window.cardano[id]), 
+      id, 
+      name,
+    }));
 };
 
 export default getInstalledWallets;

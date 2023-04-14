@@ -13,7 +13,8 @@ import { useStore } from "store";
 
 /**
  * Returns values and helper functions for connecting, utlizing,
- * and enabling a Cardano wallet.
+ * and enabling a Cardano wallet. Wallet state is shared throughout
+ * all hook references.
  */
 const useConnectWallet = (): UseConnectWalletResult => {
   const { state, setState } = useStore()
