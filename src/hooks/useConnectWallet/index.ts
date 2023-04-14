@@ -1,6 +1,4 @@
-import { EnabledWallet } from "common";
-import { useCallback, useContext, useEffect } from "react";
-import { StateContext, DispatchContext } from "store";
+import { useCallback } from "react";
 import {
   disconnectWallet,
   enableWallet,
@@ -11,41 +9,14 @@ import {
   getInstalledWallets,
 } from "utils";
 import { UseConnectWalletResult } from "./types";
+import { useStore } from "store";
 
 /**
  * Returns values and helper functions for connecting, utlizing,
  * and enabling a Cardano wallet.
  */
 const useConnectWallet = (): UseConnectWalletResult => {
-  const state = useContext(StateContext)
-  const dispatch = useContext(DispatchContext)
-
-  const setIsLoading = (isLoading: boolean) => {
-    if (!dispatch) return
-
-    dispatch({
-      type: "setIsLoading",
-      isLoading,
-    })
-  }
-
-  const setError = (error: string | null) => {
-    if (!dispatch) return
-
-    dispatch({
-      type: "setError",
-      error,
-    })
-  }
-  
-  const setEnabledWallet = (enabledWallet: EnabledWallet | null) => {
-    if (!dispatch) return
-    
-    dispatch({
-      type: "setEnabledWallet",
-      enabledWallet,
-    })
-  }
+  const { state, setState } = useStore()
 
   const connect = (name: string) => {
     selectWallet(name);
@@ -53,24 +24,35 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
   const disconnect = () => {
     disconnectWallet();
-    setEnabledWallet(null);
-    setError(null);
+    setState({
+      ...state,
+      enabledWallet: null,
+    })
   };
 
   const getAddress = useCallback(
     async (callback: (address: string) => void) => {
       try {
-        setError(null);
-        setIsLoading(true);
+        setState({
+          ...state,
+          error: null,
+          isLoading: true,
+        })
 
         const address = await getWalletAddress(state.enabledWallet);
         callback(address);
       } catch (err) {
         if (err instanceof Error) {
-          setError(err.message);
+          setState({
+            ...state,
+            error: err.message
+          })
         }
       } finally {
-        setIsLoading(false);
+        setState({
+          ...state,
+          isLoading: true,
+        })
       }
     },
     [state.enabledWallet],
@@ -79,16 +61,25 @@ const useConnectWallet = (): UseConnectWalletResult => {
   const getBalance = useCallback(
     async (callback: (balance: number) => void) => {
       try {
-        setError(null);
-        setIsLoading(true);
+        setState({
+          ...state,
+          error: null,
+          isLoading: true,
+        })
         const balance = await getWalletBalance(state.enabledWallet);
         callback(balance);
       } catch (err) {
         if (err instanceof Error) {
-          setError(err.message);
+          setState({
+            ...state,
+            error: err.message,
+          })
         }
       } finally {
-        setIsLoading(false);
+        setState({
+          ...state,
+          isLoading: false,
+        })
       }
     },
     [state.enabledWallet],
@@ -96,12 +87,18 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
   const selectWallet = async (walletName: string) => {
     try {
-      setError(null);
+      setState({
+        ...state,
+        error: null,
+      })
 
       // use existing wallet object if already connected and enabled
       const currentEnabledWallet = await getEnabledWallet();
       if (currentEnabledWallet) {
-        setEnabledWallet(currentEnabledWallet);
+        setState({
+          ...state,
+          enabledWallet: currentEnabledWallet,
+        })
         return;
       }
 
@@ -110,21 +107,19 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
       // enable a new wallet
       const enabledWallet = await enableWallet(walletName);
-      setEnabledWallet(enabledWallet);
+      setState({
+        ...state,
+        enabledWallet,
+      })
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
+        setState({
+          ...state,
+          error: err.message,
+        })
       }
     }
   };
-
-  useEffect(() => {
-    if (!dispatch) {
-      throw new Error(
-        "No context found, did you wrap your app in the Provider?"
-      );
-    }
-  }, [dispatch])
 
   return {
     wallet: state.enabledWallet,
