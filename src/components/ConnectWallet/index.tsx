@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import { FunctionComponent } from "react";
-import { Typography, Button } from "elements";
+import { Button } from "elements";
 import { useConnectWallet } from "hooks";
 import { EnabledWallet } from "common";
 import DisconnectWalletModal from "./components/DisconnectWalletModal";
@@ -11,21 +11,10 @@ interface Props {
 }
 
 const ConnectWallet: FunctionComponent<Props> = () => {
-  const {
-    wallet,
-    connect,
-    error,
-    isLoading,
-    getAvailableWallets,
-    getInstalledWallets,
-  } = useConnectWallet();
+  const { wallet } = useConnectWallet();
 
   const [isConnectModalVisible, setIsConnectModalVisible] = useState(false)
   const [isDisconnectModalVisible, setIsDisconnectModalVisible] = useState(false)
-
-  const handleChange = (event: FormEvent<HTMLSelectElement>) => {
-    connect((event.target as HTMLSelectElement).value);
-  };
 
   return (
     <>
@@ -50,18 +39,14 @@ const ConnectWallet: FunctionComponent<Props> = () => {
       >
         {!wallet ? (
           <Button onClick={() => setIsConnectModalVisible(true)}>
-            <Typography>
-              Connect wallet
-            </Typography>
+            Connect wallet
           </Button>
         ) : (
           <Button 
             iconLeft={wallet.icon} 
             onClick={() => setIsDisconnectModalVisible(true)}
           >
-            <Typography>
-              Connected
-            </Typography>
+            Connected
           </Button>
         )}
       </div>

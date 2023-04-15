@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from "react"
 import { Button, Modal, Typography } from "elements"
 import { useConnectWallet } from "hooks"
-import { getAvailableWallets, getInstalledWallets } from "utils";
+import { getSupportedWallets } from "utils";
+import { icons } from "assets";
+import { WalletInfo } from "common";
 
 interface Props {
   readonly onClose: VoidFunction
@@ -10,78 +12,91 @@ interface Props {
 const ConnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
   const { connect, error } = useConnectWallet()
 
-  const availableWallets = getAvailableWallets();
-  const installedWallets = getInstalledWallets();
+  const supportedWallets = getSupportedWallets();
 
-  const handleConnectWallet = (walletId: string) => {
-    connect(walletId)
-    onClose()
+  const isAWalletInstalled = supportedWallets.find(({ isInstalled }) => {
+    return isInstalled
+  })
+
+  const handleSelectWallet = (wallet: WalletInfo) => {
+    if (wallet.isInstalled) {
+      connect(wallet.id)
+      onClose()
+    } else {
+      window.open(wallet.websiteUrl, "_blank", "noreferrer")
+    }
   };
 
-  const handleGoToWalletPage = (url: string) => {
-    window.open(url, "_blank", "noreferrer")
-  }
-
   return (
-    <Modal title="Connect your wallet" onClose={onClose}>
-      {Object.keys(availableWallets).length === 0 && (
+    <Modal 
+      title={isAWalletInstalled ? "Connect your wallet" : "Install a wallet"}
+      onClose={onClose}
+    >
+      {supportedWallets.length === 0 ? (
         <Typography style={{ textAlign: "center"}}>
           Cardano wallet extensions are currently only supported in Chrome and
           Brave browsers.
         </Typography>
-      )}
-
-      {installedWallets.length === 0 && (
-        <>
-          <Typography style={{ marginLeft: "0.5rem", textAlign: "center" }}>
-            Please install one of the following supported Cardano wallets:
-          </Typography>
-
-          <ul style={{ listStyleType: "none" }}>
-            {availableWallets.map(({ id, name, logo, extensionUrl }) => (
-              <li key={id} style={{ display: "flex", alignItems: "center" }}>
-                <Button 
-                  iconRight={logo}
-                  onClick={ () => handleGoToWalletPage(extensionUrl)}
-                  style={{ justifyContent: "space-between" }}
-                  isFullWidth
-                >
-                  {name}
-                </Button>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      {installedWallets.length > 0 && (
-        <>
-          <Typography style={{ marginLeft: "0.5rem", marginBottom: "1rem" }}>
-            Select an installed wallet:
-          </Typography>
-
-          {installedWallets.map(({ id, name, icon }, idx) => {
-            return (
-              <div 
-                style={{ 
-                  marginBottom: idx < installedWallets.length - 1 
-                    ? "0.25rem" 
-                    : 0,
-                }}
+      ) : (
+        supportedWallets.map((wallet, idx) => {
+          return (
+            <div 
+              key={wallet.id} 
+              style={{ 
+                marginBottom: idx < supportedWallets.length - 1 
+                  ? "0.25rem" 
+                  : 0,
+              }}
+            >
+              <Button 
+                iconRight={wallet.icon}
+                onClick={() => handleSelectWallet(wallet)}
+                isFullWidth
               >
-                <Button 
-                  key={name} 
-                  iconRight={icon}
-                  onClick={() => handleConnectWallet(id)}
-                  style={{ justifyContent: "space-between" }}
-                  isFullWidth
-                >
-                  <Typography style={{ fontSize: "16px" }}>{ name }</Typography>
-                </Button>
-              </div>
-            )
-          })}
-        </>
+                <div 
+                  style={{ 
+                    display: "flex" , 
+                    flex: 1, 
+                  }}>
+                  <Typography 
+                    style={{ 
+                      fontSize: "16px", 
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    { wallet.name }
+                  </Typography>
+
+                  {!wallet.isInstalled && isAWalletInstalled && (
+                    <div 
+                      style={{ 
+                        display: "flex", 
+                        flexDirection: "row", 
+                        alignItems: "center",
+                        opacity: 0.5,
+                        marginLeft: "auto",
+                        marginRight: "1rem",
+                      }}
+                    >
+                      <Typography>
+                        Not installed
+                      </Typography>
+
+                      <img 
+                        src={icons.externalLink} 
+                        style={{ 
+                          width: 18,
+                          height: 18,
+                          marginLeft: "0.5rem",
+                        }} 
+                      />
+                    </div>
+                  )}
+                </div>
+              </Button>
+            </div>
+          )
+        })
       )}
 
       {!!error && (

@@ -1,12 +1,16 @@
+import { WalletInfo, SupportedWallet } from "common";
 import { browserName } from "react-device-detect";
-import { AvailableWalletInfo, SupportedWallet } from "common/types";
 import { logos } from "assets";
 
-const availableWallets: ReadonlyArray<AvailableWalletInfo> = [
+/**
+ * @returns a list of Cardano wallets. Installed wallets appear
+ * before uninstalled wallets.
+ */
+const supportedWallets: ReadonlyArray<WalletInfo> = [
   {
     id: SupportedWallet.nami,
     name: "Nami",
-    logo: logos.nami,
+    icon: logos.nami,
     extensionUrl:
       "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
     websiteUrl: "https://namiwallet.io/",
@@ -14,7 +18,7 @@ const availableWallets: ReadonlyArray<AvailableWalletInfo> = [
   {
     id: SupportedWallet.eternl,
     name: "Eternl",
-    logo: logos.eternl,
+    icon: logos.eternl,
     extensionUrl:
       "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
     websiteUrl: "https://eternl.io/",
@@ -22,7 +26,7 @@ const availableWallets: ReadonlyArray<AvailableWalletInfo> = [
   {
     id: SupportedWallet.flint,
     name: "Flint",
-    logo: logos.flint,
+    icon: logos.flint,
     extensionUrl:
       "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
     websiteUrl: "https://flint-wallet.com/",
@@ -30,7 +34,7 @@ const availableWallets: ReadonlyArray<AvailableWalletInfo> = [
   {
     id: SupportedWallet.cardwallet,
     name: "Cardwallet",
-    logo: logos.cardwallet,
+    icon: logos.cardwallet,
     extensionUrl:
       "https://chrome.google.com/webstore/detail/cwallet/apnehcjmnengpnmccpaibjmhhoadaico",
     websiteUrl: "https://cwallet.finance/",
@@ -38,19 +42,38 @@ const availableWallets: ReadonlyArray<AvailableWalletInfo> = [
   {
     id: SupportedWallet.gerowallet,
     name: "GeroWallet",
-    logo: logos.geroWallet,
+    icon: logos.geroWallet,
     extensionUrl:
       "https://chrome.google.com/webstore/detail/gerowallet/bgpipimickeadkjlklgciifhnalhdjhe",
     websiteUrl: "https://gerowallet.io/",
   },
 ];
 
-const getAvailableWallets = (): ReadonlyArray<AvailableWalletInfo> => {
+const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
   if (!["Chrome", "Brave"].includes(browserName)) {
     return [];
   }
 
-  return availableWallets;
+  const installedWallets: Array<WalletInfo> = []
+  const uninstalledWallets: Array<WalletInfo> = []
+
+  supportedWallets.forEach((wallet) => {
+    if (window.cardano && window.cardano[wallet.id]) {
+      installedWallets.push({
+        ...wallet,
+        ...window.cardano[wallet.id],
+        isInstalled: true,
+      })
+    } else {
+      uninstalledWallets.push({
+        ...wallet,
+        isInstalled: false,
+      })
+    }
+  })
+
+  return [...installedWallets, ...uninstalledWallets]
 };
 
-export default getAvailableWallets;
+export default getSupportedWallets
+

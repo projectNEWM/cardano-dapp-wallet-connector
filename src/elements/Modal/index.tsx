@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode, useEffect, useState } from "react"
+import React, { FunctionComponent, HTMLAttributes, useEffect, useState } from "react"
 import { icons } from "assets"
 import Typography from "elements/Typography"
 
@@ -34,6 +34,7 @@ const Modal: FunctionComponent<Props> = ({
         left: 0,
         backgroundColor: "rgba(0,0,0,0.25)",
         transition: "opacity 0.25s ease-out",
+        fontFamily: "Arial",
         opacity,
       }} 
       {...rest}

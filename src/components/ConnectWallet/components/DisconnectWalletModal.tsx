@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { Button, Modal } from "elements"
+import { Button, Modal, Typography } from "elements"
 import { useConnectWallet } from "hooks"
 
 interface Props {
@@ -21,7 +21,9 @@ const DisconnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
         style={{ padding: "1rem", justifyContent: "center" }}
         isFullWidth
       >
-        Disconnect
+        <Typography>
+          Disconnect
+        </Typography>
       </Button>
     </Modal>
   )

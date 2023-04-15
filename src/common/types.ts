@@ -6,18 +6,13 @@ export enum SupportedWallet {
   cardwallet = "cardwallet",
 }
 
-export interface InstalledWalletInfo {
+export interface WalletInfo {
   readonly id: string;
   readonly name: string;
   readonly icon: string;
-}
-
-export interface AvailableWalletInfo {
-  readonly id: string;
-  readonly name: string;
-  readonly logo: string;
   readonly extensionUrl: string;
   readonly websiteUrl: string;
+  readonly isInstalled?: boolean;
 }
 
 export interface UnenabledWallet {

@@ -1,7 +1,6 @@
 import {
   EnabledWallet,
-  AvailableWalletInfo,
-  InstalledWalletInfo,
+  WalletInfo,
 } from "common/types";
 
 export interface UseConnectWalletResult {
@@ -20,7 +19,5 @@ export interface UseConnectWalletResult {
   /** Get the ADA balance for the connected wallet */
   readonly getBalance: (callback: (balance: number) => void) => void;
   /** Get installable wallet extensions for the current browser */
-  readonly getAvailableWallets: () => ReadonlyArray<AvailableWalletInfo>;
-  /** Get currently installed wallet browser extensions */
-  readonly getInstalledWallets: () => ReadonlyArray<InstalledWalletInfo>;
+  readonly getSupportedWallets: () => ReadonlyArray<WalletInfo>;
 }

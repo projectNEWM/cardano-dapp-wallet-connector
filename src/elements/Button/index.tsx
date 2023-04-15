@@ -15,8 +15,9 @@ const StyledButton = styled.button`
   border-width: 0;
   border-radius: 0.25rem;
   cursor: pointer;
-  padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
   font-size: 1rem;
+  font-family: Arial;
   color: #333;
 
   &:hover {
@@ -35,6 +36,9 @@ const Button: FunctionComponent<Props> = ({
     <StyledButton 
       style={{ 
         width: isFullWidth ? "100%" : undefined, 
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
         ...style,
       }} 
       {...rest}
@@ -42,7 +46,11 @@ const Button: FunctionComponent<Props> = ({
       {!!iconLeft && (
         <img 
           src={iconLeft} 
-          style={{ marginRight: "0.5rem", width: 32, height: 32 }} 
+          style={{ 
+            marginRight: "0.5rem", 
+            width: 32, 
+            height: 32,
+          }} 
         />
       )}
 
@@ -51,7 +59,11 @@ const Button: FunctionComponent<Props> = ({
       {!!iconRight && (
         <img 
           src={iconRight} 
-          style={{ marginLeft: "0.5rem", width: 32, height: 32 }} 
+          style={{ 
+            marginLeft: "auto", 
+            width: 32, 
+            height: 32,
+          }} 
         />
       )}
     </StyledButton>

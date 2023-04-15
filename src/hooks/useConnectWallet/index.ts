@@ -5,8 +5,7 @@ import {
   getEnabledWallet,
   getWalletAddress,
   getWalletBalance,
-  getAvailableWallets,
-  getInstalledWallets,
+  getSupportedWallets,
 } from "utils";
 import { UseConnectWalletResult } from "./types";
 import { useStore } from "store";
@@ -130,8 +129,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
     error: state.error,
     getAddress,
     getBalance,
-    getAvailableWallets,
-    getInstalledWallets,
+    getSupportedWallets,
   };
 };
 
