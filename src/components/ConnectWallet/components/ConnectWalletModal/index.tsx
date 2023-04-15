@@ -21,10 +21,11 @@ const ConnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
   const handleSelectWallet = (wallet: WalletInfo) => {
     if (wallet.isInstalled) {
       connect(wallet.id)
-      onClose()
     } else {
       window.open(wallet.websiteUrl, "_blank", "noreferrer")
     }
+
+    onClose()
   };
 
   return (

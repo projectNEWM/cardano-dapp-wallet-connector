@@ -5,11 +5,13 @@ import Typography from "elements/Typography"
 interface Props extends HTMLAttributes<HTMLDivElement> {
   readonly onClose: VoidFunction
   readonly title?: string
+  readonly titleIcon?: string
 }
 
 const Modal: FunctionComponent<Props> = ({ 
   children, 
   title, 
+  titleIcon,
   onClose, 
   style,
   ...rest
@@ -22,6 +24,7 @@ const Modal: FunctionComponent<Props> = ({
 
   return (
     <div 
+      onClick={onClose}
       style={{ 
         position: "fixed", 
         display: "flex",
@@ -39,14 +42,17 @@ const Modal: FunctionComponent<Props> = ({
       }} 
       {...rest}
     >
-      <div style={{ 
-        backgroundColor: "white", 
-        borderRadius: "0.75rem", 
-        padding: "1.25rem", 
-        width: "100%",
-        maxWidth: "24rem",
-        ...style,
-      }}>
+      <div 
+        onClick={(e) => e.stopPropagation()}
+        style={{ 
+          backgroundColor: "white", 
+          borderRadius: "0.75rem", 
+          padding: "1.25rem", 
+          width: "100%",
+          maxWidth: "24rem",
+          ...style,
+        }}
+      >
         <div 
           style={{ 
             display: "flex", 
@@ -57,11 +63,38 @@ const Modal: FunctionComponent<Props> = ({
             padding: "0 0.5rem",
           }}
         >
-          <div />
+          {titleIcon ? (
+            <div 
+              style={{ 
+                display: "flex", 
+                flexDirection: "row", 
+                alignItems: "center",
+              }}
+            >
+              <img 
+                src={titleIcon} 
+                style={{ width: 36, height: 36, marginRight: "1rem" }}
+              />
 
-          <Typography style={{ fontSize: "24px", fontWeight: 600 }}>
-            {title}
-          </Typography>
+              <Typography 
+                style={{ 
+                  fontSize: "24px", 
+                  fontWeight: 600, 
+                  textTransform: "capitalize", 
+                }}
+              >
+                {title}
+              </Typography>
+            </div>
+          ) : (
+            <>
+              <div />
+
+              <Typography style={{ fontSize: "24px", fontWeight: 600 }}>
+                {title}
+              </Typography>
+            </>
+          )}
         
           <img 
             style={{ cursor: "pointer" }}
