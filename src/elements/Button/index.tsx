@@ -6,22 +6,24 @@ interface Props extends ComponentPropsWithoutRef<"button"> {
   readonly iconLeft?: string
   readonly iconRight?: string
   readonly isFullWidth?: boolean
+  readonly isInverted?: boolean
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<Props>`
   display: flex;
   align-items: center;
   background-color: transparent;
   border-width: 0;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+  padding: 0rem 1rem;
+  min-height: 2.75rem;
   font-size: 1rem;
-  font-family: Arial;
+  box-sizing: border-box;
   color: #333;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1)
+    background-color: ${props => props.isInverted ? "rgba(256, 256, 256, 0.1)" : "rgba(0, 0, 0, 0.1)"}
   }
 `
 const Button: FunctionComponent<Props> = ({ 
@@ -40,7 +42,7 @@ const Button: FunctionComponent<Props> = ({
         flexDirection: "row",
         alignItems: "center",
         ...style,
-      }} 
+      }}
       {...rest}
     >
       {!!iconLeft && (
@@ -61,8 +63,8 @@ const Button: FunctionComponent<Props> = ({
           src={iconRight} 
           style={{ 
             marginLeft: "auto", 
-            width: 32, 
-            height: 32,
+            width: 30, 
+            height: 30,
           }} 
         />
       )}

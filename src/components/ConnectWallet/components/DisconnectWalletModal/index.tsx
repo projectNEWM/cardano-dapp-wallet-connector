@@ -1,12 +1,19 @@
-import React, { FunctionComponent } from "react"
+import React, { CSSProperties, FunctionComponent } from "react"
 import { Button, Modal, Typography } from "elements"
 import { useConnectWallet } from "hooks"
+import { ModalProps } from "components/ConnectWallet/types"
 
-interface Props {
-  readonly onClose: VoidFunction
+interface Props extends ModalProps {
+  readonly disconnectButtonStyle?: CSSProperties
 }
 
-const DisconnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
+const DisconnectWalletModal: FunctionComponent<Props> = ({ 
+  style = {},
+  headerStyle = {},
+  disconnectButtonStyle = {},
+  isInverted = false,
+  onClose, 
+}) => {
   const { wallet, disconnect } = useConnectWallet()
 
   const handleDisconnect = () => {
@@ -17,10 +24,12 @@ const DisconnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
   if (!wallet) {
     return (
       <Modal 
+        style={style}
         title="Something went wrong" 
+        isInverted={isInverted}
         onClose={onClose}
       >
-        <Typography style={{ textAlign: "center" }}>
+        <Typography isInverted style={{ textAlign: "center" }}>
           It looks like your wallet didn't connect successfully.
         </Typography>
       </Modal>
@@ -29,8 +38,11 @@ const DisconnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
 
   return (
     <Modal 
+      style={style}
+      headerStyle={headerStyle}
       title={wallet.name} 
       titleIcon={wallet.icon}
+      isInverted={isInverted}
       onClose={onClose}
     >
       <div 
@@ -42,19 +54,19 @@ const DisconnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
           paddingLeft: "0.75rem",
         }}
       >
-        <Typography>
-          Currenty connected with {wallet.name}.
+        <Typography isInverted>
+          Connected with {wallet.name}.
         </Typography>
 
         <Button 
           onClick={handleDisconnect}
           style={{ 
             marginLeft: "0.5rem",
-            padding: "1rem", 
             justifyContent: "center", 
+            ...disconnectButtonStyle,
           }}
         >
-          <Typography>
+          <Typography isInverted>
             Disconnect
           </Typography>
         </Button>

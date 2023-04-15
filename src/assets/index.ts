@@ -5,6 +5,8 @@ import flint from "./svg/flint-logo.svg";
 import nami from "./svg/nami-logo.svg";
 import close from "./svg/close-icon.svg";
 import externalLink from "./svg/external-link-icon.svg";
+import ExternalLink from "./tsx/ExternalLink";
+import Close from "./tsx/Close";
 
 export const logos = {
   eternl,
@@ -16,7 +18,10 @@ export const logos = {
 
 export const icons = {
   close,
+  Close,
   externalLink,
+  ExternalLink,
+
 };
 
 export default {

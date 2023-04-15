@@ -4,12 +4,14 @@ import { useConnectWallet } from "hooks"
 import { getSupportedWallets } from "utils";
 import { icons } from "assets";
 import { WalletInfo } from "common";
+import { ModalProps } from "components/ConnectWallet/types";
 
-interface Props {
-  readonly onClose: VoidFunction
-}
-
-const ConnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
+const ConnectWalletModal: FunctionComponent<ModalProps> = ({
+  style = {},
+  headerStyle = {},
+  isInverted = false,
+  onClose, 
+}) => {
   const { connect, error } = useConnectWallet()
 
   const supportedWallets = getSupportedWallets();
@@ -30,11 +32,14 @@ const ConnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
 
   return (
     <Modal 
+      style={style}
+      headerStyle={headerStyle}
       title={isAWalletInstalled ? "Connect your wallet" : "Install a wallet"}
       onClose={onClose}
+      isInverted={isInverted}
     >
       {supportedWallets.length === 0 ? (
-        <Typography style={{ textAlign: "center"}}>
+        <Typography isInverted style={{ textAlign: "center" }}>
           Cardano wallet extensions are currently only supported in Chrome and
           Brave browsers.
         </Typography>
@@ -52,6 +57,7 @@ const ConnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
               <Button 
                 iconRight={wallet.icon}
                 onClick={() => handleSelectWallet(wallet)}
+                isInverted={isInverted}
                 isFullWidth
               >
                 <div 
@@ -60,6 +66,7 @@ const ConnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
                     flex: 1, 
                   }}>
                   <Typography 
+                    isInverted={isInverted}
                     style={{ 
                       fontSize: "16px", 
                       textTransform: "capitalize",
@@ -79,18 +86,19 @@ const ConnectWalletModal: FunctionComponent<Props> = ({ onClose }) => {
                         marginRight: "1rem",
                       }}
                     >
-                      <Typography>
+                      <Typography 
+                        isInverted={isInverted} 
+                      >
                         Not installed
                       </Typography>
 
-                      <img 
-                        src={icons.externalLink} 
-                        style={{ 
-                          width: 18,
-                          height: 18,
-                          marginLeft: "0.5rem",
-                        }} 
-                      />
+                      <div style={{ marginLeft: "0.5rem"}}>
+                        <icons.ExternalLink 
+                          width={18} 
+                          height={18} 
+                          stroke={isInverted ? "#FFF" : "#333"} 
+                        />
+                      </div>
                     </div>
                   )}
                 </div>

@@ -69,5 +69,12 @@ export enum NetworkMode {
   testNet = 0,
 }
 
+export interface SVGProps {
+  readonly height?: number;
+  readonly width?: number;
+  readonly fill?: string;
+  readonly stroke?: string;
+}
+
 // TODO: replace usage of this type with actual definitions
 type Any = any;

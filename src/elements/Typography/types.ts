@@ -2,6 +2,7 @@ import { HTMLProps, ReactNode } from "react";
 
 export interface TypographyProps extends HTMLProps<HTMLParagraphElement> {
   readonly variant?: TypographyVariants;
+  readonly isInverted?: boolean;
   readonly children: ReactNode;
 }
 

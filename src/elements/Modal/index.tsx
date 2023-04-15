@@ -1,11 +1,15 @@
-import React, { FunctionComponent, HTMLAttributes, useEffect, useState } from "react"
+import React, { CSSProperties, FunctionComponent, HTMLAttributes, useEffect, useState } from "react"
 import { icons } from "assets"
 import Typography from "elements/Typography"
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   readonly onClose: VoidFunction
+  readonly isInverted?: boolean
   readonly title?: string
   readonly titleIcon?: string
+  readonly style?: CSSProperties
+  readonly headerStyle?: CSSProperties
+  readonly fontFamily?: string
 }
 
 const Modal: FunctionComponent<Props> = ({ 
@@ -13,14 +17,27 @@ const Modal: FunctionComponent<Props> = ({
   title, 
   titleIcon,
   onClose, 
-  style,
+  isInverted,
+  style = {},
+  headerStyle = {},
   ...rest
 }) => {
   const [opacity, setOpacity] = useState(0)
 
+  const titleStyle = {
+    fontSize: "24px", 
+    fontWeight: 600, 
+    textTransform: "capitalize", 
+    color: isInverted ? "#FFF" : "#333",
+  } as CSSProperties
+
+  const backgroundColor = isInverted ? "#1C1C1E" : "#FFFFFF"
+
   useEffect(() => {
     setOpacity(1)
   }, [])
+
+  console.log("stylr: ", style)
 
   return (
     <div 
@@ -37,19 +54,16 @@ const Modal: FunctionComponent<Props> = ({
         left: 0,
         backgroundColor: "rgba(0,0,0,0.25)",
         transition: "opacity 0.25s ease-out",
-        fontFamily: "Arial",
         opacity,
       }} 
       {...rest}
     >
       <div 
         onClick={(e) => e.stopPropagation()}
-        style={{ 
-          backgroundColor: "white", 
-          borderRadius: "0.75rem", 
-          padding: "1.25rem", 
+        style={{
           width: "100%",
           maxWidth: "24rem",
+          maxHeight: "90vh",
           ...style,
         }}
       >
@@ -59,8 +73,13 @@ const Modal: FunctionComponent<Props> = ({
             flexDirection: "row",
             justifyContent: "space-between", 
             alignItems: "center", 
-            marginBottom: "1rem",
-            padding: "0 0.5rem",
+            padding: "1rem", 
+            borderTopLeftRadius: "0.75rem", 
+            borderTopRightRadius: "0.75rem", 
+            borderBottom: `1px solid ${isInverted ? "#121214" : "#EEE"}`,
+            overflow: "auto",
+            backgroundColor,
+            ...headerStyle,
           }}
         >
           {titleIcon ? (
@@ -76,13 +95,7 @@ const Modal: FunctionComponent<Props> = ({
                 style={{ width: 36, height: 36, marginRight: "1rem" }}
               />
 
-              <Typography 
-                style={{ 
-                  fontSize: "24px", 
-                  fontWeight: 600, 
-                  textTransform: "capitalize", 
-                }}
-              >
+              <Typography style={titleStyle}>
                 {title}
               </Typography>
             </div>
@@ -90,20 +103,27 @@ const Modal: FunctionComponent<Props> = ({
             <>
               <div />
 
-              <Typography style={{ fontSize: "24px", fontWeight: 600 }}>
+              <Typography style={titleStyle}>
                 {title}
               </Typography>
             </>
           )}
-        
-          <img 
-            style={{ cursor: "pointer" }}
-            src={icons.close} 
-            onClick={onClose} 
-          />
+
+          <div style={{ cursor: "pointer" }} onClick={onClose} >
+            <icons.Close stroke={isInverted ? "#FFF" : "#333"}  />
+          </div>
         </div>
 
-        {children}
+        <div 
+          style={{ 
+            padding: "1rem", 
+            backgroundColor,
+            borderBottomLeftRadius: "0.75rem", 
+            borderBottomRightRadius: "0.75rem", 
+          }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   )
