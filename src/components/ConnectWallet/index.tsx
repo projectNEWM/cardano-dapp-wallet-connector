@@ -1,23 +1,13 @@
-import React, { CSSProperties, useEffect, useState } from "react";
+import React, { MouseEvent, useEffect, useState } from "react";
 import { FunctionComponent } from "react";
-import { Button } from "elements";
 import { useConnectWallet } from "hooks";
-import { EnabledWallet } from "common";
-import DisconnectWalletModal from "./components/DisconnectWalletModal";
-import ConnectWalletModal from "./components/ConnectWalletModal";
-
-export interface ConnectWalletProps {
-  readonly modalStyle?: CSSProperties
-  readonly modalHeaderStyle?: CSSProperties
-  readonly mainButtonStyle?: CSSProperties
-  readonly disconnectButtonStyle?: CSSProperties
-  readonly fontFamily?: string
-  readonly isInverted?: boolean;
-  /** Called when a wallet is connected */
-  readonly onConnect?: (wallet: EnabledWallet) => void
-}
+import WalletModal from "components/WalletModal";
+import { ConnectWalletProps } from "./types";
+import WalletButton from "components/WalletButton";
 
 const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({ 
+  onClickButton,
+  onCloseModal,
   onConnect,
   mainButtonStyle = {},
   modalStyle = {},
@@ -28,11 +18,33 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
 }) => {
   const { wallet } = useConnectWallet();
 
-  const [isConnectModalVisible, setIsConnectModalVisible] = useState(false)
-  const [isDisconnectModalVisible, setIsDisconnectModalVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const handleButtonClick = (
+    event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+  ) => {
+    if (onClickButton) {
+      onClickButton(event)
+    } else {
+      setIsModalVisible(true)
+    }
+  }
+
+  const handleCloseModal = (
+    event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+  ) => {
+    if (onCloseModal) {
+      onCloseModal(event)
+    } else {
+      () => setIsModalVisible(false)
+    }
+  }
 
   /**
+   * Called when wallet is connected. Recommended to instead use 
+   * the useConnectWallet hook to access the wallet object.
    * 
+   * @returns CIP 30 wallet object
    */
   useEffect(() => {
     if (onConnect && wallet) {
@@ -42,55 +54,22 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
 
   return (
     <>
-      { isConnectModalVisible && (
-        <ConnectWalletModal 
-          style={{ ...modalStyle, fontFamily }}
-          headerStyle={modalHeaderStyle}
-          onClose={ () => setIsConnectModalVisible(false)} 
+      {isModalVisible && (
+        <WalletModal 
+          style={modalStyle}
           isInverted={isInverted}
-        />
-      )}
-      
-      { isDisconnectModalVisible && (
-        <DisconnectWalletModal 
-          style={{ ...modalStyle, fontFamily }}
           headerStyle={modalHeaderStyle}
           disconnectButtonStyle={disconnectButtonStyle}
-          onClose={ () => setIsDisconnectModalVisible(false)} 
-          isInverted={isInverted}
+          fontFamily={fontFamily}
+          onClose={handleCloseModal}
         />
       )}
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-        }}
-      >
-        {!wallet ? (
-          <Button 
-            style={{
-              color: isInverted ? "#FFF" : "#333",
-              ...mainButtonStyle,
-            }}
-            onClick={() => setIsConnectModalVisible(true)}
-          >
-            Connect wallet
-          </Button>
-        ) : (
-          <Button 
-            style={{
-              color: isInverted ? "#FFF" : "#333",
-              ...mainButtonStyle,}
-            }
-            iconLeft={wallet.icon} 
-            onClick={() => setIsDisconnectModalVisible(true)}
-          >
-            Connected
-          </Button>
-        )}
-      </div>
+      <WalletButton
+        style={mainButtonStyle}
+        isInverted={isInverted}
+        onClick={handleButtonClick}
+      />
     </>
   )
 };

@@ -1,13 +1,9 @@
-import React, { CSSProperties, FunctionComponent } from "react"
+import React, { FunctionComponent } from "react"
 import { Button, Modal, Typography } from "elements"
 import { useConnectWallet } from "hooks"
-import { ModalProps } from "components/ConnectWallet/types"
+import { WalletModalProps } from "../types"
 
-interface Props extends ModalProps {
-  readonly disconnectButtonStyle?: CSSProperties
-}
-
-const DisconnectWalletModal: FunctionComponent<Props> = ({ 
+const DisconnectWalletModal: FunctionComponent<WalletModalProps> = ({ 
   style = {},
   headerStyle = {},
   disconnectButtonStyle = {},

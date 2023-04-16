@@ -18,7 +18,6 @@ export const Unstyled = () => (
 
 export const Styled = () => (
   <ConnectWallet
-    isInverted
     mainButtonStyle={{
       background: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%)",
     }}
@@ -28,5 +27,6 @@ export const Styled = () => (
     disconnectButtonStyle={{
       border: "2px solid white",
     }}
+    isInverted
   />
 );

@@ -25,7 +25,7 @@ const Modal: FunctionComponent<Props> = ({
   const [opacity, setOpacity] = useState(0)
 
   const titleStyle = {
-    fontSize: "24px", 
+    fontSize: "22px", 
     fontWeight: 600, 
     textTransform: "capitalize", 
     color: isInverted ? "#FFF" : "#333",
@@ -36,8 +36,6 @@ const Modal: FunctionComponent<Props> = ({
   useEffect(() => {
     setOpacity(1)
   }, [])
-
-  console.log("stylr: ", style)
 
   return (
     <div 

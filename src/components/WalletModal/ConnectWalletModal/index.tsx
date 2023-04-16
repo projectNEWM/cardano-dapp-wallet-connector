@@ -4,9 +4,9 @@ import { useConnectWallet } from "hooks"
 import { getSupportedWallets } from "utils";
 import { icons } from "assets";
 import { WalletInfo } from "common";
-import { ModalProps } from "components/ConnectWallet/types";
+import { WalletModalProps } from "../types";
 
-const ConnectWalletModal: FunctionComponent<ModalProps> = ({
+const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
   style = {},
   headerStyle = {},
   isInverted = false,
