@@ -1,1 +1,1 @@
-export { useStore } from "./hooks"
+export { useStore } from "./hooks";

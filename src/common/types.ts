@@ -51,15 +51,11 @@ export interface EnabledWalletApi {
   readonly getUsedAddresses: (paginate?: boolean) => Promise<Any>;
   readonly getUtxos: (amount?: number, paginate?: boolean) => Promise<Any>;
   readonly signData: (addr: string, sigStructure: string) => Promise<Any>;
-  readonly signTx: (
-    tx: Any,
-    partialSign: boolean,
-    createDebugTx: boolean,
-  ) => Promise<Any>;
+  readonly signTx: (tx: Any, partialSign: boolean, createDebugTx: boolean) => Promise<Any>;
   readonly submitTx: (tx: Any) => Promise<Any>;
 }
 
-type FullWalletAPI = UnenabledWallet & EnabledWalletApi
+type FullWalletAPI = UnenabledWallet & EnabledWalletApi;
 export interface EnabledWallet extends FullWalletAPI {
   readonly id: string;
 }

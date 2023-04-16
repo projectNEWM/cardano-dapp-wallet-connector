@@ -12,9 +12,7 @@ export default {
   },
 } as ComponentMeta<typeof ConnectWallet>;
 
-export const Unstyled = () => (
-  <ConnectWallet />
-);
+export const Unstyled = () => <ConnectWallet />;
 
 export const Styled = () => (
   <ConnectWallet

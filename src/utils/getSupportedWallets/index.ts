@@ -11,8 +11,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     id: SupportedWallet.nami,
     name: "Nami",
     icon: logos.nami,
-    extensionUrl:
-      "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
+    extensionUrl: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
     websiteUrl: "https://namiwallet.io/",
   },
   {
@@ -54,8 +53,8 @@ const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
     return [];
   }
 
-  const installedWallets: Array<WalletInfo> = []
-  const uninstalledWallets: Array<WalletInfo> = []
+  const installedWallets: Array<WalletInfo> = [];
+  const uninstalledWallets: Array<WalletInfo> = [];
 
   supportedWallets.forEach((wallet) => {
     if (window.cardano && window.cardano[wallet.id]) {
@@ -63,17 +62,16 @@ const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
         ...wallet,
         ...window.cardano[wallet.id],
         isInstalled: true,
-      })
+      });
     } else {
       uninstalledWallets.push({
         ...wallet,
         isInstalled: false,
-      })
+      });
     }
-  })
+  });
 
-  return [...installedWallets, ...uninstalledWallets]
+  return [...installedWallets, ...uninstalledWallets];
 };
 
-export default getSupportedWallets
-
+export default getSupportedWallets;

@@ -7,23 +7,23 @@ export const initialState: State = {
   isLoading: false,
   error: null,
   enabledWallet: null,
-}
+};
 
-const store = makeObservable(initialState)
+const store = makeObservable(initialState);
 
 /**
  * Initialize with currently enabled wallet.
  */
 const initializeWallet = async () => {
-  const initialWalletName = localStorage.getItem(storageKey)
+  const initialWalletName = localStorage.getItem(storageKey);
 
   if (initialWalletName) {
-    const enabledWallet = await enableWallet(initialWalletName)
+    const enabledWallet = await enableWallet(initialWalletName);
 
-    store.set({ ...initialState, enabledWallet })
+    store.set({ ...initialState, enabledWallet });
   }
-}
+};
 
-initializeWallet()
+initializeWallet();
 
-export default store
+export default store;

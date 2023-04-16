@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from "react"
-import { Button, Modal, Typography } from "elements"
-import { useConnectWallet } from "hooks"
+import React, { FunctionComponent } from "react";
+import { Button, Modal, Typography } from "elements";
+import { useConnectWallet } from "hooks";
 import { getSupportedWallets } from "utils";
 import { icons } from "assets";
 import { WalletInfo } from "common";
@@ -10,28 +10,28 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
   style = {},
   headerStyle = {},
   isInverted = false,
-  onClose, 
+  onClose,
 }) => {
-  const { connect, error } = useConnectWallet()
+  const { connect, error } = useConnectWallet();
 
   const supportedWallets = getSupportedWallets();
 
   const isAWalletInstalled = supportedWallets.find(({ isInstalled }) => {
-    return isInstalled
-  })
+    return isInstalled;
+  });
 
   const handleSelectWallet = (wallet: WalletInfo) => {
     if (wallet.isInstalled) {
-      connect(wallet.id)
+      connect(wallet.id);
     } else {
-      window.open(wallet.websiteUrl, "_blank", "noreferrer")
+      window.open(wallet.websiteUrl, "_blank", "noreferrer");
     }
 
-    onClose()
+    onClose();
   };
 
   return (
-    <Modal 
+    <Modal
       style={style}
       headerStyle={headerStyle}
       title={isAWalletInstalled ? "Connect your wallet" : "Install a wallet"}
@@ -40,63 +40,57 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
     >
       {supportedWallets.length === 0 ? (
         <Typography isInverted style={{ textAlign: "center" }}>
-          Cardano wallet extensions are currently only supported in Chrome and
-          Brave browsers.
+          Cardano wallet extensions are currently only supported in Chrome and Brave browsers.
         </Typography>
       ) : (
         supportedWallets.map((wallet, idx) => {
           return (
-            <div 
-              key={wallet.id} 
-              style={{ 
-                marginBottom: idx < supportedWallets.length - 1 
-                  ? "0.25rem" 
-                  : 0,
+            <div
+              key={wallet.id}
+              style={{
+                marginBottom: idx < supportedWallets.length - 1 ? "0.25rem" : 0,
               }}
             >
-              <Button 
+              <Button
                 iconRight={wallet.icon}
                 onClick={() => handleSelectWallet(wallet)}
                 isInverted={isInverted}
                 isFullWidth
               >
-                <div 
-                  style={{ 
-                    display: "flex" , 
-                    flex: 1, 
-                  }}>
-                  <Typography 
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                  }}
+                >
+                  <Typography
                     isInverted={isInverted}
-                    style={{ 
-                      fontSize: "16px", 
+                    style={{
+                      fontSize: "16px",
                       textTransform: "capitalize",
                     }}
                   >
-                    { wallet.name }
+                    {wallet.name}
                   </Typography>
 
                   {!wallet.isInstalled && isAWalletInstalled && (
-                    <div 
-                      style={{ 
-                        display: "flex", 
-                        flexDirection: "row", 
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
                         alignItems: "center",
                         opacity: 0.5,
                         marginLeft: "auto",
                         marginRight: "1rem",
                       }}
                     >
-                      <Typography 
-                        isInverted={isInverted} 
-                      >
-                        Not installed
-                      </Typography>
+                      <Typography isInverted={isInverted}>Not installed</Typography>
 
-                      <div style={{ marginLeft: "0.5rem"}}>
-                        <icons.ExternalLink 
-                          width={18} 
-                          height={18} 
-                          stroke={isInverted ? "#FFF" : "#333"} 
+                      <div style={{ marginLeft: "0.5rem" }}>
+                        <icons.ExternalLink
+                          width={18}
+                          height={18}
+                          stroke={isInverted ? "#FFF" : "#333"}
                         />
                       </div>
                     </div>
@@ -104,7 +98,7 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
                 </div>
               </Button>
             </div>
-          )
+          );
         })
       )}
 
@@ -114,7 +108,7 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
         </div>
       )}
     </Modal>
-  )
-}
+  );
+};
 
-export default ConnectWalletModal
+export default ConnectWalletModal;

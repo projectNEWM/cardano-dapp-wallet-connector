@@ -16,7 +16,7 @@ import { useStore } from "store";
  * all hook references.
  */
 const useConnectWallet = (): UseConnectWalletResult => {
-  const { state, setState } = useStore()
+  const { state, setState } = useStore();
 
   const connect = (name: string) => {
     selectWallet(name);
@@ -27,7 +27,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
     setState({
       ...state,
       enabledWallet: null,
-    })
+    });
   };
 
   const getAddress = useCallback(
@@ -37,7 +37,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
           ...state,
           error: null,
           isLoading: true,
-        })
+        });
 
         const address = await getWalletAddress(state.enabledWallet);
         callback(address);
@@ -45,14 +45,14 @@ const useConnectWallet = (): UseConnectWalletResult => {
         if (err instanceof Error) {
           setState({
             ...state,
-            error: err.message
-          })
+            error: err.message,
+          });
         }
       } finally {
         setState({
           ...state,
           isLoading: true,
-        })
+        });
       }
     },
     [state.enabledWallet],
@@ -65,7 +65,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
           ...state,
           error: null,
           isLoading: true,
-        })
+        });
         const balance = await getWalletBalance(state.enabledWallet);
         callback(balance);
       } catch (err) {
@@ -73,13 +73,13 @@ const useConnectWallet = (): UseConnectWalletResult => {
           setState({
             ...state,
             error: err.message,
-          })
+          });
         }
       } finally {
         setState({
           ...state,
           isLoading: false,
-        })
+        });
       }
     },
     [state.enabledWallet],
@@ -90,7 +90,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
       setState({
         ...state,
         error: null,
-      })
+      });
 
       // use existing wallet object if already connected and enabled
       const currentEnabledWallet = await getEnabledWallet();
@@ -98,7 +98,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         setState({
           ...state,
           enabledWallet: currentEnabledWallet,
-        })
+        });
         return;
       }
 
@@ -110,13 +110,13 @@ const useConnectWallet = (): UseConnectWalletResult => {
       setState({
         ...state,
         enabledWallet,
-      })
+      });
     } catch (err) {
       if (err instanceof Error) {
         setState({
           ...state,
           error: err.message,
-        })
+        });
       }
     }
   };

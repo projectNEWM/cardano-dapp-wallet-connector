@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { State } from "./types";
-import store from "./store"
+import store from "./store";
 
 export const useStore = () => {
-  const [internalState, setInternalState] = useState(store.get())
+  const [internalState, setInternalState] = useState(store.get());
 
   const setState = (newState: State) => {
-    store.set(newState)
-  }
+    store.set(newState);
+  };
 
   useEffect(() => {
     return store.subscribe(setInternalState);
@@ -16,5 +16,5 @@ export const useStore = () => {
   return {
     state: internalState,
     setState,
-  }
-}
+  };
+};

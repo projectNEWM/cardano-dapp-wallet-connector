@@ -21,7 +21,6 @@ export const icons = {
   Close,
   externalLink,
   ExternalLink,
-
 };
 
 export default {

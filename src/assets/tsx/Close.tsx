@@ -25,6 +25,6 @@ const Close: FunctionComponent<SVGProps> = ({
       <path d="M6 6L18 18"></path>
     </svg>
   );
-}
+};
 
 export default Close;

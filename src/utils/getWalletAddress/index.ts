@@ -4,9 +4,7 @@ import { addressFromHex } from "utils/helpers";
 /**
  * @returns a payment address for the wallet
  */
-const getWalletAddress = async (
-  wallet: EnabledWallet | null,
-): Promise<string> => {
+const getWalletAddress = async (wallet: EnabledWallet | null): Promise<string> => {
   if (!wallet) {
     throw new Error("No wallet selected");
   }

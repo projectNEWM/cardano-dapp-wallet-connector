@@ -1,63 +1,59 @@
-import React, { FunctionComponent } from "react"
-import { Button, Modal, Typography } from "elements"
-import { useConnectWallet } from "hooks"
-import { WalletModalProps } from "../types"
+import React, { FunctionComponent } from "react";
+import { Button, Modal, Typography } from "elements";
+import { useConnectWallet } from "hooks";
+import { WalletModalProps } from "../types";
 
-const DisconnectWalletModal: FunctionComponent<WalletModalProps> = ({ 
+const DisconnectWalletModal: FunctionComponent<WalletModalProps> = ({
   style = {},
   headerStyle = {},
   disconnectButtonStyle = {},
   isInverted = false,
-  onClose, 
+  onClose,
 }) => {
-  const { wallet, disconnect } = useConnectWallet()
+  const { wallet, disconnect } = useConnectWallet();
 
   const handleDisconnect = () => {
-    disconnect()
-    onClose()
-  }
+    disconnect();
+    onClose();
+  };
 
   if (!wallet) {
     return null;
   }
 
   return (
-    <Modal 
+    <Modal
       style={style}
       headerStyle={headerStyle}
-      title={wallet.name} 
+      title={wallet.name}
       titleIcon={wallet.icon}
       isInverted={isInverted}
       onClose={onClose}
     >
-      <div 
-        style={{ 
-          display: "flex", 
-          flex: 1, 
-          justifyContent: "space-between", 
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          justifyContent: "space-between",
           alignItems: "center",
           paddingLeft: "0.75rem",
         }}
       >
-        <Typography isInverted={isInverted}>
-          Connected with {wallet.name}.
-        </Typography>
+        <Typography isInverted={isInverted}>Connected with {wallet.name}.</Typography>
 
-        <Button 
+        <Button
           onClick={handleDisconnect}
-          style={{ 
+          style={{
             marginLeft: "0.5rem",
-            justifyContent: "center", 
+            justifyContent: "center",
             ...disconnectButtonStyle,
           }}
         >
-          <Typography isInverted={isInverted}>
-            Disconnect
-          </Typography>
+          <Typography isInverted={isInverted}>Disconnect</Typography>
         </Button>
       </div>
     </Modal>
-  )
-}
+  );
+};
 
-export default DisconnectWalletModal
+export default DisconnectWalletModal;

@@ -5,24 +5,15 @@ import Typography from "elements/Typography";
 import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
-  const {
-    wallet,
-    connect,
-    disconnect,
-    error,
-    getAddress,
-    getBalance,
-    getSupportedWallets,
-  } = useConnectWallet();
+  const { wallet, connect, disconnect, error, getAddress, getBalance, getSupportedWallets } =
+    useConnectWallet();
 
   const [address, setAddress] = useState<string>("");
   const [balance, setBalance] = useState<number | undefined>();
 
   const supportedWallets = getSupportedWallets();
 
-  const installedWallets = supportedWallets.filter(
-    (wallet) => wallet.isInstalled,
-  );
+  const installedWallets = supportedWallets.filter((wallet) => wallet.isInstalled);
 
   const handleRecieveAddress = (addr: string) => {
     setAddress(addr);
@@ -45,17 +36,14 @@ const Demo: FunctionComponent = () => {
   if (Object.keys(supportedWallets).length === 0) {
     return (
       <Typography>
-        Cardano wallet extensions are currently only supported in Chrome and
-        Brave browsers.
+        Cardano wallet extensions are currently only supported in Chrome and Brave browsers.
       </Typography>
     );
   }
 
   return installedWallets.length === 0 ? (
     <>
-      <Typography>
-        Please install one of the following supported Cardano wallets:
-      </Typography>
+      <Typography>Please install one of the following supported Cardano wallets:</Typography>
 
       <ul style={{ listStyleType: "none" }}>
         {supportedWallets.map(({ name, icon }) => (
@@ -82,23 +70,15 @@ const Demo: FunctionComponent = () => {
         </Typography>
       )}
 
-      {!!address && (
-        <Typography style={{ marginBottom: "1rem" }}>
-          Address: {address}
-        </Typography>
-      )}
+      {!!address && <Typography style={{ marginBottom: "1rem" }}>Address: {address}</Typography>}
 
       {!!balance && (
-        <Typography style={{ marginBottom: "1rem" }}>
-          Balance: &#x20B3; {balance}
-        </Typography>
+        <Typography style={{ marginBottom: "1rem" }}>Balance: &#x20B3; {balance}</Typography>
       )}
 
       {!wallet && installedWallets.length > 0 && (
         <>
-          <Typography style={{ marginBottom: "1rem" }}>
-            Select an installed wallet:
-          </Typography>
+          <Typography style={{ marginBottom: "1rem" }}>Select an installed wallet:</Typography>
 
           <select onChange={handleChange}>
             <option />
@@ -112,15 +92,11 @@ const Demo: FunctionComponent = () => {
       {!!wallet && (
         <div style={{ marginTop: "1rem" }}>
           <div style={{ marginBottom: "1rem" }}>
-            <button onClick={() => getAddress(handleRecieveAddress)}>
-              Get address
-            </button>
+            <button onClick={() => getAddress(handleRecieveAddress)}>Get address</button>
           </div>
 
           <div style={{ marginBottom: "1rem" }}>
-            <button onClick={() => getBalance(handleRecieveBalance)}>
-              Get balance
-            </button>
+            <button onClick={() => getBalance(handleRecieveBalance)}>Get balance</button>
           </div>
 
           <div style={{ marginBottom: "1rem" }}>

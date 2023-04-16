@@ -1,7 +1,4 @@
-import {
-  EnabledWallet,
-  WalletInfo,
-} from "common/types";
+import { EnabledWallet, WalletInfo } from "common/types";
 
 export interface UseConnectWalletResult {
   /** true if an operation is being performed */

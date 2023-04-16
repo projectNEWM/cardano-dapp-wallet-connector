@@ -1,9 +1,9 @@
 import { SVGProps } from "common";
 import React, { FunctionComponent } from "react";
 
-const ExternalLink: FunctionComponent<SVGProps> = ({ 
-  width = 24, 
-  height = 24, 
+const ExternalLink: FunctionComponent<SVGProps> = ({
+  width = 24,
+  height = 24,
   fill = "none",
   stroke = "currentColor",
 }) => {
@@ -26,6 +26,6 @@ const ExternalLink: FunctionComponent<SVGProps> = ({
       <path d="M10 14L21 3"></path>
     </svg>
   );
-}
+};
 
 export default ExternalLink;
