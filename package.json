@@ -1,6 +1,6 @@
 {
   "name": "cardano-dapp-wallet-connector",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Cardano dApp wallet connector package",
   "main": "index.js",
   "type": "module",
