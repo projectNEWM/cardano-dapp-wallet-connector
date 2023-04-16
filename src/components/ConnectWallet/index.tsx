@@ -5,7 +5,7 @@ import WalletModal from "components/WalletModal";
 import { ConnectWalletProps } from "./types";
 import WalletButton from "components/WalletButton";
 
-const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({ 
+const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
   onClickButton,
   onCloseModal,
   onConnect,
@@ -18,44 +18,40 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
 }) => {
   const { wallet } = useConnectWallet();
 
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleButtonClick = (
-    event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
-  ) => {
+  const handleButtonClick = (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     if (onClickButton) {
-      onClickButton(event)
+      onClickButton(event);
     } else {
-      setIsModalVisible(true)
+      setIsModalVisible(true);
     }
-  }
+  };
 
-  const handleCloseModal = (
-    event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
-  ) => {
+  const handleCloseModal = (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     if (onCloseModal) {
-      onCloseModal(event)
+      onCloseModal(event);
     } else {
-      setIsModalVisible(false)
+      setIsModalVisible(false);
     }
-  }
+  };
 
   /**
-   * Called when wallet is connected. Recommended to instead use 
+   * Called when wallet is connected. Recommended to instead use
    * the useConnectWallet hook to access the wallet object.
-   * 
+   *
    * @returns CIP 30 wallet object
    */
   useEffect(() => {
     if (onConnect && wallet) {
-      onConnect(wallet)
+      onConnect(wallet);
     }
-  }, [onConnect, wallet])
+  }, [onConnect, wallet]);
 
   return (
     <>
       {isModalVisible && (
-        <WalletModal 
+        <WalletModal
           style={modalStyle}
           isInverted={isInverted}
           headerStyle={modalHeaderStyle}
@@ -65,13 +61,9 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
         />
       )}
 
-      <WalletButton
-        style={mainButtonStyle}
-        isInverted={isInverted}
-        onClick={handleButtonClick}
-      />
+      <WalletButton style={mainButtonStyle} isInverted={isInverted} onClick={handleButtonClick} />
     </>
-  )
+  );
 };
 
-export default ConnectWallet
+export default ConnectWallet;

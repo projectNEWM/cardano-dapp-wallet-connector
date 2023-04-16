@@ -1,5 +1,5 @@
-import { EnabledWallet } from "common"
-import { CSSProperties, MouseEvent } from "react"
+import { EnabledWallet } from "common";
+import { CSSProperties, MouseEvent } from "react";
 
 export interface ConnectWalletProps {
   /** Style for the modal. */
@@ -15,9 +15,9 @@ export interface ConnectWalletProps {
   /** True if text, icon, and hover styles should be adjusted for a dark background. */
   readonly isInverted?: boolean;
   /** Called when button is clicked. Defaults opening wallet modal. */
-  readonly onClickButton?: (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void
+  readonly onClickButton?: (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
   /** Called when modal isClosed. Defaults to closing wallet modal. */
-  readonly onCloseModal?: (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void
+  readonly onCloseModal?: (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
   /** Called when a wallet is connected. */
-  readonly onConnect?: (wallet: EnabledWallet) => void
+  readonly onConnect?: (wallet: EnabledWallet) => void;
 }
