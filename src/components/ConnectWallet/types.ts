@@ -12,7 +12,7 @@ export interface ConnectWalletProps {
   readonly disconnectButtonStyle?: CSSProperties;
   /** Font family to be used throughout the component. */
   readonly fontFamily?: string;
-  /** True if text colors should be light colored (for a dark background). */
+  /** True if text, icon, and hover styles should be adjusted for a dark background. */
   readonly isInverted?: boolean;
   /** Called when button is clicked. Defaults opening wallet modal. */
   readonly onClickButton?: (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void

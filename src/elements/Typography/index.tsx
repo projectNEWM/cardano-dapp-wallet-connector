@@ -13,7 +13,7 @@ const Typography: FunctionComponent<TypographyProps> = ({
       marginRight: 0,
       marginBottom: 0,
       marginLeft: 0,
-      color: isInverted ? "#FFF" : "#333",
+      color: isInverted ? "#FFF" : "inherit",
       ...style,
     },
     ...rest,

@@ -1,18 +1,15 @@
 import { Button } from "elements"
 import React, { FunctionComponent } from "react"
-import { WalletButtonProps } from "../types"
+import { ConnectWalletButtonProps } from "../types"
 
-const ConnectWalletButton: FunctionComponent<WalletButtonProps> = ({
+const ConnectWalletButton: FunctionComponent<ConnectWalletButtonProps> = ({
   style = {},
-  isInverted = false,
   onClick,
 }) => {
+
   return (
     <Button
-        style={{
-          color: isInverted ? "#FFF" : "#333",
-          ...style,
-        }}
+        style={style}
         onClick={onClick}
       >
         Connect wallet

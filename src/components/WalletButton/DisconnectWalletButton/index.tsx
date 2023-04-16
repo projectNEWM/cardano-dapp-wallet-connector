@@ -1,11 +1,10 @@
 import { Button } from "elements";
 import { useConnectWallet } from "hooks"
 import React, { FunctionComponent } from "react"
-import { WalletButtonProps } from "../types";
+import { DisconnectWalletButtonProps } from "../types";
 
-const DisconnectWalletButton: FunctionComponent<WalletButtonProps> = ({
+const DisconnectWalletButton: FunctionComponent<DisconnectWalletButtonProps> = ({
   style,
-  isInverted = false,
   onClick,
 }) => {
   const { wallet } = useConnectWallet()
@@ -14,10 +13,7 @@ const DisconnectWalletButton: FunctionComponent<WalletButtonProps> = ({
 
   return (
     <Button
-      style={{
-        color: isInverted ? "#FFF" : "#333",
-        ...style,}
-      }
+      style={style}
       iconLeft={wallet.icon} 
       onClick={onClick}
     >

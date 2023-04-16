@@ -1,18 +1,9 @@
-import React, { CSSProperties, FunctionComponent, HTMLAttributes, useEffect, useState } from "react"
+import React, { CSSProperties, FunctionComponent, useEffect, useState } from "react"
 import { icons } from "assets"
-import Typography from "elements/Typography"
+import { Typography}  from "elements"
+import { ModalProps } from "./types"
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
-  readonly onClose: VoidFunction
-  readonly isInverted?: boolean
-  readonly title?: string
-  readonly titleIcon?: string
-  readonly style?: CSSProperties
-  readonly headerStyle?: CSSProperties
-  readonly fontFamily?: string
-}
-
-const Modal: FunctionComponent<Props> = ({ 
+const Modal: FunctionComponent<ModalProps> = ({ 
   children, 
   title, 
   titleIcon,
@@ -28,10 +19,8 @@ const Modal: FunctionComponent<Props> = ({
     fontSize: "22px", 
     fontWeight: 600, 
     textTransform: "capitalize", 
-    color: isInverted ? "#FFF" : "#333",
+    color: isInverted ? "#FFF" : undefined,
   } as CSSProperties
-
-  const backgroundColor = isInverted ? "#1C1C1E" : "#FFFFFF"
 
   useEffect(() => {
     setOpacity(1)
@@ -62,6 +51,8 @@ const Modal: FunctionComponent<Props> = ({
           width: "100%",
           maxWidth: "24rem",
           maxHeight: "90vh",
+          borderRadius: "0.75rem",
+          backgroundColor: "#FFF",
           ...style,
         }}
       >
@@ -76,7 +67,6 @@ const Modal: FunctionComponent<Props> = ({
             borderTopRightRadius: "0.75rem", 
             borderBottom: `1px solid ${isInverted ? "#121214" : "#EEE"}`,
             overflow: "auto",
-            backgroundColor,
             ...headerStyle,
           }}
         >
@@ -115,7 +105,6 @@ const Modal: FunctionComponent<Props> = ({
         <div 
           style={{ 
             padding: "1rem", 
-            backgroundColor,
             borderBottomLeftRadius: "0.75rem", 
             borderBottomRightRadius: "0.75rem", 
           }}

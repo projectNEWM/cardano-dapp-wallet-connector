@@ -36,7 +36,7 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
     if (onCloseModal) {
       onCloseModal(event)
     } else {
-      () => setIsModalVisible(false)
+      setIsModalVisible(false)
     }
   }
 

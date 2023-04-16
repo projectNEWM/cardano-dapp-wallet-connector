@@ -4,14 +4,26 @@ import ConnectWalletButton from "./ConnectWalletButton"
 import DisconnectWalletButton from "./DisconnectWalletButton"
 import { WalletButtonProps } from "./types"
 
-const WalletButton: FunctionComponent<WalletButtonProps> = (props) => {
+const WalletButton: FunctionComponent<WalletButtonProps> = ({ 
+  style, 
+  fontFamily, 
+  isInverted,
+  ...rest
+}) => {
   const { wallet } = useConnectWallet()
+
+  const buttonStyle = {
+    fontFamily,
+    color: isInverted ? "#FFF" : "#333",
+    backgroundColor: "#FFF",
+    ...style,
+  }
 
   return (
     !!wallet ? (
-      <DisconnectWalletButton {...props} />
+      <DisconnectWalletButton style={buttonStyle} {...rest} />
     ) : (
-      <ConnectWalletButton {...props} />
+      <ConnectWalletButton style={buttonStyle} {...rest} />
     )
   )
 }

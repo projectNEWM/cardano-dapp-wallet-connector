@@ -18,18 +18,7 @@ const DisconnectWalletModal: FunctionComponent<WalletModalProps> = ({
   }
 
   if (!wallet) {
-    return (
-      <Modal 
-        style={style}
-        title="Something went wrong" 
-        isInverted={isInverted}
-        onClose={onClose}
-      >
-        <Typography isInverted style={{ textAlign: "center" }}>
-          It looks like your wallet didn't connect successfully.
-        </Typography>
-      </Modal>
-    )
+    return null;
   }
 
   return (
@@ -50,7 +39,7 @@ const DisconnectWalletModal: FunctionComponent<WalletModalProps> = ({
           paddingLeft: "0.75rem",
         }}
       >
-        <Typography isInverted>
+        <Typography isInverted={isInverted}>
           Connected with {wallet.name}.
         </Typography>
 
@@ -62,7 +51,7 @@ const DisconnectWalletModal: FunctionComponent<WalletModalProps> = ({
             ...disconnectButtonStyle,
           }}
         >
-          <Typography isInverted>
+          <Typography isInverted={isInverted}>
             Disconnect
           </Typography>
         </Button>

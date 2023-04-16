@@ -5,13 +5,19 @@ import { WalletModalProps } from "./types";
 import ConnectWalletModal from "./ConnectWalletModal";
 import DisconnectWalletModal from "./DisconnectWalletModal";
 
-const WalletModal: FunctionComponent<WalletModalProps> = (props) => {
+const WalletModal: FunctionComponent<WalletModalProps> = ({
+  style, 
+  fontFamily,
+  ...rest
+}) => {
   const { wallet } = useConnectWallet()
 
+  const modalStyle = { fontFamily, ...style }
+
   return !!wallet ? (
-    <DisconnectWalletModal {...props} />
+    <DisconnectWalletModal style={modalStyle} {...rest} />
   ) : (
-    <ConnectWalletModal {...props} />
+    <ConnectWalletModal style={modalStyle} {...rest} />
   );
 }
 

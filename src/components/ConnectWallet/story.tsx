@@ -13,13 +13,16 @@ export default {
 } as ComponentMeta<typeof ConnectWallet>;
 
 export const Unstyled = () => (
-  <ConnectWallet mainButtonStyle={{ background: "#FFF" }} />
+  <ConnectWallet />
 );
 
 export const Styled = () => (
   <ConnectWallet
     mainButtonStyle={{
       background: "linear-gradient(53.48deg, #41BE91 0%, #5091EB 100%)",
+    }}
+    modalStyle={{
+      backgroundColor: "#1C1C1E",
     }}
     modalHeaderStyle={{
       backgroundColor: "#121214",
