@@ -6,7 +6,7 @@
   "types": "index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc && tsc-alias && cp package.json README.md ./dist",
+    "build": "npm run clean && tsc && tsc-alias && cp package.json README.md ./dist && cp -a ./src/assets/img/. ./dist/assets/img/ && cp -a ./src/assets/svg/. ./dist/assets/svg/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -28,7 +28,8 @@
     "cbor": "^8.1.0",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.2",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "stream": "^0.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
