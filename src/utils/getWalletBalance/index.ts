@@ -1,5 +1,5 @@
 import { EnabledWallet } from "common";
-import { decode } from "cbor";
+import { decode } from "cbor-web";
 
 /**
  * @returns ADA balance for the wallet

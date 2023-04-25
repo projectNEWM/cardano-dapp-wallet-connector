@@ -1,6 +1,6 @@
 {
   "name": "@newm.io/cardano-dapp-wallet-connector",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Cardano dApp wallet connector package",
   "main": "index.js",
   "types": "index.d.ts",
@@ -25,11 +25,10 @@
   "homepage": "https://github.com/projectNEWM/cardano-dapp-wallet-connector#readme",
   "dependencies": {
     "bech32": "^2.0.0",
-    "cbor": "^8.1.0",
+    "cbor-web": "^8.1.0",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.2",
-    "react-dom": "^18.2.0",
-    "stream": "^0.0.2"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
