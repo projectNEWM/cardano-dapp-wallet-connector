@@ -2,7 +2,8 @@
   "include": ["src"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "module": "esnext",
+    "module": "es6",
+    "target": "es6",
     "lib": ["dom", "esnext"],
     "baseUrl": "src",
     "importHelpers": true,

@@ -6,7 +6,7 @@
   "types": "index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc && cp package.json README.md ./dist",
+    "build": "npm run clean && tsc && tsc-alias && cp package.json README.md ./dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -46,6 +46,7 @@
     "prettier": "2.7.1",
     "react-is": "^18.2.0",
     "styled-components": "^5.3.6",
+    "tsc-alias": "^1.8.5",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "tslib": "^2.4.1",
     "typescript": "^4.8.4"
