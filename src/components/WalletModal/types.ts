@@ -1,3 +1,4 @@
+import { EnabledWallet } from "common";
 import { CSSProperties, MouseEvent } from "react";
 
 export interface WalletModalProps {
@@ -13,6 +14,8 @@ export interface WalletModalProps {
   readonly fontFamily?: string;
   /** True if text, icon, and hover styles should be adjusted for a dark background. */
   readonly isInverted?: boolean;
+  /** Called when a wallet is connected */
+  readonly onConnect?: (wallet: EnabledWallet) => void;
 }
 
 export type ConnectWalletModalProps = Omit<WalletModalProps, "fontFamily">;

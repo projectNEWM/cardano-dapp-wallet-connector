@@ -1,4 +1,4 @@
-import React, { MouseEvent, FunctionComponent } from "react";
+import React, { MouseEvent, FunctionComponent, useEffect } from "react";
 import { Button, Modal, Typography } from "elements";
 import { useConnectWallet } from "hooks";
 import { getSupportedWallets } from "utils";
@@ -10,9 +10,10 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
   style = {},
   headerStyle = {},
   isInverted = false,
+  onConnect,
   onClose,
 }) => {
-  const { connect, error } = useConnectWallet();
+  const { wallet, connect, error } = useConnectWallet();
 
   const supportedWallets = getSupportedWallets();
 
@@ -29,6 +30,16 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
 
     onClose(event);
   };
+
+  /**
+   * Called when wallet is connected. Recommended to instead use
+   * the useConnectWallet hook to access the wallet object.
+   */
+  useEffect(() => {
+    if (onConnect && wallet) {
+      onConnect(wallet);
+    }
+  }, [onConnect, wallet]);
 
   return (
     <Modal

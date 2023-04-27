@@ -50,8 +50,8 @@ Provides a button, which brings up a modal to select and connect a wallet when c
 - **`fontFamily: string`** Font family to be used throughout the component
 - **`isInverted: boolean`** True if text, icon, and hover styles should be adjusted for a dark background.
 - **`onClickButton: (event: MouseEvent) => void`** Called when intial button is clicked. Defaults opening the wallet modal.
-- **`onCloseModal: (event: MouseEvent) => void`** Called when modal close icon or background is clicked. Defaults to closing wallet modal.
-- **`onConnect: (event: MouseEvent) => void`** Called when a wallet is connected
+- **`onConnect: (wallet: Wallet) => void`** Called when a wallet is connected.
+- **`onCloseModal: (event: MouseEvent) => void`** Called when modal close icon or background is clicked. Defaults to closing the wallet modal.
 
 ### WalletButton
 
@@ -98,6 +98,7 @@ const Example: FunctionComponent = () => {
 - **`disconnectButtonStyle: CSSProperties`** Inline styles for the disconnect button.
 - **`fontFamily: string`** Font family for the button text.
 - **`isInverted: boolean`** True if text, icon, and hover styles should be adjusted for a dark background.
+- **`onConnect: (wallet: Wallet) => void`** Called when a wallet is connected.
 - **`onClose: (event: MouseEvent) => void`** Called when the modal modal background or close button is clicked.
 
 ## Hooks

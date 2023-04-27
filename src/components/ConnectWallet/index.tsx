@@ -1,6 +1,5 @@
-import React, { MouseEvent, useEffect, useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import { FunctionComponent } from "react";
-import { useConnectWallet } from "hooks";
 import WalletModal from "components/WalletModal";
 import { ConnectWalletProps } from "./types";
 import WalletButton from "components/WalletButton";
@@ -16,8 +15,6 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
   fontFamily = "Arial",
   isInverted = false,
 }) => {
-  const { wallet } = useConnectWallet();
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleButtonClick = (event: MouseEvent) => {
@@ -36,18 +33,6 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
     }
   };
 
-  /**
-   * Called when wallet is connected. Recommended to instead use
-   * the useConnectWallet hook to access the wallet object.
-   *
-   * @returns CIP 30 wallet object
-   */
-  useEffect(() => {
-    if (onConnect && wallet) {
-      onConnect(wallet);
-    }
-  }, [onConnect, wallet]);
-
   return (
     <>
       {isModalVisible && (
@@ -57,6 +42,7 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
           headerStyle={modalHeaderStyle}
           disconnectButtonStyle={disconnectButtonStyle}
           fontFamily={fontFamily}
+          onConnect={onConnect}
           onClose={handleCloseModal}
         />
       )}
