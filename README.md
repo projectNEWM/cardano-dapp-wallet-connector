@@ -7,10 +7,10 @@ utilizing the Cardano wallet object as defined in [CIP 30](https://cips.cardano.
   <table>
     <tr>
       <td>
-        <img src="./docs/img/wallet-modal-unstyled.webp">
+        <img src="https://user-images.githubusercontent.com/5877597/234853247-dd2ec5b4-d90c-4a8a-8fa7-a35809b19e08.jpg">
       </td>
       <td>
-        <img src="./docs/img/wallet-modal-styled.webp">
+        <img src="https://user-images.githubusercontent.com/5877597/234853263-50c79b44-beda-4b5c-81ab-c847f5768332.jpg">
       </td>
     </tr>
   </table>
