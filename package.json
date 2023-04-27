@@ -1,6 +1,6 @@
 {
   "name": "@newm.io/cardano-dapp-wallet-connector",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Cardano dApp wallet connector package",
   "main": "index.js",
   "types": "index.d.ts",

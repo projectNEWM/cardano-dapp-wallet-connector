@@ -7,10 +7,10 @@ utilizing the Cardano wallet object as defined in [CIP 30](https://cips.cardano.
   <table>
     <tr>
       <td>
-        <img src="./docs/img/wallet-modal-unstyled.png">
+        <img src="./docs/img/wallet-modal-unstyled.webp">
       </td>
       <td>
-        <img src="./docs/img/wallet-modal-styled.png">
+        <img src="./docs/img/wallet-modal-styled.webp">
       </td>
     </tr>
   </table>
@@ -202,27 +202,28 @@ Disconnects the currently connected wallet.
 Connects the wallet corresponding to the provided wallet ID. Returns
 a wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 
-**`getEnabledWallet: async () => Promise<Wallet | undefined>`**
+**`getEnabledWallet: () => Promise<Wallet | undefined>`**
 
 Returns the currently connected wallet (as defined
 in [CIP 30](https://cips.cardano.org/cips/cip30)) or `undefined` if one is not connected.
+
+**`getWalletAddress: (wallet: Wallet) => Promise<string>`**
+
+Returns a plain text wallet address from the provided wallet object.
+
+**`getWalletBalance: (wallet: Wallet) => Promise<number>`**
+
+Returns the balance for the provided wallet in ADA.
 
 **`getSupportedWallets: () => Array<WalletInfo>`**
 
 Returns an array of "WalletInfo" objects for Cardano wallet browser extensions.
 
-**`getWalletAddress: async (wallet: Wallet) => Promise<string>`**
-
-Returns a plain text wallet address from the provided wallet object.
-
-**`getWalletBalance: async (wallet: Wallet) => Promise<number>`**
-
-Returns the balance for the provided wallet in ADA.
-
 ## Roadmap
 
 - Improved customization
 - Additional components
+- Additional helper functions
 
 Please let us know if you are a developer and would like to contribute to the package or if you
 have an idea for additional functionality. Thanks!
