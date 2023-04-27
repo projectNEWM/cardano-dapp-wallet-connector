@@ -43,15 +43,15 @@ Provides a button, which brings up a modal to select and connect a wallet when c
 
 #### Props
 
-- **`modalStyle: CSSProperties`** Inline styles for the connect wallet modal.
-- **`modalHeaderStyle: CSSProperties`** Inline styles for the modal header.
-- **`mainButtonStyle: CSSProperties`** Inline styles for the button used to open the connect wallet modal.
-- **`disconnectButtonStyle: CSSProperties`** Inline styles for the modal disconnect button.
-- **`fontFamily: string`** Font family to be used throughout the component
-- **`isInverted: boolean`** True if text, icon, and hover styles should be adjusted for a dark background.
-- **`onClickButton: (event: MouseEvent) => void`** Called when intial button is clicked. Defaults opening the wallet modal.
-- **`onConnect: (wallet: Wallet) => void`** Called when a wallet is connected.
-- **`onCloseModal: (event: MouseEvent) => void`** Called when modal close icon or background is clicked. Defaults to closing the wallet modal.
+- **`modalStyle?: CSSProperties`** Inline styles for the connect wallet modal.
+- **`modalHeaderStyle?: CSSProperties`** Inline styles for the modal header.
+- **`mainButtonStyle?: CSSProperties`** Inline styles for the button used to open the connect wallet modal.
+- **`disconnectButtonStyle?: CSSProperties`** Inline styles for the modal disconnect button.
+- **`fontFamily?: string`** Font family to be used throughout the component
+- **`isInverted?: boolean`** True if text, icon, and hover styles should be adjusted for a dark background.
+- **`onClickButton?: (event: MouseEvent) => void`** Called when intial button is clicked. Defaults opening the wallet modal.
+- **`onCloseModal?: (event: MouseEvent) => void`** Called when modal close icon or background is clicked. Defaults to closing the wallet modal.
+- **`onConnect?: (wallet: Wallet) => void`** Called when a wallet is connected.
 
 ### WalletButton
 
@@ -61,10 +61,10 @@ connect wallet modal.
 
 #### Props
 
-- **`style: CSSProperties`** Inline styles for the button.
-- **`fontFamily: string`** Font family for the button text.
-- **`isInverted: booelan`** True if text styles should be adjusted for a dark background.
-- **`onClick: (event: MouseEvent`** Called when the button is clicked.
+- **`onClick?: (event: MouseEvent`** Called when the button is clicked.
+- **`style?: CSSProperties`** Inline styles for the button.
+- **`fontFamily?: string`** Font family for the button text.
+- **`isInverted?: booelan`** True if text styles should be adjusted for a dark background.
 
 ### WalletModal
 
@@ -93,13 +93,13 @@ const Example: FunctionComponent = () => {
 
 #### Props
 
-- **`style: CSSProperties`** Inline styles for the modal.
-- **`headerStyle: CSSProperties`** Inline styles for the modal header.
-- **`disconnectButtonStyle: CSSProperties`** Inline styles for the disconnect button.
-- **`fontFamily: string`** Font family for the button text.
-- **`isInverted: boolean`** True if text, icon, and hover styles should be adjusted for a dark background.
-- **`onConnect: (wallet: Wallet) => void`** Called when a wallet is connected.
-- **`onClose: (event: MouseEvent) => void`** Called when the modal modal background or close button is clicked.
+- **`onClose: (event: MouseEvent) => void`** Called when the modal background or close button is clicked.
+- **`style?: CSSProperties`** Inline styles for the modal.
+- **`headerStyle?: CSSProperties`** Inline styles for the modal header.
+- **`disconnectButtonStyle?: CSSProperties`** Inline styles for the disconnect button.
+- **`fontFamily?: string`** Font family for the button text.
+- **`isInverted?: boolean`** True if text, icon, and hover styles should be adjusted for a dark background.
+- **`onConnect?: (wallet: Wallet) => void`** Called when a wallet is connected.
 
 ## Hooks
 

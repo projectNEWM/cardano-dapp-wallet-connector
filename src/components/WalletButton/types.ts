@@ -2,7 +2,7 @@ import { CSSProperties, MouseEvent } from "react";
 
 export interface WalletButtonProps {
   /** Style for the button. */
-  readonly style: CSSProperties;
+  readonly style?: CSSProperties;
   /** Font family for the text. */
   readonly fontFamily?: string;
   /** True if text styles should be adjusted for a dark background. */
