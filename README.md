@@ -118,10 +118,9 @@ Sets the `wallet` value for the provided wallet id.
 
 **`disconnect: () => undefined`**
 
-Disconnects the currently connected wallet and sets the `wallet` value to
-`undefined`.
+Disconnects the currently connected wallet and sets the `wallet` value to `undefined`.
 
-**`getSupportedWallets: () => Array<InstalledWallet>`**
+**`getSupportedWallets: () => Array<WalletInfo>`**
 
 Returns an array of "WalletInfo" objects for Cardano wallet browser extensions.
 
@@ -154,12 +153,39 @@ An error message returned from the Cardano wallet, if one exists.
 
 ## Utils
 
-_in progress_
+In order to allow the library functionality to be used outside of a component, the following
+functions can also be imported as utils:
+
+**`disconnectWallet: () => void`**
+
+Disconnects the currently connected wallet.
+
+**`enableWallet: async (walletId: string) => Promise<Wallet>`**
+
+Asynchronous function that connects the wallet corresponding to the provided wallet ID. Returns
+a wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
+
+**`getEnabledWallet: async () => Promise<Wallet | undefined>`**
+
+Asynchronous function that returns the currently connected wallet (as defined
+in [CIP 30](https://cips.cardano.org/cips/cip30)) or `undefined` if one is not connected.
+
+**`getSupportedWallets: () => Array<WalletInfo>`**
+
+Returns an array of "WalletInfo" objects for Cardano wallet browser extensions.
+
+**`getWalletAddress: async (wallet: Wallet) => Promise<string>`**
+
+Returns a plain text wallet address from the provided wallet object.
+
+**`getWalletBalance: async (wallet: Wallet) => Promise<number>`**
+
+Returns the balance for the provided wallet in ADA.
 
 ## Roadmap
 
-- Create transaction
+- Improved customization
 - Additional components
 
-Please let us know if you are a developer and would like to contribute to the
-package or if you have an idea for additional functionality. Thanks!
+Please let us know if you are a developer and would like to contribute to the package or if you
+have an idea for additional functionality. Thanks!

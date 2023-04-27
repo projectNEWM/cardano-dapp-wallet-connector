@@ -4,7 +4,7 @@ import { decode } from "cbor-web";
 /**
  * @returns ADA balance for the wallet
  */
-const getWalletBalance = async (wallet: EnabledWallet | null) => {
+const getWalletBalance = async (wallet: EnabledWallet | null): Promise<number> => {
   if (!wallet) {
     throw new Error("No wallet selected");
   }
