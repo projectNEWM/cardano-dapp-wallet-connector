@@ -1,7 +1,7 @@
-import { CSSProperties, HTMLAttributes } from "react";
+import { CSSProperties, HTMLAttributes, MouseEvent } from "react";
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
-  readonly onClose: VoidFunction;
+  readonly onClose: (event: MouseEvent) => void;
   readonly isInverted?: boolean;
   readonly title?: string;
   readonly titleIcon?: string;

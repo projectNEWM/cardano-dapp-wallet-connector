@@ -108,27 +108,18 @@ Sets the `wallet` value for the provided wallet id.
 Disconnects the currently connected wallet and sets the `wallet` value to
 `undefined`.
 
-**`getInstalledWallets: () => Array<InstalledWallet>`**
+**`getSupportedWallets: () => Array<InstalledWallet>`**
 
-Returns an array of "InstalledWallet" objects for wallet browser extensions
-that are currently installed and can be connected.
+Returns an array of "WalletInfo" objects for Cardano wallet browser extensions.
 
-The "InstalledWallet" is an object with the following fields:
+The "WalletInfo" is an object with the following fields:
 
-- `id: string` The string identifier for the wallet
-- `name: string` The readable string name for the wallet
-
-**`getAvailableWallets: () => Array<AvailableWallet>`**
-
-Returns an array of "AvailableWallet" objects for wallet browser extensions
-that can be installed.
-
-The "AvailableWallet" is an object with the following fields:
-
-- `name: string` The readable name for the wallet
-- `logo: string` A source url for the wallet image
-- `extenstionUrl: string` The url for the wallet extension
-- `websiteUrl: string` The url for the wallet extension website
+- `id: string` String identifier for the wallet
+- `name: string` Display name for the wallet
+- `icon: string` Path to the icon file
+- `extensionUrl: string` Url for the wallet's browser extension
+- `websiteUrl: string` Url for the wallet's website
+- `isInstalled` True if the wallet browser extension has been installed
 
 **`getBalance: (callback: (balance: number) => undefined) => undefined`**
 

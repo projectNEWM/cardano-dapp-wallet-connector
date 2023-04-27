@@ -8,7 +8,7 @@ export interface WalletButtonProps {
   /** True if text styles should be adjusted for a dark background. */
   readonly isInverted?: boolean;
   /** Called when the button is clicked. */
-  readonly onClick?: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
+  readonly onClick?: (event: MouseEvent) => void;
 }
 
 export type ConnectWalletButtonProps = Omit<WalletButtonProps, "isInverted" | "fontFamily">;

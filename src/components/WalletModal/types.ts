@@ -2,7 +2,7 @@ import { CSSProperties, MouseEvent } from "react";
 
 export interface WalletModalProps {
   /** Called when the modal is closed. Defaults to closing the modal */
-  readonly onClose: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
+  readonly onClose: (event: MouseEvent) => void;
   /** Style for the modal */
   readonly style?: CSSProperties;
   /** Style for the modal header */

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, MouseEvent } from "react";
 import { Button, Modal, Typography } from "elements";
 import { useConnectWallet } from "hooks";
 import { WalletModalProps } from "../types";
@@ -12,9 +12,9 @@ const DisconnectWalletModal: FunctionComponent<WalletModalProps> = ({
 }) => {
   const { wallet, disconnect } = useConnectWallet();
 
-  const handleDisconnect = () => {
+  const handleDisconnect = (event: MouseEvent) => {
     disconnect();
-    onClose();
+    onClose(event);
   };
 
   if (!wallet) {

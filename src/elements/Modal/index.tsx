@@ -53,6 +53,8 @@ const Modal: FunctionComponent<ModalProps> = ({
           maxHeight: "90vh",
           borderRadius: "0.75rem",
           backgroundColor: "#FFF",
+          overflowX: "hidden",
+          overflowY: "auto",
           ...style,
         }}
       >
@@ -66,7 +68,6 @@ const Modal: FunctionComponent<ModalProps> = ({
             borderTopLeftRadius: "0.75rem",
             borderTopRightRadius: "0.75rem",
             borderBottom: `1px solid ${isInverted ? "#121214" : "#EEE"}`,
-            overflow: "auto",
             ...headerStyle,
           }}
         >
@@ -100,6 +101,7 @@ const Modal: FunctionComponent<ModalProps> = ({
             padding: "1rem",
             borderBottomLeftRadius: "0.75rem",
             borderBottomRightRadius: "0.75rem",
+            overflowY: "scroll",
           }}
         >
           {children}

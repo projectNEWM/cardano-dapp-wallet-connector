@@ -3,6 +3,12 @@ import geroWallet from "./img/gero-wallet-logo.png";
 import cardwallet from "./svg/cardwallet-logo.svg";
 import flint from "./svg/flint-logo.svg";
 import nami from "./svg/nami-logo.svg";
+import typhon from "./svg/typhon-logo.svg";
+import yoroi from "./svg/yoroi-logo.svg";
+import lodeWallet from "./img/lode-wallet-logo.png";
+import nufi from "./svg/nufi-logo.svg";
+import begin from "./svg/begin-logo.svg";
+import lace from "./svg/lace-logo.svg";
 import close from "./svg/close-icon.svg";
 import externalLink from "./svg/external-link-icon.svg";
 import ExternalLink from "./tsx/ExternalLink";
@@ -14,6 +20,12 @@ export const logos = {
   cardwallet,
   flint,
   nami,
+  typhon,
+  yoroi,
+  lodeWallet,
+  nufi,
+  begin,
+  lace,
 };
 
 export const icons = {

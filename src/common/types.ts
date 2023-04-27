@@ -4,6 +4,13 @@ export enum SupportedWallet {
   gerowallet = "gerowallet",
   nami = "nami",
   cardwallet = "cardwallet",
+  typhon = "typhoncip30",
+  yoroi = "yoroi",
+  lodeWallet = "LodeWallet",
+  nufi = "nufi",
+  vespr = "vespr",
+  begin = "begin",
+  lace = "lace",
 }
 
 export interface WalletInfo {

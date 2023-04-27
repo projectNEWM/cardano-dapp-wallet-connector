@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { MouseEvent, FunctionComponent } from "react";
 import { Button, Modal, Typography } from "elements";
 import { useConnectWallet } from "hooks";
 import { getSupportedWallets } from "utils";
@@ -20,14 +20,14 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
     return isInstalled;
   });
 
-  const handleSelectWallet = (wallet: WalletInfo) => {
+  const handleSelectWallet = (event: MouseEvent) => (wallet: WalletInfo) => {
     if (wallet.isInstalled) {
       connect(wallet.id);
     } else {
       window.open(wallet.websiteUrl, "_blank", "noreferrer");
     }
 
-    onClose();
+    onClose(event);
   };
 
   return (
@@ -53,7 +53,7 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
             >
               <Button
                 iconRight={wallet.icon}
-                onClick={() => handleSelectWallet(wallet)}
+                onClick={(event) => handleSelectWallet(event)(wallet)}
                 isInverted={isInverted}
                 isFullWidth
               >
