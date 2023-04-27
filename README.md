@@ -3,6 +3,11 @@
 The Cardano wallet dApp connector library provides components, hooks, and util functions to simplify
 utilizing the Cardano wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 
+<center>
+<img width=340 src="./docs/img/wallet-modal-unstyled.png">
+<img width=340 src="./docs/img/wallet-modal-styled.png">
+</center>
+
 ### Example
 
 The most straightforward implemenation is to use the `ConnectWallet` component to connect a wallet

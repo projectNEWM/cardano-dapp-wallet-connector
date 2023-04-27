@@ -7,7 +7,7 @@ import typhon from "./svg/typhon-logo.svg";
 import yoroi from "./svg/yoroi-logo.svg";
 import lodeWallet from "./img/lode-wallet-logo.png";
 import nufi from "./svg/nufi-logo.svg";
-import begin from "./svg/begin-logo.svg";
+import begin from "./img/begin-logo.webp";
 import lace from "./svg/lace-logo.svg";
 import close from "./svg/close-icon.svg";
 import externalLink from "./svg/external-link-icon.svg";
