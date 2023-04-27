@@ -24,7 +24,7 @@ a Cardano wallet, which will then be accessible with the `wallet` object returne
 
 ```
 import { FunctionComponent } from "react";
-import { ConnectWallet, useConnectWallet } from "cardano-dapp-wallet-connector";
+import { ConnectWallet, useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 const Example: FunctionComponent = () => {
   const { wallet } = useConnectWallet();
@@ -61,7 +61,7 @@ connect wallet modal.
 
 #### Props
 
-- **`onClick?: (event: MouseEvent`** Called when the button is clicked.
+- **`onClick?: (event: MouseEvent) => void`** Called when the button is clicked.
 - **`style?: CSSProperties`** Inline styles for the button.
 - **`fontFamily?: string`** Font family for the button text.
 - **`isInverted?: booelan`** True if text styles should be adjusted for a dark background.
@@ -75,7 +75,7 @@ like to trigger the modal with your own button or other user interaction.
 
 ```
 import { FunctionComponent, useState } from "react";
-import { WalletModal } from "cardano-dapp-wallet-connector";
+import { WalletModal, useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 const Example: FunctionComponent = () => {
   const { wallet } = useConnectWallet();
@@ -87,7 +87,7 @@ const Example: FunctionComponent = () => {
 
       { isModalOpen && <WalletModal onClose={ () => setIsModalOpen(false) /> }
     </>
-  )
+  );
 }
 ```
 
@@ -107,6 +107,39 @@ const Example: FunctionComponent = () => {
 
 The `useConnectWallet` hook returns an object with the CIP 30 wallet object and
 a number of helper functions.
+
+#### Example
+
+```
+import { FunctionComponent, useEffect, useState } from "react";
+import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
+
+const Example: FunctionComponent = () => {
+  const { wallet, connect, getBalance } = useConnectWallet();
+  const [walletBalance, setWalletBalance] = useState();
+
+  useEffect(() => {
+    connect("cip_30_wallet_identifier")
+  }, [])
+
+  useEffect(() => {
+    if (wallet) {
+      getBalance((ada) => setWalletBalance(ada)))
+    }
+  }, [wallet])
+
+  if (!wallet) {
+    return <div>No wallet connected</div>;
+  }
+
+  return (
+    <div>
+      { wallet.name } wallet is currently connected.
+      { !!walletBalance && <div>Current wallet balance is {walletBalance} ADA.</div> }
+    </div>
+  );
+}
+```
 
 **`wallet: Wallet | undefined`**
 
