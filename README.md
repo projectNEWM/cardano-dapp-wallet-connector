@@ -4,8 +4,16 @@ The Cardano wallet dApp connector library provides components, hooks, and util f
 utilizing the Cardano wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 
 <center>
-<img width=340 src="./docs/img/wallet-modal-unstyled.png">
-<img width=340 src="./docs/img/wallet-modal-styled.png">
+  <table>
+    <tr>
+      <td>
+        <img src="./docs/img/wallet-modal-unstyled.png">
+      </td>
+      <td>
+        <img src="./docs/img/wallet-modal-styled.png">
+      </td>
+    </tr>
+  </table>
 </center>
 
 ### Example
