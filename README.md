@@ -32,7 +32,7 @@ const Example: FunctionComponent = () => {
   return (
     <ConnectWallet />
   );
-}
+};
 ```
 
 ## Components
@@ -48,7 +48,7 @@ Provides a button, which brings up a modal to select and connect a wallet when c
 - **`mainButtonStyle?: CSSProperties`** Inline styles for the button used to open the connect wallet modal.
 - **`disconnectButtonStyle?: CSSProperties`** Inline styles for the modal disconnect button.
 - **`fontFamily?: string`** Font family to be used throughout the component
-- **`isInverted?: boolean`** True if text, icon, and hover styles should be adjusted for a dark background.
+- **`isInverted?: boolean`** `true` if text, icon, and hover styles should be adjusted for a dark background.
 - **`onClickButton?: (event: MouseEvent) => void`** Called when intial button is clicked. Defaults opening the wallet modal.
 - **`onCloseModal?: (event: MouseEvent) => void`** Called when modal close icon or background is clicked. Defaults to closing the wallet modal.
 - **`onConnect?: (wallet: Wallet) => void`** Called when a wallet is connected.
@@ -64,7 +64,7 @@ connect wallet modal.
 - **`onClick?: (event: MouseEvent) => void`** Called when the button is clicked.
 - **`style?: CSSProperties`** Inline styles for the button.
 - **`fontFamily?: string`** Font family for the button text.
-- **`isInverted?: booelan`** True if text styles should be adjusted for a dark background.
+- **`isInverted?: boolean`** `true` if text styles should be adjusted for a dark background.
 
 ### WalletModal
 
@@ -88,7 +88,7 @@ const Example: FunctionComponent = () => {
       { isModalOpen && <WalletModal onClose={ () => setIsModalOpen(false) /> }
     </>
   );
-}
+};
 ```
 
 #### Props
@@ -98,7 +98,7 @@ const Example: FunctionComponent = () => {
 - **`headerStyle?: CSSProperties`** Inline styles for the modal header.
 - **`disconnectButtonStyle?: CSSProperties`** Inline styles for the disconnect button.
 - **`fontFamily?: string`** Font family for the button text.
-- **`isInverted?: boolean`** True if text, icon, and hover styles should be adjusted for a dark background.
+- **`isInverted?: boolean`** `true` if text, icon, and hover styles should be adjusted for a dark background.
 - **`onConnect?: (wallet: Wallet) => void`** Called when a wallet is connected.
 
 ## Hooks
@@ -115,12 +115,12 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 const Example: FunctionComponent = () => {
-  const { wallet, connect, getBalance } = useConnectWallet();
+  const { wallet, connect, getBalance, error } = useConnectWallet();
   const [walletBalance, setWalletBalance] = useState();
 
   useEffect(() => {
     connect("cip_30_wallet_identifier")
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (wallet) {
@@ -129,17 +129,20 @@ const Example: FunctionComponent = () => {
   }, [wallet])
 
   if (!wallet) {
-    return <div>No wallet connected</div>;
+    return <div>No wallet connected.</div>;
   }
 
   return (
     <div>
       { wallet.name } wallet is currently connected.
       { !!walletBalance && <div>Current wallet balance is {walletBalance} ADA.</div> }
+      { !!error && <div>An error occured: {error}</div> }
     </div>
   );
-}
+};
 ```
+
+#### Returns
 
 **`wallet: Wallet | undefined`**
 
@@ -153,19 +156,6 @@ Sets the `wallet` value for the provided wallet id.
 **`disconnect: () => undefined`**
 
 Disconnects the currently connected wallet and sets the `wallet` value to `undefined`.
-
-**`getSupportedWallets: () => Array<WalletInfo>`**
-
-Returns an array of "WalletInfo" objects for Cardano wallet browser extensions.
-
-The "WalletInfo" is an object with the following fields:
-
-- `id: string` String identifier for the wallet
-- `name: string` Display name for the wallet
-- `icon: string` Path to the icon file
-- `extensionUrl: string` Url for the wallet's browser extension
-- `websiteUrl: string` Url for the wallet's website
-- `isInstalled` True if the wallet browser extension has been installed
 
 **`getBalance: (callback: (balance: number) => undefined) => undefined`**
 
@@ -185,6 +175,19 @@ the argument.
 
 An error message returned from the Cardano wallet, if one exists.
 
+**`getSupportedWallets: () => Array<WalletInfo>`**
+
+Returns an array of "WalletInfo" objects for Cardano wallet browser extensions.
+
+The "WalletInfo" is an object with the following fields:
+
+- `id: string` String identifier for the wallet
+- `name: string` Display name for the wallet
+- `icon: string` Path to the icon file
+- `extensionUrl: string` Url for the wallet's browser extension
+- `websiteUrl: string` Url for the wallet's website
+- `isInstalled` `true` if the wallet browser extension has been installed
+
 ## Utils
 
 In order to allow the library functionality to be used outside of a component, the following
@@ -196,12 +199,12 @@ Disconnects the currently connected wallet.
 
 **`enableWallet: async (walletId: string) => Promise<Wallet>`**
 
-Asynchronous function that connects the wallet corresponding to the provided wallet ID. Returns
+Connects the wallet corresponding to the provided wallet ID. Returns
 a wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 
 **`getEnabledWallet: async () => Promise<Wallet | undefined>`**
 
-Asynchronous function that returns the currently connected wallet (as defined
+Returns the currently connected wallet (as defined
 in [CIP 30](https://cips.cardano.org/cips/cip30)) or `undefined` if one is not connected.
 
 **`getSupportedWallets: () => Array<WalletInfo>`**
