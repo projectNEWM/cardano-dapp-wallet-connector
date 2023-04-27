@@ -1,7 +1,91 @@
 # Cardano dApp Wallet Connector
 
-The Cardano wallet dApp connector library simplifies functionality around
+The Cardano wallet dApp connector library provides components, hooks, and util functions to simplify
 utilizing the Cardano wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
+
+### Example
+
+The most straightforward implemenation is to use the `ConnectWallet` component to connect a wallet
+and the `useConnectWallet` hook to access it. This example will provide a button and modal to connect
+a Cardano wallet, which will then be accessible with the `wallet` object returned from the hook.
+
+```
+import { FunctionComponent } from "react";
+import { ConnectWallet, useConnectWallet } from "cardano-dapp-wallet-connector";
+
+const Example: FunctionComponent = () => {
+  const { wallet } = useConnectWallet();
+
+  return (
+    <ConnectWallet />
+  );
+}
+```
+
+## Components
+
+### ConnectWallet
+
+Provides a button, which brings up a modal to select and connect a wallet when clicked.
+
+#### Props
+
+- `modalStyle: CSSProperties` Inline styles for the connect wallet modal.
+- `modalHeaderStyle: CSSProperties` Inline styles for the modal header.
+- `mainButtonStyle: CSSProperties` Inline styles for the modal used to select and connect a wallet.
+- `disconnectButtonStyle: CSSProperties` Inline styles for the modal disconnect button.
+- `fontFamily: string` Font family to be used throughout the component
+- `isInverted: boolean` True if text, icon, and hover styles should be adjusted for a dark background.
+- `onClickButton: (event: MouseEvent) => void` Called when button is clicked. Defaults opening the wallet modal.
+- `onCloseModal: (event: MouseEvent) => void` Called when modal isClosed. Defaults to closing wallet modal.
+- `onConnect: (event: MouseEvent) => void` Called when a wallet is connected
+
+### WalletButton
+
+Stand-alone connect wallet button from the `ConnectWallet` component. It can be used if you
+would like to create your own modal, or have it trigger functionality other than opening the
+connect wallet modal.
+
+#### Props
+
+- `style: CSSProperties` Inline styles for the button.
+- `fontFamily: string` Font family for the button text.
+- `isInverted: booelan` True if text styles should be adjusted for a dark background.
+- `onClick: (event: MouseEvent` Called when the button is clicked.
+
+### WalletModal
+
+Stand-alone select wallet modal from the `ConnectWallet` component. It can be used if you would
+like to trigger the modal with your own button or other user interaction.
+
+#### Example
+
+```
+import { FunctionComponent, useState } from "react";
+import { WalletModal } from "cardano-dapp-wallet-connector";
+
+const Example: FunctionComponent = () => {
+  const { wallet } = useConnectWallet();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      <MyCustomButton onClick={ () => setIsModalOpen(true) }>
+
+      { isModalOpen && <WalletModal onClose={ () => setIsModalOpen(false) /> }
+    </>
+  )
+}
+```
+
+#### Props
+
+- `style: CSSProperties` Inline styles for the modal.
+- `headerStyle: CSSProperties` Inline styles for the modal header.
+- `disconnectButtonStyle: CSSProperties` Inline styles for the disconnect button.
+- `fontFamily: string` Font family for the button text.
+- `isInverted: boolean` True if text, icon, and hover styles should be adjusted for a dark background.
+- `onClose: (event: MouseEvent) => void` Called when the modal modal background or close button is clicked.
 
 ## Hooks
 
@@ -9,77 +93,6 @@ utilizing the Cardano wallet object as defined in [CIP 30](https://cips.cardano.
 
 The `useConnectWallet` hook returns an object with the CIP 30 wallet object and
 a number of helper functions.
-
-#### Example
-
-```
-import { setState, FunctionComponent } from "react"
-import { useConnectWallet } from "cardano-dapp-wallet-connector"
-
-const Component: FunctionComponent = () => {
-  const {
-    wallet,
-    connect,
-    disconnect,
-    getInstalledWallets,
-    getAvailableWallets,
-    getBalance,
-    getAddress,
-  } = useConnectWallet()
-
-  const [balance, setBalance] = useState()
-  const [address, setAddress] = useState()
-
-  const installedWallets = getInstalledWallets()
-  const availableWallets = getAvailableWallets()
-
-  // provide access to the wallet and helper functions if a wallet is currently connected
-  if (wallet) {
-    return (
-      <div>
-        <div>{ wallet.name }</div>
-        <div>Balance: {balance}</div>
-        <div>Address: {address}</div>
-
-        <button onPress={() => getBalance(setBalance)}>Get current balance</button>
-        <button onPress={() => getAddress(setAddress)}>Get recieving address</button>
-        <button onPress={() => disconnect()}>Disconnect wallet</button>
-      </div>
-    )
-  }
-
-  // if no wallet is connected, list currently installed wallets that can be connected
-  if (installedWallets.length > 0) {
-    return installedWallets.map(({ id, name }) => (
-      <button onPress={() => connect(id)}>{ name }</button>
-    ))
-  }
-
-  // if no wallets are installed, link to urls for available wallet extensions
-  if (availableWallets.length > 0) {
-    return (
-      <div>
-        Install one of the following wallets:
-
-        <ul>
-          {availableWallets.map(({ name, extensionUrl }) => (
-            <li>
-              <a rel="nofollow" target="_blank" href={ extensionUrl }>{ name }</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
-
-  // if no available wallets, user is not using a browser that supports Cardano wallet extensions
-  return (
-    <div>
-      Cardano wallets are currently only supported in Chrome and Brave browsers.
-    </div>
-  )
-}
-```
 
 **`wallet: Wallet | undefined`**
 
@@ -134,10 +147,6 @@ the argument.
 **`error: string | undefined`**
 
 An error message returned from the Cardano wallet, if one exists.
-
-## Components
-
-_in progress_
 
 ## Utils
 

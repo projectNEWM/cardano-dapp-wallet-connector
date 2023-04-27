@@ -20,7 +20,7 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleButtonClick = (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+  const handleButtonClick = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     if (onClickButton) {
       onClickButton(event);
     } else {
@@ -28,7 +28,7 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
     }
   };
 
-  const handleCloseModal = (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+  const handleCloseModal = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     if (onCloseModal) {
       onCloseModal(event);
     } else {
