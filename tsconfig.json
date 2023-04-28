@@ -8,6 +8,7 @@
     "baseUrl": "src",
     "importHelpers": true,
     "declaration": true,
+    "emitDeclarationOnly": true,
     "sourceMap": false,
     "rootDir": "./src",
     "outDir": "./dist",
@@ -21,7 +22,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
-    "noEmit": true
+    "isolatedModules": true
   }
 }
