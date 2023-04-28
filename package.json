@@ -1,9 +1,12 @@
 {
   "name": "@newm.io/cardano-dapp-wallet-connector",
-  "version": "0.2.23",
+  "version": "0.2.25",
   "description": "Cardano dApp wallet connector package",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc && tsc-alias && babel src --out-dir dist --extensions '.ts,.tsx' && cp package.json README.md ./dist && cp -a ./src/assets/img/. ./dist/assets/img/ && cp -a ./src/assets/svg/. ./dist/assets/svg/",
@@ -11,7 +14,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
-    "deploy": "npm run build && npm publish ./dist --access public"
+    "deploy": "npm run build && npm publish --access public"
   },
   "repository": {
     "type": "git",
