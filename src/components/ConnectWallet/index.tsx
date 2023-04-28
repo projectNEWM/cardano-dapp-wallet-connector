@@ -36,19 +36,17 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
 
   return (
     <>
-      {isModalVisible && (
-        <WalletModal
-          isOpen={isModalVisible}
-          style={modalStyle}
-          isInverted={isInverted}
-          headerStyle={modalHeaderStyle}
-          disconnectButtonStyle={disconnectButtonStyle}
-          fontFamily={fontFamily}
-          onConnect={onConnect}
-          onError={onError}
-          onClose={handleCloseModal}
-        />
-      )}
+      <WalletModal
+        isOpen={isModalVisible}
+        style={modalStyle}
+        isInverted={isInverted}
+        headerStyle={modalHeaderStyle}
+        disconnectButtonStyle={disconnectButtonStyle}
+        fontFamily={fontFamily}
+        onConnect={onConnect}
+        onError={onError}
+        onClose={handleCloseModal}
+      />
 
       <WalletButton style={mainButtonStyle} isInverted={isInverted} onClick={handleButtonClick} />
     </>
