@@ -2,8 +2,8 @@
   "include": ["src"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "module": "es6",
-    "target": "es6",
+    "module": "esnext",
+    "target": "esnext",
     "lib": ["dom", "esnext"],
     "baseUrl": "src",
     "importHelpers": true,
@@ -20,6 +20,8 @@
     "jsx": "react",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "noEmit": true
   }
 }

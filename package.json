@@ -1,12 +1,12 @@
 {
   "name": "@newm.io/cardano-dapp-wallet-connector",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Cardano dApp wallet connector package",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc && tsc-alias && cp package.json README.md ./dist && cp -a ./src/assets/img/. ./dist/assets/img/ && cp -a ./src/assets/svg/. ./dist/assets/svg/",
+    "build": "npm run clean && babel src --out-dir dist --extensions '.ts,.tsx' && cp package.json README.md ./dist && cp -a ./src/assets/img/. ./dist/assets/img/ && cp -a ./src/assets/svg/. ./dist/assets/svg/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -31,7 +31,10 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.2",
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.4",
     "@storybook/addon-actions": "^6.5.13",
     "@storybook/addon-essentials": "^6.5.13",
     "@storybook/addon-interactions": "^6.5.13",
