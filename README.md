@@ -220,6 +220,39 @@ Returns the balance for the provided wallet in ADA.
 
 Returns an array of "WalletInfo" objects for Cardano wallet browser extensions.
 
+## Troubleshooting
+
+### Issues with the jsdom testing library
+
+If you're using the react-create-app package for your app (which `jsdom` is a dependency of), you
+may encounter the following error when running jest: `ReferenceError: TextDecoder is not defined`.
+This is because the `cbor-web` dependency references the `TextDecoder` global browser variable,
+which is not present in the jsdom test environment. This can be resolved by adding the global
+variable in your `setupTests.js` file:
+
+```
+import { TextDecoder } from "util";
+global.TextDecoder = TextDecoder;
+```
+
+Another option is to mock the `@newm.io/cardano-dapp-wallet-connector` package for your tests:
+
+```
+jest.mock("@newm.io/cardano-dapp-wallet-connector", () => ({
+  ...jest.requireActual,
+  getWalletBalance: jest.fn(),
+  useConnectWallet: jest.fn(() => ({
+    wallet: {},
+    connect: jest.fn(),
+    disconnect: jest.fn(),
+    isLoading: false,
+    getAddress: jest.fn(),
+    getBalance: jest.fn(),
+    getSupportedWallets: jest.fn(),
+  })),
+}));
+```
+
 ## Roadmap
 
 - Improved customization
