@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useConnectWallet } from "hooks";
 import { FunctionComponent } from "react";
 import { WalletModalProps } from "./types";
 import ConnectWalletModal from "./ConnectWalletModal";
 import DisconnectWalletModal from "./DisconnectWalletModal";
+import { usePrevious } from "common";
 
 const WalletModal: FunctionComponent<WalletModalProps> = ({
   style,
@@ -12,20 +13,18 @@ const WalletModal: FunctionComponent<WalletModalProps> = ({
   ...rest
 }) => {
   const { wallet, isConnected } = useConnectWallet();
-  const [isInitialized, setIsInitialized] = useState(false);
+  const prevIsConnected = usePrevious(isConnected);
 
   const modalStyle = { fontFamily, ...style };
 
   /**
-   * Ignore initial isConnected state and then call onConnect if value changes to true.
+   * Call onConnect if isConnected changes to true.
    */
   useEffect(() => {
-    if (onConnect && wallet && isInitialized && isConnected) {
+    if (onConnect && wallet && !prevIsConnected && isConnected) {
       onConnect(wallet);
     }
-
-    setIsInitialized(true);
-  }, [isConnected, wallet]);
+  }, [isConnected, wallet, prevIsConnected]);
 
   return isConnected ? (
     <DisconnectWalletModal style={modalStyle} {...rest} />
