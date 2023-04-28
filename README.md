@@ -84,7 +84,7 @@ const Example: FunctionComponent = () => {
 
   return (
     <>
-      <MyCustomButton onClick={ () => setIsModalOpen(true) }>
+      <MyCustomButton onClick={ () => setIsModalOpen(true) } />
 
       <WalletModal isOpen={isModalOpen} onClose={ () => setIsModalOpen(false) />
     </>
@@ -193,7 +193,7 @@ The "WalletInfo" is an object with the following fields:
 - `icon: string` Path to the icon file
 - `extensionUrl: string` Url for the wallet's browser extension
 - `websiteUrl: string` Url for the wallet's website
-- `isInstalled` `true` if the wallet browser extension has been installed
+- `isInstalled: boolean` `true` if the wallet browser extension has been installed
 
 ## Utils
 
