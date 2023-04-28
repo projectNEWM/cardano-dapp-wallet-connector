@@ -31,3 +31,14 @@ export const makeObservable = <T>(target: T) => {
     subscribe,
   };
 };
+
+/**
+ * Wait for the specified number of milliseconds.
+ */
+export const sleep = async (ms: number = 250) => {
+  await new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });
+};

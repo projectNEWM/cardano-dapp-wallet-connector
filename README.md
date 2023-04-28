@@ -204,7 +204,7 @@ functions can also be imported as utils:
 
 Disconnects the currently connected wallet.
 
-**`enableWallet: async (walletId: string) => Promise<Wallet>`**
+**`enableWallet: (walletId: string) => Promise<Wallet>`**
 
 Connects the wallet corresponding to the provided wallet ID. Returns
 a wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
