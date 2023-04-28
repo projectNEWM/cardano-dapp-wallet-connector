@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}"
+    "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
+    "deploy": "npm publish ./dist --access public"
   },
   "repository": {
     "type": "git",
