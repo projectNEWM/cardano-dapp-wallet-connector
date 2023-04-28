@@ -9,6 +9,7 @@ import {
 } from "utils";
 import { UseConnectWalletResult } from "./types";
 import { useStore } from "store";
+import { APIErrorMessage } from "common";
 
 /**
  * Returns values and helper functions for connecting, utlizing,
@@ -85,7 +86,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
     [state.enabledWallet],
   );
 
-  const selectWallet = async (walletName: string) => {
+  const selectWallet = useCallback(async (walletName: string) => {
     try {
       setState({
         ...state,
@@ -112,14 +113,15 @@ const useConnectWallet = (): UseConnectWalletResult => {
         enabledWallet,
       });
     } catch (err) {
-      if (err instanceof Error) {
+      // ignore error if user manually disconnected, otherwise update state with error message
+      if (err instanceof Error && err.message !== APIErrorMessage.manualDisconnect) {
         setState({
           ...state,
           error: err.message,
         });
       }
     }
-  };
+  }, []);
 
   return {
     wallet: state.enabledWallet,

@@ -79,5 +79,9 @@ export interface SVGProps {
   readonly stroke?: string;
 }
 
+export enum APIErrorMessage {
+  manualDisconnect = "The request was refused due to lack of access - e.g. wallet disconnects.",
+}
+
 // TODO: replace usage of this type with actual definitions
 type Any = any;

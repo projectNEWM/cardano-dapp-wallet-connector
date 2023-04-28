@@ -21,3 +21,7 @@ export interface WalletModalProps {
   /** Called when a wallet is connected */
   readonly onConnect?: (wallet: EnabledWallet) => void;
 }
+
+export type ConnectWalletModalProps = Omit<WalletModalProps, "fontFamily">;
+
+export type DisconnectWalletModalProps = Omit<WalletModalProps, "fontFamily">;
