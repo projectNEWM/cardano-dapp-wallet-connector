@@ -2,6 +2,8 @@ import { EnabledWallet } from "common";
 import { CSSProperties, MouseEvent } from "react";
 
 export interface WalletModalProps {
+  /** True if the modal is open */
+  readonly isOpen: boolean;
   /** Called when the modal is closed. */
   readonly onClose: (event: MouseEvent) => void;
   /** Style for the modal */
@@ -14,10 +16,8 @@ export interface WalletModalProps {
   readonly fontFamily?: string;
   /** True if text, icon, and hover styles should be adjusted for a dark background. */
   readonly isInverted?: boolean;
+  /** Opacity of background overlay when modal is open */
+  readonly backgroundOpacity?: number;
   /** Called when a wallet is connected */
   readonly onConnect?: (wallet: EnabledWallet) => void;
 }
-
-export type ConnectWalletModalProps = Omit<WalletModalProps, "fontFamily">;
-
-export type DisconnectWalletModalProps = Omit<WalletModalProps, "fontFamily">;

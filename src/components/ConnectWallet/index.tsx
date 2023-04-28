@@ -37,6 +37,7 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
     <>
       {isModalVisible && (
         <WalletModal
+          isOpen={isModalVisible}
           style={modalStyle}
           isInverted={isInverted}
           headerStyle={modalHeaderStyle}

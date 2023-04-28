@@ -5,7 +5,11 @@ import { WalletModalProps } from "./types";
 import ConnectWalletModal from "./ConnectWalletModal";
 import DisconnectWalletModal from "./DisconnectWalletModal";
 
-const WalletModal: FunctionComponent<WalletModalProps> = ({ style, fontFamily, ...rest }) => {
+const WalletModal: FunctionComponent<WalletModalProps> = ({
+  style,
+  fontFamily = "Arial",
+  ...rest
+}) => {
   const { wallet } = useConnectWallet();
 
   const modalStyle = { fontFamily, ...style };

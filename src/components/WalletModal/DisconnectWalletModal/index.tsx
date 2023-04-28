@@ -4,10 +4,12 @@ import { useConnectWallet } from "hooks";
 import { WalletModalProps } from "../types";
 
 const DisconnectWalletModal: FunctionComponent<WalletModalProps> = ({
+  isOpen,
   style = {},
   headerStyle = {},
   disconnectButtonStyle = {},
   isInverted = false,
+  backgroundOpacity = 0.5,
   onClose,
 }) => {
   const { wallet, disconnect } = useConnectWallet();
@@ -23,11 +25,13 @@ const DisconnectWalletModal: FunctionComponent<WalletModalProps> = ({
 
   return (
     <Modal
+      isOpen={isOpen}
       style={style}
       headerStyle={headerStyle}
       title={wallet.name}
       titleIcon={wallet.icon}
       isInverted={isInverted}
+      backgroundOpacity={backgroundOpacity}
       onClose={onClose}
     >
       <div

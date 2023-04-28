@@ -10,6 +10,8 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
   style = {},
   headerStyle = {},
   isInverted = false,
+  backgroundOpacity = 0.5,
+  isOpen,
   onConnect,
   onClose,
 }) => {
@@ -43,11 +45,13 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
 
   return (
     <Modal
+      isOpen={isOpen}
       style={style}
       headerStyle={headerStyle}
       title={isAWalletInstalled ? "Connect your wallet" : "Install a wallet"}
       onClose={onClose}
       isInverted={isInverted}
+      backgroundOpacity={backgroundOpacity}
     >
       {supportedWallets.length === 0 ? (
         <Typography isInverted style={{ textAlign: "center" }}>

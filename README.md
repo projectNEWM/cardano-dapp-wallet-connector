@@ -85,7 +85,7 @@ const Example: FunctionComponent = () => {
     <>
       <MyCustomButton onClick={ () => setIsModalOpen(true) }>
 
-      { isModalOpen && <WalletModal onClose={ () => setIsModalOpen(false) /> }
+      <WalletModal isOpen={isModalOpen} onClose={ () => setIsModalOpen(false) />
     </>
   );
 };
@@ -93,6 +93,7 @@ const Example: FunctionComponent = () => {
 
 #### Props
 
+- **`isOpen: boolean`** `true` if the modal is open.
 - **`onClose: (event: MouseEvent) => void`** Called when the modal background or close button is clicked.
 - **`style?: CSSProperties`** Inline styles for the modal.
 - **`headerStyle?: CSSProperties`** Inline styles for the modal header.

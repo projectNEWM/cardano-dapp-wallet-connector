@@ -4,6 +4,7 @@ import { Typography } from "elements";
 import { ModalProps } from "./types";
 
 const Modal: FunctionComponent<ModalProps> = ({
+  isOpen,
   children,
   title,
   titleIcon,
@@ -11,6 +12,7 @@ const Modal: FunctionComponent<ModalProps> = ({
   isInverted,
   style = {},
   headerStyle = {},
+  backgroundOpacity = 0.5,
   ...rest
 }) => {
   const [opacity, setOpacity] = useState(0);
@@ -26,6 +28,10 @@ const Modal: FunctionComponent<ModalProps> = ({
     setOpacity(1);
   }, []);
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <div
       onClick={onClose}
@@ -39,7 +45,7 @@ const Modal: FunctionComponent<ModalProps> = ({
         right: 0,
         bottom: 0,
         left: 0,
-        backgroundColor: "rgba(0,0,0,0.25)",
+        backgroundColor: `rgba(0,0,0,${backgroundOpacity})`,
         transition: "opacity 0.25s ease-out",
         opacity,
       }}
