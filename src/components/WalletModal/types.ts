@@ -20,6 +20,8 @@ export interface WalletModalProps {
   readonly backgroundOpacity?: number;
   /** Called when a wallet is connected */
   readonly onConnect?: (wallet: EnabledWallet) => void;
+  /** Called when an error occurs */
+  readonly onError?: (message: string) => void;
 }
 
 export type ConnectWalletModalProps = Omit<WalletModalProps, "fontFamily" | "onConnect">;

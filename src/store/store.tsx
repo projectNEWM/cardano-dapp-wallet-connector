@@ -19,9 +19,12 @@ const store = makeObservable(initialState);
  */
 const initializeWallet = async () => {
   if (initialWalletName) {
-    const enabledWallet = await enableWallet(initialWalletName);
-
-    store.set({ ...initialState, enabledWallet });
+    try {
+      const enabledWallet = await enableWallet(initialWalletName);
+      store.set({ ...initialState, enabledWallet });
+    } catch (err) {
+      store.set({ ...initialState, isConnected: false });
+    }
   }
 };
 

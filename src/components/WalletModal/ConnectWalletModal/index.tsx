@@ -14,7 +14,7 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { connect, error } = useConnectWallet();
+  const { connect } = useConnectWallet();
 
   const supportedWallets = getSupportedWallets();
 
@@ -104,12 +104,6 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
             </div>
           );
         })
-      )}
-
-      {!!error && (
-        <div style={{ marginTop: "1rem" }}>
-          <Typography style={{ color: "red" }}>{error}</Typography>
-        </div>
       )}
     </Modal>
   );
