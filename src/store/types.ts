@@ -6,4 +6,5 @@ export interface State {
   readonly isLoading: boolean;
   readonly error: string | null;
   readonly enabledWallet: EnabledWallet | null;
+  readonly isConnected: boolean;
 }

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import {
   disconnectWallet,
   enableWallet,
@@ -86,49 +86,66 @@ const useConnectWallet = (): UseConnectWalletResult => {
     [state.enabledWallet],
   );
 
-  const selectWallet = useCallback(async (walletName: string) => {
-    try {
-      setState({
-        ...state,
-        error: null,
-      });
-
-      // use existing wallet object if already connected and enabled
-      const currentEnabledWallet = await getEnabledWallet();
-      if (currentEnabledWallet) {
+  const selectWallet = useCallback(
+    async (walletName: string) => {
+      try {
         setState({
           ...state,
-          enabledWallet: currentEnabledWallet,
+          error: null,
         });
-        return;
-      }
 
-      // if wallet is no longer enabled, disconnect it
-      disconnectWallet();
+        // use existing wallet object if already connected and enabled
+        const currentEnabledWallet = await getEnabledWallet();
+        if (currentEnabledWallet) {
+          setState({
+            ...state,
+            enabledWallet: currentEnabledWallet,
+          });
+          return;
+        }
 
-      // enable a new wallet
-      const enabledWallet = await enableWallet(walletName);
-      setState({
-        ...state,
-        enabledWallet,
-      });
-    } catch (err) {
-      // ignore error if user manually disconnected, otherwise update state with error message
-      if (err instanceof Error && err.message !== APIErrorMessage.manualDisconnect) {
+        // if wallet is no longer enabled, disconnect it
+        disconnectWallet();
+
+        // enable a new wallet
+        const enabledWallet = await enableWallet(walletName);
         setState({
           ...state,
-          error: err.message,
+          enabledWallet,
         });
+      } catch (err) {
+        // ignore error if user manually disconnected, otherwise update state with error message
+        if (err instanceof Error && err.message !== APIErrorMessage.manualDisconnect) {
+          setState({
+            ...state,
+            error: err.message,
+          });
+        }
       }
+    },
+    [state],
+  );
+
+  /**
+   * Ensure isConnected stays in sync with presence of enabled wallet.
+   */
+  useEffect(() => {
+    if (state.enabledWallet && !state.isConnected) {
+      setState({ ...state, isConnected: true });
     }
-  }, []);
+
+    if (!state.enabledWallet && state.isConnected) {
+      setState({ ...state, isConnected: false });
+    }
+  }, [state]);
 
   return {
+    isConnected: state.isConnected,
+    isLoading: state.isLoading,
+    error: state.error,
     wallet: state.enabledWallet,
     connect,
     disconnect,
-    isLoading: state.isLoading,
-    error: state.error,
     getAddress,
     getBalance,
     getSupportedWallets,

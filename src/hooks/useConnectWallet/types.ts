@@ -3,6 +3,8 @@ import { EnabledWallet, WalletInfo } from "common/types";
 export interface UseConnectWalletResult {
   /** true if an operation is being performed */
   readonly isLoading: boolean;
+  /** true if wallet is connected */
+  readonly isConnected: boolean;
   /** Error response from interacting with the wallet */
   readonly error: string | null;
   /** The enabled wallet API */

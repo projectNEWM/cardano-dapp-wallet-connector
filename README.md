@@ -158,6 +158,10 @@ Sets the `wallet` value for the provided wallet id.
 
 Disconnects the currently connected wallet and sets the `wallet` value to `undefined`.
 
+**`isConnected: boolean`**
+
+`true` if a wallet is connected.
+
 **`getBalance: (callback: (balance: number) => undefined) => undefined`**
 
 Function that accepts a callback with the current ADA balance as
