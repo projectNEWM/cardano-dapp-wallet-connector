@@ -38,8 +38,6 @@ const initializeWallet = async () => {
       // wallet object is present on window, no need to retry
       if (isWalletAvailable) break;
 
-      console.log("retry");
-
       retryCount += 1;
 
       await sleep();
