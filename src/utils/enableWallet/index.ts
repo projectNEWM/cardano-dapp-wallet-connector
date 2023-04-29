@@ -27,9 +27,6 @@ const enableWallet = async (walletName: string) => {
 
   window.localStorage.setItem(storageKey, walletName);
 
-  if (!window.Wallets) window.Wallets = {};
-  window.Wallets[walletName] = enabledWallet;
-
   return enabledWallet;
 };
 

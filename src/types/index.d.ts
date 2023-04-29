@@ -5,6 +5,5 @@ export {};
 declare global {
   interface Window {
     readonly cardano?: Record<AvailableWallets, UnenabledWallet>;
-    Wallets?: Record<SupportedWallet, EnabledWallet>;
   }
 }

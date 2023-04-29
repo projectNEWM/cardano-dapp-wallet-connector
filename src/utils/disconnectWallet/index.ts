@@ -5,10 +5,6 @@ const disconnectWallet = () => {
 
   if (!selectedWalletName) return;
 
-  if (window.Wallets && window.Wallets[selectedWalletName]) {
-    delete window.Wallets[selectedWalletName];
-  }
-
   window.localStorage.removeItem(storageKey);
 };
 

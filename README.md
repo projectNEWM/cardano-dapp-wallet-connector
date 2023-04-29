@@ -209,11 +209,6 @@ Disconnects the currently connected wallet.
 Connects the wallet corresponding to the provided wallet ID. Returns
 a wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 
-**`getEnabledWallet: () => Promise<Wallet | undefined>`**
-
-Returns the currently connected wallet (as defined
-in [CIP 30](https://cips.cardano.org/cips/cip30)) or `undefined` if one is not connected.
-
 **`getWalletAddress: (wallet: Wallet) => Promise<string>`**
 
 Returns a plain text wallet address from the provided wallet object.

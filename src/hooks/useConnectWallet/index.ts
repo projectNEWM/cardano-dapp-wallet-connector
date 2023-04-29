@@ -2,7 +2,6 @@ import { useCallback, useEffect } from "react";
 import {
   disconnectWallet,
   enableWallet,
-  getEnabledWallet,
   getWalletAddress,
   getWalletBalance,
   getSupportedWallets,
@@ -52,7 +51,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
       } finally {
         setState({
           ...state,
-          isLoading: true,
+          isLoading: false,
         });
       }
     },
@@ -94,27 +93,16 @@ const useConnectWallet = (): UseConnectWalletResult => {
           error: null,
         });
 
-        // use existing wallet object if already connected and enabled
-        const currentEnabledWallet = await getEnabledWallet();
-        if (currentEnabledWallet) {
-          setState({
-            ...state,
-            enabledWallet: currentEnabledWallet,
-          });
-          return;
-        }
-
-        // if no wallet is enabled, ensure it is disconnected
-        disconnectWallet();
-
-        // enable a new wallet
+        // enable wallet
         const enabledWallet = await enableWallet(walletName);
         setState({
           ...state,
           enabledWallet,
         });
       } catch (err) {
-        // ignore error if user manually disconnected, otherwise update state with error message
+        disconnect();
+
+        // ignore error message if user manually disconnected, otherwise update state
         if (err instanceof Error && err.message !== APIErrorMessage.manualDisconnect) {
           setState({
             ...state,
