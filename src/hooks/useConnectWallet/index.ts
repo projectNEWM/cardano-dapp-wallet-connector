@@ -104,7 +104,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
           return;
         }
 
-        // if wallet is no longer enabled, disconnect it
+        // if no wallet is enabled, ensure it is disconnected
         disconnectWallet();
 
         // enable a new wallet
