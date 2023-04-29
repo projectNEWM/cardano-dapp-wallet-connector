@@ -1,9 +1,9 @@
-import { EnabledWallet, SupportedWallet, UnenabledWallet } from "hooks";
+import { SupportedWallet, UnenabledWallet } from "hooks";
 
 export {};
 
 declare global {
   interface Window {
-    readonly cardano?: Record<AvailableWallets, UnenabledWallet>;
+    readonly cardano?: Record<SupportedWallet, UnenabledWallet>;
   }
 }
