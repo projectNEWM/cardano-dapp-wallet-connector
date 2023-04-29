@@ -19,17 +19,17 @@ import { APIErrorMessage } from "common";
 const useConnectWallet = (): UseConnectWalletResult => {
   const { state, setState } = useStore();
 
-  const connect = (name: string) => {
+  const connect = useCallback((name: string) => {
     selectWallet(name);
-  };
+  }, []);
 
-  const disconnect = () => {
+  const disconnect = useCallback(() => {
     disconnectWallet();
     setState({
       ...state,
       enabledWallet: null,
     });
-  };
+  }, [state]);
 
   const getAddress = useCallback(
     async (callback: (address: string) => void) => {
@@ -56,7 +56,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
       }
     },
-    [state.enabledWallet],
+    [state],
   );
 
   const getBalance = useCallback(
@@ -83,7 +83,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
       }
     },
-    [state.enabledWallet],
+    [state],
   );
 
   const selectWallet = useCallback(

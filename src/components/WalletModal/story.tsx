@@ -33,7 +33,6 @@ export const Styled = () => {
 
       <WalletModal
         isOpen={isOpen}
-        onError={(error) => console.log("error: ", error)}
         onClose={() => setIsOpen(false)}
         style={{
           backgroundColor: "#1C1C1E",
