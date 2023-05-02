@@ -32,7 +32,7 @@ const initializeWallet = async () => {
     let retryCount = 0;
 
     // wallet may not be immediately available on initial render, check up to 5 times
-    while (retryCount < 5) {
+    while (retryCount < 50) {
       isWalletAvailable = getIsWalletAvailable();
 
       // wallet object is present on window, no need to retry
