@@ -1,7 +1,7 @@
 import { Listener } from "./types";
 
 export const makeObservable = <T>(target: T) => {
-  let listeners: ReadonlyArray<Listener<T>> = [];
+  let listeners: Array<Listener<T>> = [];
   let value = target;
 
   const get = () => {
@@ -16,7 +16,7 @@ export const makeObservable = <T>(target: T) => {
   };
 
   const subscribe = (listener: Listener<T>) => {
-    listeners = [...listeners, listener];
+    listeners.push(listener);
 
     return () => unsubscribe(listener);
   };

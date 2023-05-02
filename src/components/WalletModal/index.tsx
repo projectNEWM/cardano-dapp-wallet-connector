@@ -36,7 +36,7 @@ const WalletModal: FunctionComponent<WalletModalProps> = ({
     }
   }, [error]);
 
-  return isConnected ? (
+  return wallet ? (
     <DisconnectWalletModal style={modalStyle} {...rest} />
   ) : (
     <ConnectWalletModal style={modalStyle} {...rest} />

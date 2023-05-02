@@ -3,49 +3,89 @@ import { enableWallet } from "utils";
 import { State } from "./types";
 import { makeObservable, sleep } from "./utils";
 
-const initialWalletName = localStorage.getItem(storageKey);
-
 export const initialState: State = {
   isLoading: false,
   error: null,
   enabledWallet: null,
-  isConnected: !!initialWalletName, // initialize as connected if wallet was connected previously
+  isConnected: !!localStorage.getItem(storageKey),
 };
 
 const store = makeObservable(initialState);
 
 /**
- * Checks that the currently stored wallet is available on the window.cardano object.
+ * Checks for up to 5 seconds that cardano object is populated on window.
  */
-const getIsWalletAvailable = () => {
-  return !!window.cardano && !!initialWalletName && !!window.cardano[initialWalletName];
+const checkForCardanoObject = async () => {
+  let retryCount = 0;
+
+  while (retryCount < 50) {
+    if (!!window.cardano) return true;
+
+    retryCount++;
+
+    await sleep();
+  }
+
+  return false;
+};
+
+/**
+ * Check that connected wallet is available on window.cardano object.
+ */
+const getIsWalletConnected = () => {
+  const initialWalletName = localStorage.getItem(storageKey);
+
+  if (!initialWalletName) {
+    return false;
+  }
+
+  if (!window.cardano) {
+    return false;
+  }
+
+  if (!window.cardano[initialWalletName]) {
+    return false;
+  }
+
+  return true;
+};
+
+/**
+ * Checks for up to 5 seconds that currently stored wallet is available on the window.
+ */
+const checkForConnectedWallet = async () => {
+  let retryCount = 0;
+
+  while (retryCount < 50) {
+    const isEnabled = await getIsWalletConnected();
+
+    if (isEnabled) return true;
+
+    retryCount++;
+
+    await sleep();
+  }
+
+  return false;
 };
 
 /**
  * If wallet has been previously connected, check that wallet is available
- * on the window object up to 5 times and connect it.
+ * on the window object up to 5 seconds and connect it.
  */
 const initializeWallet = async () => {
-  let isWalletAvailable = false;
+  const initialWalletName = localStorage.getItem(storageKey);
 
+  // wait until cardano object is populated on window
+  await checkForCardanoObject();
+
+  // get enabled wallet if one should be available
   if (initialWalletName) {
-    let retryCount = 0;
+    // check up to 5 seconds for wallet to be available on window
+    const isWalletConnected = await checkForConnectedWallet();
 
-    // wallet may not be immediately available on initial render, check up to 5 times
-    while (retryCount < 50) {
-      isWalletAvailable = getIsWalletAvailable();
-
-      // wallet object is present on window, no need to retry
-      if (isWalletAvailable) break;
-
-      retryCount += 1;
-
-      await sleep();
-    }
-
-    // if wallet is not available on window after 5 tries, ensure connected state is false
-    if (!isWalletAvailable) {
-      store.set({ ...initialState, isConnected: false });
+    if (!isWalletConnected) {
+      store.set({ ...initialState, isConnected: false, error: "Unable to find connected wallet." });
       return;
     }
 
@@ -54,7 +94,9 @@ const initializeWallet = async () => {
       const enabledWallet = await enableWallet(initialWalletName);
       store.set({ ...initialState, enabledWallet });
     } catch (err) {
-      store.set({ ...initialState, isConnected: false });
+      if (err instanceof Error) {
+        store.set({ ...initialState, isConnected: false, error: err.message });
+      }
     }
   }
 };

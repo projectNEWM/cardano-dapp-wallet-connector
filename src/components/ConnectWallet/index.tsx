@@ -16,13 +16,13 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
   fontFamily = "Arial",
   isInverted = false,
 }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleButtonClick = (event: MouseEvent) => {
     if (onClickButton) {
       onClickButton(event);
     } else {
-      setIsModalVisible(true);
+      setIsModalOpen(true);
     }
   };
 
@@ -30,14 +30,14 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
     if (onCloseModal) {
       onCloseModal(event);
     } else {
-      setIsModalVisible(false);
+      setIsModalOpen(false);
     }
   };
 
   return (
     <>
       <WalletModal
-        isOpen={isModalVisible}
+        isOpen={isModalOpen}
         style={modalStyle}
         isInverted={isInverted}
         headerStyle={modalHeaderStyle}
