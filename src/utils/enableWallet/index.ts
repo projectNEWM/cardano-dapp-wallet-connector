@@ -1,4 +1,4 @@
-import { storageKey } from "common";
+import { EnabledWalletApi, asyncTimeout, storageKey } from "common";
 
 const enableWallet = async (walletName: string) => {
   if (!window.cardano) {
@@ -18,11 +18,15 @@ const enableWallet = async (walletName: string) => {
     );
   }
 
-  const enabledWalletApi = await selectedWallet.enable();
+  const enabledWalletAPI = await asyncTimeout<EnabledWalletApi>(
+    selectedWallet.enable,
+    "Enabling wallet timed out after 10 seconds",
+    10000,
+  );
 
   const enabledWallet = {
     ...selectedWallet,
-    ...enabledWalletApi,
+    ...enabledWalletAPI,
   };
 
   window.localStorage.setItem(storageKey, walletName);
