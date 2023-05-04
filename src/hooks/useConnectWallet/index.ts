@@ -7,8 +7,8 @@ import {
   getSupportedWallets,
 } from "utils";
 import { UseConnectWalletResult } from "./types";
-import { useStore } from "store";
-import { APIErrorMessage } from "common";
+import { checkForInjectedWallet, useStore } from "store";
+import { APIErrorMessage, storageKey } from "common";
 
 /**
  * Returns values and helper functions for connecting, utlizing,
@@ -113,6 +113,40 @@ const useConnectWallet = (): UseConnectWalletResult => {
     },
     [state],
   );
+
+  /**
+   * If wallet should be connected but is not available in the state,
+   * ensure that it is available and connected.
+   */
+  const getEnabledWallet = useCallback(async () => {
+    const initialWalletName = localStorage.getItem(storageKey);
+
+    if (initialWalletName && state.isConnected && !state.enabledWallet) {
+      const isWalletConnected = await checkForInjectedWallet();
+
+      if (!isWalletConnected) {
+        setState({ ...state, isConnected: false, error: "Unable to find connected wallet." });
+        return;
+      }
+
+      // if available, attempt to connect it
+      try {
+        const enabledWallet = await enableWallet(initialWalletName);
+        setState({ ...state, enabledWallet });
+      } catch (err) {
+        if (err instanceof Error) {
+          setState({ ...state, isConnected: false, error: err.message });
+        }
+      }
+    }
+  }, [state]);
+
+  /**
+   * Initialize with previously connected wallet (if necessary) when hook mounts.
+   */
+  useEffect(() => {
+    getEnabledWallet();
+  }, []);
 
   /**
    * Ensure isConnected stays in sync with presence of enabled wallet.
