@@ -1,5 +1,6 @@
 import { bech32 } from "bech32";
 import { NetworkMode } from "common";
+import { Buffer } from "buffer";
 
 export const addressFromHex = (hex: string) => {
   const networkId = hex[1] === "0" ? NetworkMode.testNet : NetworkMode.mainNet;
