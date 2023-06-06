@@ -1,11 +1,17 @@
 import { EnabledWalletApi, asyncTimeout, storageKey } from "common";
 
-const enableWallet = async (walletName: string) => {
+const enableWallet = async (name?: string) => {
   if (!window.cardano) {
     throw new Error(
       `No wallet extensions have been installed. Please install a wallet
       extension and refresh the page.`,
     );
+  }
+
+  const walletName = name || localStorage.getItem(storageKey);
+
+  if (!walletName) {
+    throw new Error("Wallet name must be passed as an argument or have been connected previously.");
   }
 
   const selectedWallet = window.cardano[walletName];
