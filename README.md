@@ -166,13 +166,15 @@ Disconnects the currently connected wallet and sets the `wallet` value to `undef
 
 **`getBalance: (callback: (balance: number) => undefined) => undefined`**
 
-Function that accepts a callback with the current ADA balance as
-the argument.
+Function that accepts a callback with the current ADA balance as the argument.
 
 **`getAddress: (callback: (address: string) => undefined) => undefined`**
 
-Function that accepts a callback with a usable recieving address as
-the argument.
+Function that accepts a callback with a usable recieving address as the argument.
+
+**`getChangeAddress: (callback: (address: string) => undefined) => undefined`**
+
+Function that accepts a callback with a change address as the argument.
 
 **`isLoading: boolean`**
 
@@ -212,6 +214,10 @@ a wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 **`getWalletAddress: (wallet: Wallet) => Promise<string>`**
 
 Returns a plain text wallet address from the provided wallet object.
+
+**`getWalletChangeAddress: (wallet: Wallet) => Promise<string>`**
+
+Returns a plain text wallet change address from the provided wallet object.
 
 **`getWalletBalance: (wallet: Wallet) => Promise<number>`**
 

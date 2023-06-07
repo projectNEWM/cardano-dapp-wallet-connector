@@ -3,6 +3,7 @@ import {
   disconnectWallet,
   enableWallet,
   getWalletAddress,
+  getWalletChangeAddress,
   getWalletBalance,
   getSupportedWallets,
 } from "utils";
@@ -40,6 +41,34 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
 
         const address = await getWalletAddress(state.enabledWallet);
+        callback(address);
+      } catch (err) {
+        if (err instanceof Error) {
+          setState({
+            ...state,
+            error: err.message,
+          });
+        }
+      } finally {
+        setState({
+          ...state,
+          isLoading: false,
+        });
+      }
+    },
+    [state],
+  );
+
+  const getChangeAddress = useCallback(
+    async (callback: (address: string) => void) => {
+      try {
+        setState({
+          ...state,
+          error: null,
+          isLoading: true,
+        });
+
+        const address = await getWalletChangeAddress(state.enabledWallet);
         callback(address);
       } catch (err) {
         if (err instanceof Error) {
@@ -169,6 +198,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
     connect,
     disconnect,
     getAddress,
+    getChangeAddress,
     getBalance,
     getSupportedWallets,
   };

@@ -1,6 +1,6 @@
-import { EnabledWalletApi, asyncTimeout, storageKey } from "common";
+import { EnabledWallet, EnabledWalletApi, asyncTimeout, storageKey } from "common";
 
-const enableWallet = async (name?: string) => {
+const enableWallet = async (name?: string): Promise<EnabledWallet> => {
   if (!window.cardano) {
     throw new Error(
       `No wallet extensions have been installed. Please install a wallet

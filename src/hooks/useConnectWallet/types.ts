@@ -15,6 +15,8 @@ export interface UseConnectWalletResult {
   readonly disconnect: () => void;
   /** Get a receive address from the connected wallet */
   readonly getAddress: (callback: (address: string) => void) => void;
+  /** Get a receive change address from the connected wallet */
+  readonly getChangeAddress: (callback: (address: string) => void) => void;
   /** Get the ADA balance for the connected wallet */
   readonly getBalance: (callback: (balance: number) => void) => void;
   /** Get installable wallet extensions for the current browser */

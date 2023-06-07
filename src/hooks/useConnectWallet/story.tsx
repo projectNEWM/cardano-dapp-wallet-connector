@@ -5,10 +5,19 @@ import Typography from "elements/Typography";
 import useConnectWallet from "./index";
 
 const Demo: FunctionComponent = () => {
-  const { wallet, connect, disconnect, error, getAddress, getBalance, getSupportedWallets } =
-    useConnectWallet();
+  const {
+    wallet,
+    connect,
+    disconnect,
+    error,
+    getAddress,
+    getChangeAddress,
+    getBalance,
+    getSupportedWallets,
+  } = useConnectWallet();
 
   const [address, setAddress] = useState<string>("");
+  const [changeAddress, setChangeAddress] = useState<string>("");
   const [balance, setBalance] = useState<number | undefined>();
 
   const supportedWallets = getSupportedWallets();
@@ -17,6 +26,10 @@ const Demo: FunctionComponent = () => {
 
   const handleRecieveAddress = (addr: string) => {
     setAddress(addr);
+  };
+
+  const handleRecieveChangeAddress = (addr: string) => {
+    setChangeAddress(addr);
   };
 
   const handleRecieveBalance = (balance: number) => {
@@ -72,6 +85,10 @@ const Demo: FunctionComponent = () => {
 
       {!!address && <Typography style={{ marginBottom: "1rem" }}>Address: {address}</Typography>}
 
+      {!!changeAddress && (
+        <Typography style={{ marginBottom: "1rem" }}>Change address: {changeAddress}</Typography>
+      )}
+
       {!!balance && (
         <Typography style={{ marginBottom: "1rem" }}>Balance: &#x20B3; {balance}</Typography>
       )}
@@ -93,6 +110,12 @@ const Demo: FunctionComponent = () => {
         <div style={{ marginTop: "1rem" }}>
           <div style={{ marginBottom: "1rem" }}>
             <button onClick={() => getAddress(handleRecieveAddress)}>Get address</button>
+          </div>
+
+          <div style={{ marginBottom: "1rem" }}>
+            <button onClick={() => getChangeAddress(handleRecieveChangeAddress)}>
+              Get change address
+            </button>
           </div>
 
           <div style={{ marginBottom: "1rem" }}>
