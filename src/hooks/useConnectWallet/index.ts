@@ -6,6 +6,7 @@ import {
   getWalletChangeAddress,
   getWalletBalance,
   getSupportedWallets,
+  signWalletTransaction,
 } from "utils";
 import { UseConnectWalletResult } from "./types";
 import { checkForInjectedWallet, useStore } from "store";
@@ -114,6 +115,34 @@ const useConnectWallet = (): UseConnectWalletResult => {
     [state],
   );
 
+  const signTransaction = useCallback(
+    async (tx: string, callback: (signTx: string) => void) => {
+      try {
+        setState({
+          ...state,
+          error: null,
+          isLoading: true,
+        });
+
+        const signedTx = await signWalletTransaction(state.enabledWallet, tx);
+        callback(signedTx);
+      } catch (err) {
+        if (err instanceof Error) {
+          setState({
+            ...state,
+            error: err.message,
+          });
+        }
+      } finally {
+        setState({
+          ...state,
+          isLoading: false,
+        });
+      }
+    },
+    [state],
+  );
+
   const selectWallet = useCallback(
     async (walletName: string) => {
       try {
@@ -201,6 +230,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
     getChangeAddress,
     getBalance,
     getSupportedWallets,
+    signTransaction,
   };
 };
 
