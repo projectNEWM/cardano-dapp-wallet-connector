@@ -20,7 +20,7 @@ const signWalletTransaction = async (wallet: EnabledWallet | null, tx: string): 
   decodedTx[1] = decodedWitnesses;
   const encodedTx = encode(decodedTx);
 
-  return encodedTx;
+  return encodedTx.toString("hex");
 };
 
 export default signWalletTransaction;
