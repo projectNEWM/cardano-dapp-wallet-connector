@@ -9,7 +9,7 @@ import {
   signWalletTransaction,
 } from "utils";
 import { UseConnectWalletResult } from "./types";
-import { checkForInjectedWallet, useStore } from "store";
+import { checkForEnabledWallet, useStore } from "store";
 import { APIErrorMessage, storageKey } from "common";
 
 /**
@@ -180,7 +180,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
     const initialWalletName = localStorage.getItem(storageKey);
 
     if (initialWalletName && state.isConnected && !state.enabledWallet) {
-      const isWalletConnected = await checkForInjectedWallet();
+      const isWalletConnected = await checkForEnabledWallet();
 
       if (!isWalletConnected) {
         setState({ ...state, isConnected: false, error: "Unable to find connected wallet." });
