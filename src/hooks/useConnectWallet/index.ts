@@ -30,7 +30,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
       ...state,
       enabledWallet: null,
     });
-  }, [state]);
+  }, [state.isConnected, state.isLoading, state.error, state.enabledWallet]);
 
   const getAddress = useCallback(
     async (callback: (address: string) => void) => {
@@ -57,7 +57,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
       }
     },
-    [state],
+    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
   );
 
   const getChangeAddress = useCallback(
@@ -85,7 +85,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
       }
     },
-    [state],
+    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
   );
 
   const getBalance = useCallback(
@@ -112,7 +112,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
       }
     },
-    [state],
+    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
   );
 
   const signTransaction = useCallback(
@@ -140,7 +140,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         });
       }
     },
-    [state],
+    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
   );
 
   const selectWallet = useCallback(
@@ -169,7 +169,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         }
       }
     },
-    [state],
+    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
   );
 
   /**
@@ -197,7 +197,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         }
       }
     }
-  }, [state]);
+  }, [state.isConnected, state.isLoading, state.error, state.enabledWallet]);
 
   /**
    * Initialize with previously connected wallet (if necessary) when hook mounts.
@@ -217,7 +217,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
     if (!state.enabledWallet && state.isConnected) {
       setState({ ...state, isConnected: false });
     }
-  }, [state]);
+  }, [state.isConnected, state.isLoading, state.error, state.enabledWallet]);
 
   return {
     isConnected: state.isConnected,
