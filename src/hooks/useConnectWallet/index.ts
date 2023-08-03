@@ -28,9 +28,11 @@ const useConnectWallet = (): UseConnectWalletResult => {
     disconnectWallet();
     setState({
       ...state,
+      isLoading: false,
       enabledWallet: null,
+      error: null,
     });
-  }, [state.isConnected, state.isLoading, state.error, state.enabledWallet]);
+  }, [state.isConnected, state.enabledWallet]);
 
   const getAddress = useCallback(
     async (callback: (address: string) => void) => {
@@ -47,17 +49,19 @@ const useConnectWallet = (): UseConnectWalletResult => {
         if (err instanceof Error) {
           setState({
             ...state,
+            isLoading: false,
             error: err.message,
           });
         }
       } finally {
         setState({
           ...state,
+          error: null,
           isLoading: false,
         });
       }
     },
-    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
+    [state.isConnected, state.enabledWallet],
   );
 
   const getChangeAddress = useCallback(
@@ -75,17 +79,19 @@ const useConnectWallet = (): UseConnectWalletResult => {
         if (err instanceof Error) {
           setState({
             ...state,
+            isLoading: false,
             error: err.message,
           });
         }
       } finally {
         setState({
           ...state,
+          error: null,
           isLoading: false,
         });
       }
     },
-    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
+    [state.isConnected, state.enabledWallet],
   );
 
   const getBalance = useCallback(
@@ -102,17 +108,19 @@ const useConnectWallet = (): UseConnectWalletResult => {
         if (err instanceof Error) {
           setState({
             ...state,
+            isLoading: false,
             error: err.message,
           });
         }
       } finally {
         setState({
           ...state,
+          error: null,
           isLoading: false,
         });
       }
     },
-    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
+    [state.isConnected, state.enabledWallet],
   );
 
   const signTransaction = useCallback(
@@ -130,17 +138,19 @@ const useConnectWallet = (): UseConnectWalletResult => {
         if (err instanceof Error) {
           setState({
             ...state,
+            isLoading: false,
             error: err.message,
           });
         }
       } finally {
         setState({
           ...state,
+          error: null,
           isLoading: false,
         });
       }
     },
-    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
+    [state.isConnected, state.enabledWallet],
   );
 
   const selectWallet = useCallback(
@@ -148,6 +158,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
       try {
         setState({
           ...state,
+          isLoading: true,
           error: null,
         });
 
@@ -155,7 +166,9 @@ const useConnectWallet = (): UseConnectWalletResult => {
         const enabledWallet = await enableWallet(walletName);
         setState({
           ...state,
+          isLoading: false,
           enabledWallet,
+          error: null,
         });
       } catch (err) {
         disconnect();
@@ -164,12 +177,13 @@ const useConnectWallet = (): UseConnectWalletResult => {
         if (err instanceof Error && err.message !== APIErrorMessage.manualDisconnect) {
           setState({
             ...state,
+            isLoading: false,
             error: err.message,
           });
         }
       }
     },
-    [state.isConnected, state.isLoading, state.error, state.enabledWallet],
+    [state.isConnected, state.enabledWallet],
   );
 
   /**
@@ -183,21 +197,36 @@ const useConnectWallet = (): UseConnectWalletResult => {
       const isWalletConnected = await checkForEnabledWallet();
 
       if (!isWalletConnected) {
-        setState({ ...state, isConnected: false, error: "Unable to find connected wallet." });
+        setState({
+          ...state,
+          isConnected: false,
+          isLoading: false,
+          error: "Unable to find connected wallet.",
+        });
         return;
       }
 
-      // if available, attempt to connect it
       try {
+        // if available, attempt to connect it, but only if it is already authorized
         const enabledWallet = await enableWallet(initialWalletName);
-        setState({ ...state, enabledWallet });
+        setState({
+          ...state,
+          isLoading: false,
+          enabledWallet,
+          error: null,
+        });
       } catch (err) {
         if (err instanceof Error) {
-          setState({ ...state, isConnected: false, error: err.message });
+          setState({
+            ...state,
+            isConnected: false,
+            isLoading: false,
+            error: err.message,
+          });
         }
       }
     }
-  }, [state.isConnected, state.isLoading, state.error, state.enabledWallet]);
+  }, [state.isConnected, state.enabledWallet]);
 
   /**
    * Initialize with previously connected wallet (if necessary) when hook mounts.
@@ -211,13 +240,21 @@ const useConnectWallet = (): UseConnectWalletResult => {
    */
   useEffect(() => {
     if (state.enabledWallet && !state.isConnected) {
-      setState({ ...state, isConnected: true });
+      setState({
+        ...state,
+        isLoading: false,
+        isConnected: true,
+      });
     }
 
     if (!state.enabledWallet && state.isConnected) {
-      setState({ ...state, isConnected: false });
+      setState({
+        ...state,
+        isLoading: false,
+        isConnected: false,
+      });
     }
-  }, [state.isConnected, state.isLoading, state.error, state.enabledWallet]);
+  }, [state.isConnected, state.error, state.enabledWallet]);
 
   return {
     isConnected: state.isConnected,
