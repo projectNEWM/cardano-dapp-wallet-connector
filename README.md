@@ -18,16 +18,26 @@ utilizing the Cardano wallet object as defined in [CIP 30](https://cips.cardano.
 
 ### Example
 
-The most straightforward implemenation is to use the `ConnectWallet` component to connect a wallet
-and the `useConnectWallet` hook to access it. This example will provide a button and modal to connect
-a Cardano wallet, which will then be accessible with the `wallet` object returned from the hook.
+The most straightforward implementation is to use the `ConnectWallet` component to connect a wallet
+and the `useConnectWallet` hook to access it. This example will provide a button and modal to
+connect a Cardano wallet. Once the wallet is connected, the `wallet` object and helper functions
+from the hook can be utilized.
 
 ```
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { ConnectWallet, useConnectWallet } from "@newm.io/cardano-dapp-wallet-connector";
 
 const Example: FunctionComponent = () => {
-  const { wallet } = useConnectWallet();
+  const { wallet, getAddress } = useConnectWallet();
+  const [address, setAddress] = useState<string>()
+
+  useEffect(() => {
+    if (wallet) {
+      // do whatever you need with the wallet and/or helper functions once the wallet is connected
+      // e.g. get an address from the wallet and update the component state with it
+      getAddress(setAddress)
+    }
+  }, [wallet, getAddress])
 
   return (
     <ConnectWallet />
