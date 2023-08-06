@@ -137,7 +137,7 @@ const Example: FunctionComponent = () => {
 
   useEffect(() => {
     if (wallet) {
-      getBalance((ada) => setWalletBalance(ada)))
+      getBalance(setWalletBalance)
     }
   }, [wallet])
 
