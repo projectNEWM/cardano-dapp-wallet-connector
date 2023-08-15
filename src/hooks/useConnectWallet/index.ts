@@ -255,7 +255,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
    * Ensure isConnected stays in sync with presence of enabled wallet and localStorage.
    */
   useEffect(() => {
-    if (!state.isConnected && state.enabledWallet) {
+    if (!state.isConnected && initialWalletName && state.enabledWallet) {
       setState({
         ...state,
         isLoading: false,
