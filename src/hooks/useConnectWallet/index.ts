@@ -167,7 +167,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         // enable wallet
         const enabledWallet = await enableWallet(walletName);
         setState({
-          ...state,
+          isConnected: true,
           isLoading: false,
           enabledWallet,
           error: null,
@@ -178,7 +178,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
         // ignore error message if user manually disconnected, otherwise update state
         if (err instanceof Error && err.message !== APIErrorMessage.manualDisconnect) {
           setState({
-            ...state,
+            enabledWallet: null,
+            isConnected: false,
             isLoading: false,
             error: err.message,
           });
@@ -236,6 +237,24 @@ const useConnectWallet = (): UseConnectWalletResult => {
   }, []);
 
   /**
+   * Ensure connected status stays in sync with local storage
+   */
+  useEffect(() => {
+    if (!state.isConnected && initialWalletName) {
+      selectWallet(initialWalletName);
+    }
+
+    if (state.isConnected && !initialWalletName) {
+      setState({
+        enabledWallet: null,
+        isLoading: false,
+        isConnected: false,
+        error: null,
+      });
+    }
+  }, [state.isConnected, initialWalletName]);
+
+  /**
    * Ensure hook state responds to localStorage being changed from utils.
    */
   useEffect(() => {
@@ -250,28 +269,6 @@ const useConnectWallet = (): UseConnectWalletResult => {
       window.removeEventListener("storageKey", updateInitialWalletName);
     };
   }, []);
-
-  /**
-   * Ensure isConnected stays in sync with presence of enabled wallet and localStorage.
-   */
-  useEffect(() => {
-    if (!state.isConnected && initialWalletName && state.enabledWallet) {
-      setState({
-        ...state,
-        isLoading: false,
-        isConnected: true,
-      });
-    }
-
-    if (state.isConnected && (!initialWalletName || !state.enabledWallet)) {
-      setState({
-        ...state,
-        enabledWallet: null,
-        isLoading: false,
-        isConnected: false,
-      });
-    }
-  }, [state.isConnected, state.error, state.enabledWallet, initialWalletName]);
 
   return {
     isConnected: state.isConnected,
