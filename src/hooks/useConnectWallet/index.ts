@@ -199,6 +199,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
       if (!isWalletConnected) {
         setState({
           ...state,
+          enabledWallet: null,
           isConnected: false,
           isLoading: false,
           error: "Unable to find connected wallet.",
@@ -211,6 +212,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         const enabledWallet = await enableWallet(initialWalletName);
         setState({
           ...state,
+          isConnected: true,
           isLoading: false,
           enabledWallet,
           error: null,
@@ -219,6 +221,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         if (err instanceof Error) {
           setState({
             ...state,
+            enabledWallet: null,
             isConnected: false,
             isLoading: false,
             error: err.message,
