@@ -36,6 +36,8 @@ const enableWallet = async (name?: string): Promise<EnabledWallet> => {
   };
 
   window.localStorage.setItem(storageKey, walletName);
+  // dispatch event so hook can register changes
+  window.dispatchEvent(new Event(storageKey));
 
   return enabledWallet;
 };

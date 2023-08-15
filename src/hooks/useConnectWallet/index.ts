@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   disconnectWallet,
   enableWallet,
@@ -20,6 +20,8 @@ import { APIErrorMessage, storageKey } from "common";
 const useConnectWallet = (): UseConnectWalletResult => {
   const { state, setState } = useStore();
 
+  const [initialWalletName, setInitialWalletName] = useState(localStorage.getItem(storageKey));
+
   const connect = useCallback((name: string) => {
     selectWallet(name);
   }, []);
@@ -27,12 +29,12 @@ const useConnectWallet = (): UseConnectWalletResult => {
   const disconnect = useCallback(() => {
     disconnectWallet();
     setState({
-      ...state,
+      isConnected: false,
       isLoading: false,
       enabledWallet: null,
       error: null,
     });
-  }, [state.isConnected, state.enabledWallet]);
+  }, []);
 
   const getAddress = useCallback(
     async (callback: (address: string) => void) => {
@@ -191,14 +193,11 @@ const useConnectWallet = (): UseConnectWalletResult => {
    * ensure that it is available and connected.
    */
   const getEnabledWallet = useCallback(async () => {
-    const initialWalletName = localStorage.getItem(storageKey);
-
     if (initialWalletName && state.isConnected && !state.enabledWallet) {
       const isWalletConnected = await checkForEnabledWallet();
 
       if (!isWalletConnected) {
         setState({
-          ...state,
           enabledWallet: null,
           isConnected: false,
           isLoading: false,
@@ -211,7 +210,6 @@ const useConnectWallet = (): UseConnectWalletResult => {
         // if available, attempt to connect it, but only if it is already authorized
         const enabledWallet = await enableWallet(initialWalletName);
         setState({
-          ...state,
           isConnected: true,
           isLoading: false,
           enabledWallet,
@@ -220,7 +218,6 @@ const useConnectWallet = (): UseConnectWalletResult => {
       } catch (err) {
         if (err instanceof Error) {
           setState({
-            ...state,
             enabledWallet: null,
             isConnected: false,
             isLoading: false,
@@ -229,7 +226,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
         }
       }
     }
-  }, [state.isConnected, state.enabledWallet]);
+  }, [state.isConnected, state.enabledWallet, initialWalletName]);
 
   /**
    * Initialize with previously connected wallet (if necessary) when hook mounts.
@@ -239,10 +236,26 @@ const useConnectWallet = (): UseConnectWalletResult => {
   }, []);
 
   /**
-   * Ensure isConnected stays in sync with presence of enabled wallet.
+   * Ensure hook state responds to localStorage being changed from utils.
    */
   useEffect(() => {
-    if (state.enabledWallet && !state.isConnected) {
+    const updateInitialWalletName = () => {
+      const walletName = localStorage.getItem(storageKey);
+      setInitialWalletName(walletName);
+    };
+
+    window.addEventListener(storageKey, updateInitialWalletName);
+
+    return () => {
+      window.removeEventListener("storageKey", updateInitialWalletName);
+    };
+  }, []);
+
+  /**
+   * Ensure isConnected stays in sync with presence of enabled wallet and localStorage.
+   */
+  useEffect(() => {
+    if (!state.isConnected && state.enabledWallet) {
       setState({
         ...state,
         isLoading: false,
@@ -250,14 +263,15 @@ const useConnectWallet = (): UseConnectWalletResult => {
       });
     }
 
-    if (!state.enabledWallet && state.isConnected) {
+    if (state.isConnected && (!initialWalletName || !state.enabledWallet)) {
       setState({
         ...state,
+        enabledWallet: null,
         isLoading: false,
         isConnected: false,
       });
     }
-  }, [state.isConnected, state.error, state.enabledWallet]);
+  }, [state.isConnected, state.error, state.enabledWallet, initialWalletName]);
 
   return {
     isConnected: state.isConnected,
