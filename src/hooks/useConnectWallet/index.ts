@@ -266,7 +266,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
     window.addEventListener(storageKey, updateInitialWalletName);
 
     return () => {
-      window.removeEventListener("storageKey", updateInitialWalletName);
+      window.removeEventListener(storageKey, updateInitialWalletName);
     };
   }, []);
 
