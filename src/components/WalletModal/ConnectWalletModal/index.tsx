@@ -5,6 +5,7 @@ import { getSupportedWallets } from "utils";
 import { icons } from "assets";
 import { WalletInfo } from "common";
 import { WalletModalProps } from "../types";
+import { BrowserView, MobileView } from "react-device-detect";
 
 const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
   style = {},
@@ -43,9 +44,18 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
       backgroundOpacity={backgroundOpacity}
     >
       {supportedWallets.length === 0 ? (
-        <Typography isInverted style={{ textAlign: "center" }}>
-          Cardano wallet extensions are currently only supported in Chrome and Brave browsers.
-        </Typography>
+        <>
+          <MobileView>
+            <Typography isInverted={isInverted} style={{ textAlign: "center" }}>
+              No available Cardano wallets detected.
+            </Typography>
+          </MobileView>
+          <BrowserView>
+            <Typography isInverted={isInverted} style={{ textAlign: "center" }}>
+              Cardano wallet extensions are currently only supported in Chrome and Brave browsers.
+            </Typography>
+          </BrowserView>
+        </>
       ) : (
         supportedWallets.map((wallet, idx) => {
           return (
