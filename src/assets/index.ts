@@ -9,6 +9,7 @@ import lodeWallet from "./img/lode-wallet-logo.png";
 import nufi from "./svg/nufi-logo.svg";
 import begin from "./img/begin-logo.webp";
 import lace from "./svg/lace-logo.svg";
+import vespr from "./img/vespr-logo.webp";
 import close from "./svg/close-icon.svg";
 import externalLink from "./svg/external-link-icon.svg";
 import ExternalLink from "./tsx/ExternalLink";
@@ -26,6 +27,7 @@ export const logos = {
   nufi,
   begin,
   lace,
+  vespr,
 };
 
 export const icons = {

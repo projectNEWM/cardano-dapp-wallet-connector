@@ -1,6 +1,6 @@
 import { WalletInfo, SupportedWallet } from "common";
-import { browserName } from "react-device-detect";
 import { logos } from "assets";
+import { isIOS, isMobile, browserName } from "react-device-detect";
 
 const supportedWallets: ReadonlyArray<WalletInfo> = [
   {
@@ -9,6 +9,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     icon: logos.nami,
     extensionUrl: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
     websiteUrl: "https://namiwallet.io/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.eternl,
@@ -17,6 +18,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
     websiteUrl: "https://eternl.io/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.flint,
@@ -25,6 +27,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
     websiteUrl: "https://flint-wallet.com/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.cardwallet,
@@ -33,6 +36,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/cwallet/apnehcjmnengpnmccpaibjmhhoadaico",
     websiteUrl: "https://cwallet.finance/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.gerowallet,
@@ -41,6 +45,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/gerowallet/bgpipimickeadkjlklgciifhnalhdjhe",
     websiteUrl: "https://gerowallet.io/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.typhon,
@@ -49,6 +54,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
     websiteUrl: "https://typhonwallet.io/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.yoroi,
@@ -57,6 +63,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
     websiteUrl: "https://typhonwallet.io/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.lodeWallet,
@@ -65,6 +72,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/lodewallet/ikffplhknjhbfkgbhnionfklokakmknd",
     websiteUrl: "https://lodewallet.io/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.nufi,
@@ -72,6 +80,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     icon: logos.nufi,
     extensionUrl: "https://chrome.google.com/webstore/detail/nufi/gpnihlnnodeiiaakbikldcihojploeca",
     websiteUrl: "https://nu.fi/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.begin,
@@ -80,6 +89,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/begin-wallet/nhbicdelgedinnbcidconlnfeionhbml",
     websiteUrl: "https://begin.is/",
+    isMobile: false,
   },
   {
     id: SupportedWallet.lace,
@@ -87,6 +97,17 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     icon: logos.lace,
     extensionUrl: "https://chrome.google.com/webstore/detail/lace/gafhhkghbfjjkeiendhlofajokpaflmk",
     websiteUrl: "https://www.lace.io/",
+    isMobile: false,
+  },
+  {
+    id: SupportedWallet.vespr,
+    name: "vespr",
+    icon: logos.vespr,
+    extensionUrl: isIOS
+      ? "https://apps.apple.com/pk/app/vespr-cardano-wallet/id1565749376"
+      : "https://play.google.com/store/apps/details?id=art.nft_craze.gallery.main&hl=en_US&gl=US&pli=1",
+    websiteUrl: "https://vespr.gitbook.io/vespr/introduction/about",
+    isMobile: true,
   },
 ];
 
@@ -95,15 +116,11 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
  * before uninstalled wallets.
  */
 const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
-  if (!["Chrome", "Brave"].includes(browserName)) {
-    return [];
-  }
-
   const installedWallets: Array<WalletInfo> = [];
   const uninstalledWallets: Array<WalletInfo> = [];
 
   supportedWallets.forEach((wallet) => {
-    if (window.cardano && window.cardano[wallet.id]) {
+    if (window?.cardano && window.cardano[wallet.id]) {
       installedWallets.push({
         ...wallet,
         ...window.cardano[wallet.id],
@@ -117,7 +134,17 @@ const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
     }
   });
 
-  return [...installedWallets, ...uninstalledWallets];
+  // only display links to download wallets on Chrome and Brave browsers
+  if (!["Chrome", "Brave"].includes(browserName) && installedWallets.length === 0) {
+    return [];
+  }
+
+  return [...installedWallets, ...uninstalledWallets].filter(filterMobileWallets);
 };
+
+/**
+ * @returns whether a wallet's mobile support matches the current device.
+ */
+const filterMobileWallets = (wallet: WalletInfo): boolean => wallet.isMobile === isMobile;
 
 export default getSupportedWallets;

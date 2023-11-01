@@ -20,6 +20,7 @@ export interface WalletInfo {
   readonly extensionUrl: string;
   readonly websiteUrl: string;
   readonly isInstalled?: boolean;
+  readonly isMobile?: boolean;
 }
 
 export interface UnenabledWallet {
