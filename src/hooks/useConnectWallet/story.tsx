@@ -100,7 +100,11 @@ const Demo: FunctionComponent = () => {
           <select onChange={handleChange}>
             <option />
             {installedWallets.map(({ id, name }) => {
-              return <option key={id} value={id} label={name} />;
+              return (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              );
             })}
           </select>
         </>
