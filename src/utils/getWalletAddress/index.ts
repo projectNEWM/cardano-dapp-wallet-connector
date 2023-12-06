@@ -9,8 +9,11 @@ const getWalletAddress = async (wallet: EnabledWallet | null): Promise<string> =
     throw new Error("No wallet selected");
   }
 
-  const addresses = await wallet.getUsedAddresses();
-  const address = addresses[0];
+  const [usedAddresses, unusedAddresses] = await Promise.all([
+    wallet.getUsedAddresses(),
+    wallet.getUnusedAddresses(),
+  ]);
+  const address = [...usedAddresses, ...unusedAddresses][0];
 
   if (!address) {
     throw new Error("Unable to fetch wallet address");

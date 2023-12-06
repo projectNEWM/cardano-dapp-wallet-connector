@@ -55,8 +55,8 @@ export interface EnabledWalletApi {
   readonly getCollateral: () => Promise<Any>;
   readonly getNetworkId: () => Promise<Any>;
   readonly getRewardAddresses: () => Promise<Any>;
-  readonly getUnusedAddresses: () => Promise<Any>;
-  readonly getUsedAddresses: (paginate?: boolean) => Promise<Any>;
+  readonly getUnusedAddresses: () => Promise<Array<string>>;
+  readonly getUsedAddresses: (paginate?: boolean) => Promise<Array<string>>;
   readonly getUtxos: (amount?: string, paginate?: boolean) => Promise<Any>;
   readonly signData: (addr: string, sigStructure: string) => Promise<Any>;
   readonly signTx: (tx: string, partialSign?: boolean, createDebugTx?: boolean) => Promise<Any>;
