@@ -30,11 +30,10 @@ const enableWallet = async (name?: string): Promise<EnabledWallet> => {
     10000,
   );
 
-  const enabledWallet = {
-    ...selectedWallet,
-    ...enabledWalletAPI,
-  };
+  // combine enabled and selected wallet APIs so all fields are available
+  const enabledWallet = Object.assign(Object.create(enabledWalletAPI), selectedWallet);
 
+  // set active wallet name in local storage
   window.localStorage.setItem(storageKey, walletName);
   // dispatch event so hook can register changes
   window.dispatchEvent(new Event(storageKey));
