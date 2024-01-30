@@ -11,6 +11,7 @@ import {
 import { UseConnectWalletResult } from "./types";
 import { checkForEnabledWallet, useStore } from "store";
 import { APIErrorMessage, storageKey } from "common";
+import { getInitialWalletName } from "utils/helpers";
 
 /**
  * Returns values and helper functions for connecting, utlizing,
@@ -20,7 +21,7 @@ import { APIErrorMessage, storageKey } from "common";
 const useConnectWallet = (): UseConnectWalletResult => {
   const { state, setState } = useStore();
 
-  const [initialWalletName, setInitialWalletName] = useState(localStorage.getItem(storageKey));
+  const [initialWalletName, setInitialWalletName] = useState(getInitialWalletName());
 
   const connect = useCallback((name: string) => {
     selectWallet(name);
