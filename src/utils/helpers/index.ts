@@ -1,5 +1,5 @@
 import { bech32 } from "bech32";
-import { NetworkMode } from "common";
+import { NetworkMode, storageKey } from "common";
 import { Buffer } from "buffer";
 
 export const addressFromHex = (hex: string) => {
@@ -14,4 +14,18 @@ export const addressFromHex = (hex: string) => {
 
 export const fromHex = (hex: string): Buffer => {
   return Buffer.from(hex, "hex");
+};
+
+/**
+ * References localStorage to get stored wallet key with a check to
+ * avoid Next.js server-side error where window is not defined.
+ *
+ * @returns the stored wallet key string or null
+ */
+export const getInitialWalletName = () => {
+  if (typeof window !== "undefined") {
+    return window.localStorage.getItem(storageKey);
+  }
+
+  return null;
 };
