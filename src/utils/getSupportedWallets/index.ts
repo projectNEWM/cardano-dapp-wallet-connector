@@ -125,7 +125,7 @@ const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
     const isMobileWalletInstallable = wallet.isMobile && isMobile;
     const isBrowserExtensionWalletInstallable = !wallet.isMobile && isBrowserSupported;
 
-    if (window?.cardano && window.cardano[wallet.id]) {
+    if (typeof window !== "undefined" && window.cardano?.[wallet.id]) {
       installedWallets.push({
         ...wallet,
         ...window.cardano[wallet.id],
