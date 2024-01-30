@@ -3,8 +3,8 @@ import { State } from "./types";
 import { makeObservable } from "./utils";
 
 const getIsConnected = () => {
-  if (typeof localStorage !== "undefined") {
-    return !!localStorage.getItem(storageKey);
+  if (typeof window !== "undefined") {
+    return !!window.localStorage.getItem(storageKey);
   }
 
   return false;
