@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc && tsc-alias && babel src --out-dir dist --extensions '.ts,.tsx' && cp package.json README.md ./dist && cp -a ./src/assets/img/. ./dist/assets/img/ && cp -a ./src/assets/svg/. ./dist/assets/svg/",
+    "build": "npm run clean && tsc && tsc-alias && babel src --out-dir dist --extensions '.ts,.tsx' && cp package.json README.md ./dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
