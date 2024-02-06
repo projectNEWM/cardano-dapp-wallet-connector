@@ -28,13 +28,14 @@ const useConnectWallet = (): UseConnectWalletResult => {
   }, []);
 
   const disconnect = useCallback(() => {
-    disconnectWallet();
     setState({
       isConnected: false,
       isLoading: false,
       enabledWallet: null,
       error: null,
     });
+    setInitialWalletName(null);
+    disconnectWallet();
   }, []);
 
   const getAddress = useCallback(
