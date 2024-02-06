@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import {
   disconnectWallet,
   enableWallet,
@@ -21,8 +21,6 @@ import { getInitialWalletName } from "utils/helpers";
 const useConnectWallet = (): UseConnectWalletResult => {
   const { state, setState } = useStore();
 
-  const [initialWalletName, setInitialWalletName] = useState(getInitialWalletName());
-
   const connect = useCallback((name: string) => {
     selectWallet(name);
   }, []);
@@ -34,7 +32,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
       enabledWallet: null,
       error: null,
     });
-    setInitialWalletName(null);
+
     disconnectWallet();
   }, []);
 
@@ -196,6 +194,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
    * ensure that it is available and connected.
    */
   const getEnabledWallet = useCallback(async () => {
+    const initialWalletName = getInitialWalletName();
+
     if (initialWalletName && state.isConnected && !state.enabledWallet) {
       const isWalletConnected = await checkForEnabledWallet();
 
@@ -229,47 +229,41 @@ const useConnectWallet = (): UseConnectWalletResult => {
         }
       }
     }
-  }, [state.isConnected, state.enabledWallet, initialWalletName]);
+  }, [state.isConnected, state.enabledWallet]);
+
+  /**
+   * Ensure hook state responds to localStorage being changed from utils.
+   */
+  useEffect(() => {
+    const syncHookState = () => {
+      const walletName = getInitialWalletName();
+
+      if (!state.isConnected && walletName) {
+        selectWallet(walletName);
+      }
+
+      if (state.isConnected && !walletName) {
+        setState({
+          enabledWallet: null,
+          isLoading: false,
+          isConnected: false,
+          error: null,
+        });
+      }
+    };
+
+    window.addEventListener(storageKey, syncHookState);
+
+    return () => {
+      window.removeEventListener(storageKey, syncHookState);
+    };
+  }, [state.isConnected]);
 
   /**
    * Initialize with previously connected wallet (if necessary) when hook mounts.
    */
   useEffect(() => {
     getEnabledWallet();
-  }, []);
-
-  /**
-   * Ensure connected status stays in sync with local storage
-   */
-  useEffect(() => {
-    if (!state.isConnected && initialWalletName) {
-      selectWallet(initialWalletName);
-    }
-
-    if (state.isConnected && !initialWalletName) {
-      setState({
-        enabledWallet: null,
-        isLoading: false,
-        isConnected: false,
-        error: null,
-      });
-    }
-  }, [state.isConnected, initialWalletName]);
-
-  /**
-   * Ensure hook state responds to localStorage being changed from utils.
-   */
-  useEffect(() => {
-    const updateInitialWalletName = () => {
-      const walletName = localStorage.getItem(storageKey);
-      setInitialWalletName(walletName);
-    };
-
-    window.addEventListener(storageKey, updateInitialWalletName);
-
-    return () => {
-      window.removeEventListener(storageKey, updateInitialWalletName);
-    };
   }, []);
 
   return {
