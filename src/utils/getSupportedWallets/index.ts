@@ -70,8 +70,8 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     name: "Yoroi",
     icon: "https://res.cloudinary.com/newm/image/upload/v1706669030/yoroi-logo_t9ayqc.svg",
     extensionUrl:
-      "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
-    websiteUrl: "https://typhonwallet.io/",
+      "https://chromewebstore.google.com/detail/yoroi/ffnbelfdoeiohenkjibnmadjiehjhajb",
+    websiteUrl: "https://yoroi-wallet.com/",
     isMobile: false,
   },
   {
