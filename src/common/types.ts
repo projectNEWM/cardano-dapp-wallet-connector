@@ -20,7 +20,8 @@ export interface WalletInfo {
   readonly extensionUrl: string;
   readonly websiteUrl: string;
   readonly isInstalled?: boolean;
-  readonly isMobile?: boolean;
+  readonly browsers: ReadonlyArray<Browser>;
+  readonly isMobile: boolean;
 }
 
 export interface UnenabledWallet {
@@ -83,6 +84,8 @@ export interface SVGProps {
 export enum APIErrorMessage {
   manualDisconnect = "The request was refused due to lack of access - e.g. wallet disconnects.",
 }
+
+export type Browser = "Chrome" | "Brave" | "Firefox" | "Edge";
 
 // TODO: replace usage of this type with actual definitions
 type Any = any;

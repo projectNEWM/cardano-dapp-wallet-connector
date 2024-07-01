@@ -1,5 +1,5 @@
-import { WalletInfo, SupportedWallet } from "common";
-import { isIOS, isMobile, browserName } from "react-device-detect";
+import { WalletInfo, SupportedWallet, Browser } from "common";
+import { isIOS, isAndroid, isMobile, browserName } from "react-device-detect";
 
 const supportedWallets: ReadonlyArray<WalletInfo> = [
   {
@@ -8,8 +8,11 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     icon: "https://res.cloudinary.com/newm/image/upload/v1706668760/vespr-logo_emqgo8.webp",
     extensionUrl: isIOS
       ? "https://apps.apple.com/pk/app/vespr-cardano-wallet/id1565749376"
-      : "https://play.google.com/store/apps/details?id=art.nft_craze.gallery.main&hl=en_US&gl=US&pli=1",
+      : isAndroid
+      ? "https://play.google.com/store/apps/details?id=art.nft_craze.gallery.main&hl=en_US&gl=US&pli=1"
+      : "https://chromewebstore.google.com/detail/vespr-wallet/bedogdpgdnifilpgeianmmdabklhfkcn",
     websiteUrl: "https://vespr.gitbook.io/vespr/introduction/about",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: true,
   },
   {
@@ -18,6 +21,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     icon: "https://res.cloudinary.com/newm/image/upload/v1706668811/nami-logo_reuohl.svg",
     extensionUrl: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
     websiteUrl: "https://namiwallet.io/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
   {
@@ -27,6 +31,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
     websiteUrl: "https://eternl.io/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
   {
@@ -36,6 +41,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
     websiteUrl: "https://flint-wallet.com/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
   {
@@ -45,6 +51,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/cwallet/apnehcjmnengpnmccpaibjmhhoadaico",
     websiteUrl: "https://cwallet.finance/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
   {
@@ -54,6 +61,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/gerowallet/bgpipimickeadkjlklgciifhnalhdjhe",
     websiteUrl: "https://gerowallet.io/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
   {
@@ -63,6 +71,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
     websiteUrl: "https://typhonwallet.io/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
   {
@@ -70,8 +79,11 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     name: "Yoroi",
     icon: "https://res.cloudinary.com/newm/image/upload/v1706669030/yoroi-logo_t9ayqc.svg",
     extensionUrl:
-      "https://chromewebstore.google.com/detail/yoroi/ffnbelfdoeiohenkjibnmadjiehjhajb",
+      browserName === "Firefox"
+        ? "https://addons.mozilla.org/en-US/firefox/addon/yoroi/"
+        : "https://chromewebstore.google.com/detail/yoroi/ffnbelfdoeiohenkjibnmadjiehjhajb",
     websiteUrl: "https://yoroi-wallet.com/",
+    browsers: ["Chrome", "Brave", "Edge", "Firefox"],
     isMobile: false,
   },
   {
@@ -81,6 +93,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/lodewallet/ikffplhknjhbfkgbhnionfklokakmknd",
     websiteUrl: "https://lodewallet.io/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
   {
@@ -89,6 +102,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     icon: "https://res.cloudinary.com/newm/image/upload/v1706669107/nufi-logo_iutlxs.svg",
     extensionUrl: "https://chrome.google.com/webstore/detail/nufi/gpnihlnnodeiiaakbikldcihojploeca",
     websiteUrl: "https://nu.fi/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
   {
@@ -98,6 +112,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     extensionUrl:
       "https://chrome.google.com/webstore/detail/begin-wallet/nhbicdelgedinnbcidconlnfeionhbml",
     websiteUrl: "https://begin.is/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
   {
@@ -106,6 +121,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     icon: "https://res.cloudinary.com/newm/image/upload/v1706669221/lace-logo_mhtvnb.svg",
     extensionUrl: "https://chrome.google.com/webstore/detail/lace/gafhhkghbfjjkeiendhlofajokpaflmk",
     websiteUrl: "https://www.lace.io/",
+    browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
 ];
@@ -117,12 +133,11 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
 const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
   const installedWallets: Array<WalletInfo> = [];
   const uninstalledWallets: Array<WalletInfo> = [];
-  const supportedBrowsers = ["Chrome", "Brave"];
-  const isBrowserSupported = supportedBrowsers.includes(browserName);
 
   supportedWallets.forEach((wallet) => {
+    const currentBrowser = browserName as Browser;
     const isMobileWalletInstallable = wallet.isMobile && isMobile;
-    const isBrowserExtensionWalletInstallable = !wallet.isMobile && isBrowserSupported;
+    const isBrowserExtensionWalletInstallable = wallet.browsers.includes(currentBrowser);
 
     if (typeof window !== "undefined" && window.cardano?.[wallet.id]) {
       installedWallets.push({
