@@ -1,5 +1,4 @@
 import React from "react";
-import { ComponentMeta } from "@storybook/react";
 import ConnectWallet from "./index";
 
 export default {
@@ -10,7 +9,7 @@ export default {
       default: "dark",
     },
   },
-} as ComponentMeta<typeof ConnectWallet>;
+};
 
 export const Unstyled = () => <ConnectWallet />;
 

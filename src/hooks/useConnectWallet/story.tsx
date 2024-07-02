@@ -1,5 +1,4 @@
 import React, { FormEvent, useState } from "react";
-import { ComponentMeta } from "@storybook/react";
 import { FunctionComponent } from "react";
 import Typography from "elements/Typography";
 import useConnectWallet from "./index";
@@ -144,6 +143,6 @@ const Demo: FunctionComponent = () => {
 export default {
   title: "useConnectWallet",
   component: Demo,
-} as ComponentMeta<typeof Demo>;
+};
 
 export const Primary = () => <Demo />;

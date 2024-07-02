@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ComponentMeta } from "@storybook/react";
 import WalletModal from "./index";
 
 export default {
@@ -10,7 +9,7 @@ export default {
       default: "dark",
     },
   },
-} as ComponentMeta<typeof WalletModal>;
+};
 
 export const Unstyled = () => {
   const [isOpen, setIsOpen] = useState(false);
