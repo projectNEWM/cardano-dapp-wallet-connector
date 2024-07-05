@@ -64,6 +64,11 @@ export interface EnabledWalletApi {
   readonly submitTx: (tx: string) => Promise<Any>;
 }
 
+export interface SignTxOptions {
+  partialSign?: boolean;
+  createDebugTx?: boolean;
+}
+
 type FullWalletAPI = UnenabledWallet & EnabledWalletApi;
 export interface EnabledWallet extends FullWalletAPI {
   readonly id: string;
