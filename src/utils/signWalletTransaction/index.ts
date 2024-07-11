@@ -27,12 +27,8 @@ const signWalletTransaction = async (
   const existingSignatures = decodedTx[1];
 
   // update transaction with signature/s
-  if (existingSignatures && Object.entries(existingSignatures).length > 0) {
-    const mergedSignatures = mergeSignatureMaps(decodedWitnesses, existingSignatures);
-    decodedTx[1] = mergedSignatures;
-  } else {
-    decodedTx[1] = decodedWitnesses;
-  }
+  const mergedSignatures = mergeSignatureMaps(decodedWitnesses, existingSignatures);
+  decodedTx[1] = mergedSignatures;
 
   return encode(decodedTx).toString("hex");
 };
