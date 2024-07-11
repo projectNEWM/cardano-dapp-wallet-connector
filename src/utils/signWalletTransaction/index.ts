@@ -1,5 +1,6 @@
 import { EnabledWallet, SignTxOptions } from "common";
 import { encode, decode } from "cbor-web";
+import { mergeSignatureMaps } from "utils/helpers";
 
 /**
  * Signs a transaction and returns the entire transaction as a CBOR encoded hex string.
@@ -12,7 +13,7 @@ import { encode, decode } from "cbor-web";
 const signWalletTransaction = async (
   wallet: EnabledWallet | null,
   tx: string,
-  options?: SignTxOptions
+  options?: SignTxOptions,
 ): Promise<string> => {
   if (!wallet) {
     throw new Error("No wallet selected");
@@ -20,16 +21,20 @@ const signWalletTransaction = async (
 
   const { partialSign = false, createDebugTx = false } = options || {};
 
-
   const witnesses = await wallet.signTx(tx, partialSign, createDebugTx);
   const decodedTx = decode(tx);
   const decodedWitnesses = decode(witnesses);
+  const existingSignatures = decodedTx[1];
 
-  // update transaction with signature
-  decodedTx[1] = decodedWitnesses;
-  const encodedTx = encode(decodedTx);
+  // update transaction with signature/s
+  if (existingSignatures && Object.entries(existingSignatures).length > 0) {
+    const mergedSignatures = mergeSignatureMaps(decodedWitnesses, existingSignatures);
+    decodedTx[1] = mergedSignatures;
+  } else {
+    decodedTx[1] = decodedWitnesses;
+  }
 
-  return encodedTx.toString("hex");
+  return encode(decodedTx).toString("hex");
 };
 
 export default signWalletTransaction;
