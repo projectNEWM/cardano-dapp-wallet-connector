@@ -230,7 +230,7 @@ a wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 
 Returns a plain text wallet address from the provided wallet object.
 
-**`getWalletChangeAddress: (wallet: Wallet) => Promise<string>`**`
+**`getWalletChangeAddress: (wallet: Wallet) => Promise<string>`**
 
 Returns a plain text wallet change address from the provided wallet object.
 
