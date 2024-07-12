@@ -1,4 +1,4 @@
-import { EnabledWallet, SignTxOptions } from "common";
+import { EnabledWallet } from "common";
 import { encode, decode } from "cbor-web";
 import { mergeSignatureMaps } from "utils/helpers";
 
@@ -13,15 +13,13 @@ import { mergeSignatureMaps } from "utils/helpers";
 const signWalletTransaction = async (
   wallet: EnabledWallet | null,
   tx: string,
-  options?: SignTxOptions,
+  partialSign = false,
 ): Promise<string> => {
   if (!wallet) {
     throw new Error("No wallet selected");
   }
 
-  const { partialSign = false, createDebugTx = false } = options || {};
-
-  const witnesses = await wallet.signTx(tx, partialSign, createDebugTx);
+  const witnesses = await wallet.signTx(tx, partialSign);
   const decodedTx = decode(tx);
   const decodedWitnesses = decode(witnesses);
   const existingSignatures = decodedTx[1];

@@ -60,13 +60,8 @@ export interface EnabledWalletApi {
   readonly getUsedAddresses: (paginate?: boolean) => Promise<Array<string>>;
   readonly getUtxos: (amount?: string, paginate?: boolean) => Promise<Any>;
   readonly signData: (addr: string, sigStructure: string) => Promise<Any>;
-  readonly signTx: (tx: string, partialSign?: boolean, createDebugTx?: boolean) => Promise<Any>;
+  readonly signTx: (tx: string, partialSign?: boolean) => Promise<Any>;
   readonly submitTx: (tx: string) => Promise<Any>;
-}
-
-export interface SignTxOptions {
-  partialSign?: boolean;
-  createDebugTx?: boolean;
 }
 
 type FullWalletAPI = UnenabledWallet & EnabledWalletApi;

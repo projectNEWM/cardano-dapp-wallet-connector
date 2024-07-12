@@ -10,7 +10,7 @@ import {
 } from "utils";
 import { UseConnectWalletResult } from "./types";
 import { checkForEnabledWallet, useStore } from "store";
-import { APIErrorMessage, SignTxOptions, storageKey } from "common";
+import { APIErrorMessage, storageKey } from "common";
 import { getInitialWalletName } from "utils/helpers";
 
 /**
@@ -126,7 +126,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
   );
 
   const signTransaction = useCallback(
-    async (tx: string, callback: (signedTx: string) => void, options?: SignTxOptions) => {
+    async (tx: string, callback: (signedTx: string) => void, partialSign = false) => {
       try {
         setState({
           ...state,
@@ -134,7 +134,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
           isLoading: true,
         });
 
-        const signedTx = await signWalletTransaction(state.enabledWallet, tx, options);
+        const signedTx = await signWalletTransaction(state.enabledWallet, tx, partialSign);
 
         callback(signedTx);
       } catch (err) {
