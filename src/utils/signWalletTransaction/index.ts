@@ -7,7 +7,7 @@ import { mergeSignatureMaps } from "utils/helpers";
  *
  * @param wallet the enabled wallet API
  * @param tx cbor hex encoded transaction string
- * @param options optional parameters for partial sign and debug transaction
+ * @param partialSign optional boolean to partially sign transaction
  * @returns the full signed transaction as a CBOR encoded hex string
  */
 const signWalletTransaction = async (
