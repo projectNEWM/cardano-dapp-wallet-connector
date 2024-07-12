@@ -186,7 +186,7 @@ Function that accepts a callback with a usable recieving address as the argument
 
 Function that accepts a callback with a change address as the argument.
 
-**`signTransaction: (tx: string, callback: (signedTx: string) => undefined, partialSign?: boolean) => undefined`**
+**`signTransaction: (tx: string, callback: (signedTx: string) => undefined, partialSign?: boolean = false) => undefined`**
 
 Function that accepts an unsigned transaction, a callback with the signed
 transaction as the argument, and an optional `partialSign` argument.
@@ -230,7 +230,7 @@ a wallet object as defined in [CIP 30](https://cips.cardano.org/cips/cip30).
 
 Returns a plain text wallet address from the provided wallet object.
 
-**`getWalletChangeAddress: (wallet: Wallet) => Promise<string>`**
+**`getWalletChangeAddress: (wallet: Wallet) => Promise<string>`**`
 
 Returns a plain text wallet change address from the provided wallet object.
 
@@ -238,7 +238,7 @@ Returns a plain text wallet change address from the provided wallet object.
 
 Returns the balance for the provided wallet in ADA.
 
-**`signWalletTransaction: (wallet: Wallet, tx: string, partialSign?: boolean) => Promise<string>`**
+**`signWalletTransaction: (wallet: Wallet, tx: string, partialSign?: boolean = false) => Promise<string>`**
 
 Returns the full signed transaction as a CBOR encoded hex string.
 
