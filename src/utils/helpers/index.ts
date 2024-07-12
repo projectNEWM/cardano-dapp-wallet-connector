@@ -36,8 +36,8 @@ export const getInitialWalletName = () => {
  * @returns map with entries from both signature maps
  */
 export const mergeSignatureMaps = (
-  a: Map<number, Array<Array<number>>>,
-  b: Map<number, Array<Array<number>>>,
+  a: Map<number, Array<Array<number>>> = new Map(),
+  b: Map<number, Array<Array<number>>> = new Map(),
 ): Map<number, Array<Array<number>>> => {
   const merged = new Map();
 
