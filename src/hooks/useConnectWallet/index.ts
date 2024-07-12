@@ -126,7 +126,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
   );
 
   const signTransaction = useCallback(
-    async (tx: string, callback: (signTx: string) => void) => {
+    async (tx: string, callback: (signedTx: string) => void, partialSign = false) => {
       try {
         setState({
           ...state,
@@ -134,7 +134,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
           isLoading: true,
         });
 
-        const signedTx = await signWalletTransaction(state.enabledWallet, tx);
+        const signedTx = await signWalletTransaction(state.enabledWallet, tx, partialSign);
+
         callback(signedTx);
       } catch (err) {
         if (err instanceof Error) {

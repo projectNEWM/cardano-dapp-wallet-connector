@@ -186,10 +186,10 @@ Function that accepts a callback with a usable recieving address as the argument
 
 Function that accepts a callback with a change address as the argument.
 
-**`signTransaction: (tx: string, callback: (signedTx: string) => undefined) => undefined`**
+**`signTransaction: (tx: string, callback: (signedTx: string) => undefined, partialSign?: boolean = false) => undefined`**
 
-Function that accepts an unsigned transaction and a callback with the signed
-transaction as the argument.
+Function that accepts an unsigned transaction, a callback with the signed
+transaction as the argument, and an optional `partialSign` argument.
 
 **`isLoading: boolean`**
 
@@ -238,7 +238,7 @@ Returns a plain text wallet change address from the provided wallet object.
 
 Returns the balance for the provided wallet in ADA.
 
-**`signWalletTransaction: (wallet: Wallet, tx: string) => Promise<string>`**
+**`signWalletTransaction: (wallet: Wallet, tx: string, partialSign?: boolean = false) => Promise<string>`**
 
 Returns the full signed transaction as a CBOR encoded hex string.
 

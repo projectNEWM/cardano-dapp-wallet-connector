@@ -29,3 +29,31 @@ export const getInitialWalletName = () => {
 
   return null;
 };
+
+/**
+ * Merges the keys and values from two signature maps into a single map.
+ *
+ * @returns map with entries from both signature maps
+ */
+export const mergeSignatureMaps = (
+  a: Map<number, Array<Array<number>>>,
+  b: Map<number, Array<Array<number>>>,
+): Map<number, Array<Array<number>>> => {
+  const merged = new Map();
+
+  a.forEach((value, key) => {
+    merged.set(key, value);
+  });
+
+  b.forEach((value, key) => {
+    const existingValue = merged.get(key);
+
+    if (!existingValue) {
+      merged.set(key, value);
+    } else {
+      merged.set(key, [...existingValue, ...value]);
+    }
+  });
+
+  return merged;
+};
