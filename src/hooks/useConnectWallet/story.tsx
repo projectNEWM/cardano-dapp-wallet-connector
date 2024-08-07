@@ -47,7 +47,9 @@ const Demo: FunctionComponent = () => {
 
   const handleDisconnectWallet = () => {
     setAddress("");
+    setChangeAddress("");
     setBalance(undefined);
+    setNewmBalance(undefined);
     disconnect();
   };
 
@@ -94,11 +96,11 @@ const Demo: FunctionComponent = () => {
         <Typography style={{ marginBottom: "1rem" }}>Change address: {changeAddress}</Typography>
       )}
 
-      {!!balance && (
+      {typeof balance === "number" && (
         <Typography style={{ marginBottom: "1rem" }}>Balance: &#x20B3; {balance}</Typography>
       )}
 
-      {!!newmBalance && (
+      {typeof newmBalance === "number" && (
         <Typography style={{ marginBottom: "1rem" }}>
           NEWM Balance: &#x19D; {newmBalance}
         </Typography>
