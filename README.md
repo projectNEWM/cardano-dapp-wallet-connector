@@ -178,6 +178,10 @@ Disconnects the currently connected wallet and sets the `wallet` value to `undef
 
 Function that accepts a callback with the current ADA balance as the argument.
 
+**`getTokenBalance: (policyId: string, callback: (balance: number) => undefined, tokenName?: string) => undefined`**
+
+Function that accepts a callback with the current balance for a specific policy ID and optional hex encoded token name.
+
 **`getAddress: (callback: (address: string) => undefined) => undefined`**
 
 Function that accepts a callback with a usable recieving address as the argument.
@@ -237,6 +241,10 @@ Returns a plain text wallet change address from the provided wallet object.
 **`getWalletBalance: (wallet: Wallet) => Promise<number>`**
 
 Returns the balance for the provided wallet in ADA.
+
+**`getWalletTokenBalance: (wallet: Wallet, policyId: string, tokenName?: string) => Promise<number>`**
+
+Returns the wallet balance for a specific policy ID and optional hex encoded token name.
 
 **`signWalletTransaction: (wallet: Wallet, tx: string, partialSign?: boolean = false) => Promise<string>`**
 

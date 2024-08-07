@@ -21,6 +21,16 @@ export interface UseConnectWalletResult {
   readonly getBalance: (callback: (balance: number) => void) => void;
   /** Get installable wallet extensions for the current browser */
   readonly getSupportedWallets: () => ReadonlyArray<WalletInfo>;
-  /** Get installable wallet extensions for the current browser */
-  readonly signTransaction: (tx: string, callback: (signedTx: string) => void) => void;
+  /** Sign a transaction and return the full signed transaction */
+  readonly signTransaction: (
+    tx: string,
+    callback: (signedTx: string) => void,
+    partialSign?: boolean,
+  ) => void;
+  /** Get the wallet balance for a specific policy ID and optional hex encoded token name */
+  readonly getTokenBalance: (
+    policyId: string,
+    callback: (balance: number) => void,
+    tokenName?: string,
+  ) => void;
 }

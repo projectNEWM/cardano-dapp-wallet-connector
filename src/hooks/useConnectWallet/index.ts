@@ -7,6 +7,7 @@ import {
   getWalletBalance,
   getSupportedWallets,
   signWalletTransaction,
+  getWalletTokenBalance,
 } from "utils";
 import { UseConnectWalletResult } from "./types";
 import { checkForEnabledWallet, useStore } from "store";
@@ -156,6 +157,37 @@ const useConnectWallet = (): UseConnectWalletResult => {
     [state.isConnected, state.enabledWallet],
   );
 
+  const getTokenBalance = useCallback(
+    async (policyId: string, callback: (balance: number) => void, tokenName?: string) => {
+      try {
+        setState({
+          ...state,
+          error: null,
+          isLoading: true,
+        });
+
+        const balance = await getWalletTokenBalance(state.enabledWallet, policyId, tokenName);
+
+        callback(balance);
+      } catch (err) {
+        if (err instanceof Error) {
+          setState({
+            ...state,
+            isLoading: false,
+            error: err.message,
+          });
+        }
+      } finally {
+        setState({
+          ...state,
+          error: null,
+          isLoading: false,
+        });
+      }
+    },
+    [state.isConnected, state.enabledWallet],
+  );
+
   const selectWallet = useCallback(
     async (walletName: string) => {
       try {
@@ -279,6 +311,7 @@ const useConnectWallet = (): UseConnectWalletResult => {
     getBalance,
     getSupportedWallets,
     signTransaction,
+    getTokenBalance,
   };
 };
 
