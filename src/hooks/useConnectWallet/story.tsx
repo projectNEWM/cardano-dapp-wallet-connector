@@ -12,12 +12,14 @@ const Demo: FunctionComponent = () => {
     getAddress,
     getChangeAddress,
     getBalance,
+    getTokenBalance,
     getSupportedWallets,
   } = useConnectWallet();
 
   const [address, setAddress] = useState<string>("");
   const [changeAddress, setChangeAddress] = useState<string>("");
   const [balance, setBalance] = useState<number | undefined>();
+  const [newmBalance, setNewmBalance] = useState<number>();
 
   const supportedWallets = getSupportedWallets();
 
@@ -35,13 +37,19 @@ const Demo: FunctionComponent = () => {
     setBalance(balance);
   };
 
+  const handleRecieveNewmBalance = (balance: number) => {
+    setNewmBalance(balance);
+  };
+
   const handleChange = (event: FormEvent<HTMLSelectElement>) => {
     connect((event.target as HTMLSelectElement).value);
   };
 
   const handleDisconnectWallet = () => {
     setAddress("");
+    setChangeAddress("");
     setBalance(undefined);
+    setNewmBalance(undefined);
     disconnect();
   };
 
@@ -88,8 +96,14 @@ const Demo: FunctionComponent = () => {
         <Typography style={{ marginBottom: "1rem" }}>Change address: {changeAddress}</Typography>
       )}
 
-      {!!balance && (
+      {typeof balance === "number" && (
         <Typography style={{ marginBottom: "1rem" }}>Balance: &#x20B3; {balance}</Typography>
+      )}
+
+      {typeof newmBalance === "number" && (
+        <Typography style={{ marginBottom: "1rem" }}>
+          NEWM Balance: &#x19D; {newmBalance}
+        </Typography>
       )}
 
       {!wallet && installedWallets.length > 0 && (
@@ -123,6 +137,20 @@ const Demo: FunctionComponent = () => {
 
           <div style={{ marginBottom: "1rem" }}>
             <button onClick={() => getBalance(handleRecieveBalance)}>Get balance</button>
+          </div>
+
+          <div style={{ marginBottom: "1rem" }}>
+            <button
+              onClick={() =>
+                getTokenBalance(
+                  "682fe60c9918842b3323c43b5144bc3d52a23bd2fb81345560d73f63",
+                  handleRecieveNewmBalance,
+                  "4e45574d",
+                )
+              }
+            >
+              Get NEWM balance
+            </button>
           </div>
 
           <div style={{ marginBottom: "1rem" }}>

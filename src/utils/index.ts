@@ -5,3 +5,4 @@ export { default as getWalletChangeAddress } from "./getWalletChangeAddress";
 export { default as getWalletBalance } from "./getWalletBalance";
 export { default as getSupportedWallets } from "./getSupportedWallets";
 export { default as signWalletTransaction } from "./signWalletTransaction";
+export { default as getWalletTokenBalance } from "./getWalletTokenBalance";
