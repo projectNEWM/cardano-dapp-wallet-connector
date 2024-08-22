@@ -4,7 +4,7 @@ import { isIOS, isAndroid, isMobile, browserName } from "react-device-detect";
 const supportedWallets: ReadonlyArray<WalletInfo> = [
   {
     id: SupportedWallet.vespr,
-    name: "vespr",
+    name: "VESPR",
     icon: "https://res.cloudinary.com/newm/image/upload/v1706668760/vespr-logo_emqgo8.webp",
     extensionUrl: isIOS
       ? "https://apps.apple.com/pk/app/vespr-cardano-wallet/id1565749376"
@@ -66,7 +66,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
   },
   {
     id: SupportedWallet.typhon,
-    name: "Typhon",
+    name: "Typhon Wallet",
     icon: "https://res.cloudinary.com/newm/image/upload/v1706668668/typhon-logo_jxwqoi.svg",
     extensionUrl:
       "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
@@ -98,7 +98,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
   },
   {
     id: SupportedWallet.nufi,
-    name: "nufi",
+    name: "NuFi",
     icon: "https://res.cloudinary.com/newm/image/upload/v1706669107/nufi-logo_iutlxs.svg",
     extensionUrl: "https://chrome.google.com/webstore/detail/nufi/gpnihlnnodeiiaakbikldcihojploeca",
     websiteUrl: "https://nu.fi/",
@@ -107,7 +107,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
   },
   {
     id: SupportedWallet.begin,
-    name: "begin",
+    name: "Begin",
     icon: "https://res.cloudinary.com/newm/image/upload/v1706669164/begin-logo_t0fu7d.webp",
     extensionUrl:
       "https://chrome.google.com/webstore/detail/begin-wallet/nhbicdelgedinnbcidconlnfeionhbml",
@@ -117,7 +117,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
   },
   {
     id: SupportedWallet.lace,
-    name: "lace",
+    name: "Lace",
     icon: "https://res.cloudinary.com/newm/image/upload/v1706669221/lace-logo_mhtvnb.svg",
     extensionUrl: "https://chrome.google.com/webstore/detail/lace/gafhhkghbfjjkeiendhlofajokpaflmk",
     websiteUrl: "https://www.lace.io/",
