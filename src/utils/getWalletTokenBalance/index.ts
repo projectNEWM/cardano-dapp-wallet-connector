@@ -15,7 +15,10 @@ const getWalletTokenBalance = async (
 
   const numTokens = utxos.reduce((sum: number, utxo: string) => {
     const decoded = decode(utxo);
-    const quantity = decoded[1][1];
+    const data = decoded[1];
+
+    // account for shelly and conway encoded UTXOs
+    const quantity = data instanceof Map ? Array.from(data.entries())[1][1] : data[1];
 
     // ignore ADA UTXOs
     if (typeof quantity === "number") return sum;
