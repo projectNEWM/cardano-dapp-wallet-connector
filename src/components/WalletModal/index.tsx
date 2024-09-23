@@ -9,6 +9,7 @@ import { usePrevious } from "common";
 const WalletModal: FunctionComponent<WalletModalProps> = ({
   style,
   onConnect,
+  onDisconnect,
   onError,
   fontFamily = "Arial",
   ...rest
@@ -26,6 +27,15 @@ const WalletModal: FunctionComponent<WalletModalProps> = ({
       onConnect(wallet);
     }
   }, [isConnected, wallet, prevIsConnected]);
+
+  /**
+   * Call onDisconnect if isConnected changes to false.
+   */
+  useEffect(() => {
+    if (onDisconnect && prevIsConnected && !isConnected) {
+      onDisconnect();
+    }
+  }, [isConnected, prevIsConnected]);
 
   /**
    * Call onError if an error occurs.

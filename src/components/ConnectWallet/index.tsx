@@ -8,6 +8,7 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
   onClickButton,
   onCloseModal,
   onConnect,
+  onDisconnect,
   onError,
   mainButtonStyle = {},
   modalStyle = {},
@@ -44,6 +45,7 @@ const ConnectWallet: FunctionComponent<ConnectWalletProps> = ({
         disconnectButtonStyle={disconnectButtonStyle}
         fontFamily={fontFamily}
         onConnect={onConnect}
+        onDisconnect={onDisconnect}
         onError={onError}
         onClose={handleCloseModal}
       />
