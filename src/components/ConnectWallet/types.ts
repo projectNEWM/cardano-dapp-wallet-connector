@@ -20,6 +20,8 @@ export interface ConnectWalletProps {
   readonly onCloseModal?: (event: MouseEvent) => void;
   /** Called when a wallet is connected. */
   readonly onConnect?: (wallet: EnabledWallet) => void;
+  /** Called when a wallet is disconnected. */
+  readonly onDisconnect?: () => void;
   /** Called when an error occurs. */
   readonly onError?: (message: string) => void;
 }
