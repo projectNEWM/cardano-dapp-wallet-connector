@@ -35,16 +35,6 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     isMobile: false,
   },
   {
-    id: SupportedWallet.flint,
-    name: "Flint",
-    icon: "https://res.cloudinary.com/newm/image/upload/v1706668855/flint-logo_bjv3ha.svg",
-    extensionUrl:
-      "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
-    websiteUrl: "https://flint-wallet.com/",
-    browsers: ["Chrome", "Brave", "Edge"],
-    isMobile: false,
-  },
-  {
     id: SupportedWallet.cardwallet,
     name: "Cardwallet",
     icon: "https://res.cloudinary.com/newm/image/upload/v1706668906/cardwallet-logo_ddtpuv.svg",
@@ -143,6 +133,7 @@ const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
       installedWallets.push({
         ...wallet,
         ...window.cardano[wallet.id],
+        name: wallet.name, // use hard-coded name, some window object wallet names are innacurate
         isInstalled: true,
       });
     } else if (isMobileWalletInstallable || isBrowserExtensionWalletInstallable) {
