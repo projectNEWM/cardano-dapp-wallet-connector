@@ -39,7 +39,7 @@ export const makeObservable = <T>(target: T) => {
 export const checkForEnabledWallet = async () => {
   let retryCount = 0;
 
-  while (retryCount < 50) {
+  while (retryCount < 10) {
     const isEnabled = await getIsWalletAvailable();
 
     if (isEnabled) return true;
@@ -79,7 +79,7 @@ const getIsWalletAvailable = async () => {
 /**
  * Wait for the specified number of milliseconds.
  */
-const sleep = async (ms: number = 250) => {
+const sleep = async (ms: number = 500) => {
   await new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve();
