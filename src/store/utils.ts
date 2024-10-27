@@ -46,7 +46,7 @@ export const checkForEnabledWallet = async () => {
 
     retryCount++;
 
-    await sleep();
+    await sleep(500);
   }
 
   return false;

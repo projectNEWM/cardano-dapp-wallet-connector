@@ -239,7 +239,6 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
   const selectWallet = useCallback(
     async (walletName: string) => {
-      // ensure function is only called once despite multiple hook instances
       if (selectWalletMutex.isLocked()) {
         return;
       }
