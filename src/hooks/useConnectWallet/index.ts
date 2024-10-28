@@ -13,6 +13,15 @@ import { UseConnectWalletResult } from "./types";
 import { checkForEnabledWallet, useStore } from "store";
 import { APIErrorMessage, storageKey } from "common";
 import { getInitialWalletName } from "utils/helpers";
+import {
+  getEnabledWalletMutex,
+  selectWalletMutex,
+  getAddressMutex,
+  getChangeAddressMutex,
+  getBalanceMutex,
+  signTransactionMutex,
+  getTokenBalanceMutex,
+} from "./mutex";
 
 /**
  * Returns values and helper functions for connecting, utlizing,
@@ -39,6 +48,12 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
   const getAddress = useCallback(
     async (callback: (address: string) => void) => {
+      if (getAddressMutex.isLocked()) {
+        return;
+      }
+
+      const release = await getAddressMutex.acquire();
+
       try {
         setState({
           ...state,
@@ -62,6 +77,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
           error: null,
           isLoading: false,
         });
+
+        release();
       }
     },
     [state.isConnected, state.enabledWallet],
@@ -69,6 +86,12 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
   const getChangeAddress = useCallback(
     async (callback: (address: string) => void) => {
+      if (getChangeAddressMutex.isLocked()) {
+        return;
+      }
+
+      const release = await getChangeAddressMutex.acquire();
+
       try {
         setState({
           ...state,
@@ -92,6 +115,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
           error: null,
           isLoading: false,
         });
+
+        release();
       }
     },
     [state.isConnected, state.enabledWallet],
@@ -99,6 +124,12 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
   const getBalance = useCallback(
     async (callback: (balance: number) => void) => {
+      if (getBalanceMutex.isLocked()) {
+        return;
+      }
+
+      const release = await getBalanceMutex.acquire();
+
       try {
         setState({
           ...state,
@@ -121,6 +152,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
           error: null,
           isLoading: false,
         });
+
+        release();
       }
     },
     [state.isConnected, state.enabledWallet],
@@ -128,6 +161,12 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
   const signTransaction = useCallback(
     async (tx: string, callback: (signedTx: string) => void, partialSign = false) => {
+      if (signTransactionMutex.isLocked()) {
+        return;
+      }
+
+      const release = await signTransactionMutex.acquire();
+
       try {
         setState({
           ...state,
@@ -152,6 +191,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
           error: null,
           isLoading: false,
         });
+
+        release();
       }
     },
     [state.isConnected, state.enabledWallet],
@@ -159,6 +200,12 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
   const getTokenBalance = useCallback(
     async (policyId: string, callback: (balance: number) => void, tokenName?: string) => {
+      if (getTokenBalanceMutex.isLocked()) {
+        return;
+      }
+
+      const release = await getTokenBalanceMutex.acquire();
+
       try {
         setState({
           ...state,
@@ -183,6 +230,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
           error: null,
           isLoading: false,
         });
+
+        release();
       }
     },
     [state.isConnected, state.enabledWallet],
@@ -190,6 +239,12 @@ const useConnectWallet = (): UseConnectWalletResult => {
 
   const selectWallet = useCallback(
     async (walletName: string) => {
+      if (selectWalletMutex.isLocked()) {
+        return;
+      }
+
+      const release = await selectWalletMutex.acquire();
+
       try {
         setState({
           ...state,
@@ -217,6 +272,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
             error: err.message,
           });
         }
+      } finally {
+        release();
       }
     },
     [state.isConnected, state.enabledWallet],
@@ -227,6 +284,12 @@ const useConnectWallet = (): UseConnectWalletResult => {
    * ensure that it is available and connected.
    */
   const getEnabledWallet = useCallback(async () => {
+    if (getEnabledWalletMutex.isLocked()) {
+      return;
+    }
+
+    const release = await getEnabledWalletMutex.acquire();
+
     const initialWalletName = getInitialWalletName();
 
     if (initialWalletName && state.isConnected && !state.enabledWallet) {
@@ -260,6 +323,8 @@ const useConnectWallet = (): UseConnectWalletResult => {
             error: err.message,
           });
         }
+      } finally {
+        release();
       }
     }
   }, [state.isConnected, state.enabledWallet]);

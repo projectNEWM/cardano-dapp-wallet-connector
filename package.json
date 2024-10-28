@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/projectNEWM/cardano-dapp-wallet-connector#readme",
   "dependencies": {
+    "async-mutex": "^0.5.0",
     "bech32": "^2.0.0",
     "buffer": "^6.0.3",
     "cbor-web": "^8.1.0",
