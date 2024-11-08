@@ -24,10 +24,14 @@ const enableWallet = async (name?: string): Promise<EnabledWallet> => {
     );
   }
 
+  // allow for longer timeout if wallet connection needs approval
+  const isEnabled = await selectedWallet.isEnabled();
+  const timeoutDelay = isEnabled ? 120 : 10;
+
   const enabledWalletAPI = await asyncTimeout<EnabledWalletApi>(
     selectedWallet.enable,
-    "Enabling wallet timed out after 10 seconds",
-    10000,
+    `Enabling wallet timed out after ${timeoutDelay} seconds`,
+    timeoutDelay * 1000,
   );
 
   // combine enabled and selected wallet APIs so all fields are available
