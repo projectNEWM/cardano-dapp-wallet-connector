@@ -12,7 +12,7 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
       ? "https://play.google.com/store/apps/details?id=art.nft_craze.gallery.main&hl=en_US&gl=US&pli=1"
       : "https://chromewebstore.google.com/detail/vespr-wallet/bedogdpgdnifilpgeianmmdabklhfkcn",
     websiteUrl: "https://vespr.gitbook.io/vespr/introduction/about",
-    browsers: ["Chrome", "Brave", "Edge"],
+    browsers: [],
     isMobile: true,
   },
   {
