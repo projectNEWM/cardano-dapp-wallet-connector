@@ -1,4 +1,5 @@
 import { EnabledWallet, WalletInfo } from "common/types";
+import { GetSupportedWalletOptions } from "utils/getSupportedWallets/types";
 
 export interface UseConnectWalletResult {
   /** true if an operation is being performed */
@@ -20,7 +21,7 @@ export interface UseConnectWalletResult {
   /** Get the ADA balance for the connected wallet */
   readonly getBalance: (callback: (balance: number) => void) => void;
   /** Get installable wallet extensions for the current browser */
-  readonly getSupportedWallets: () => ReadonlyArray<WalletInfo>;
+  readonly getSupportedWallets: (options?: GetSupportedWalletOptions) => ReadonlyArray<WalletInfo>;
   /** Sign a transaction and return the full signed transaction */
   readonly signTransaction: (
     tx: string,

@@ -1,4 +1,4 @@
-import { EnabledWallet } from "common";
+import { EnabledWallet, WalletInfo } from "common";
 import { CSSProperties, MouseEvent } from "react";
 
 export interface ConnectWalletProps {
@@ -14,6 +14,8 @@ export interface ConnectWalletProps {
   readonly fontFamily?: string;
   /** True if text, icon, and hover styles should be adjusted for a dark background. */
   readonly isInverted?: boolean;
+  /** List of wallets to omit from the list of available wallets */
+  readonly omitWallets?: ReadonlyArray<WalletInfo["id"]>;
   /** Called when button is clicked. Defaults opening wallet modal. */
   readonly onClickButton?: (event: MouseEvent) => void;
   /** Called when modal isClosed. Defaults to closing wallet modal. */
