@@ -59,7 +59,7 @@ Provides a button, which brings up a modal to select and connect a wallet when c
 - **`disconnectButtonStyle?: CSSProperties`** Inline styles for the modal disconnect button.
 - **`fontFamily?: string`** Font family to be used throughout the component
 - **`isInverted?: boolean`** `true` if text, icon, and hover styles should be adjusted for a dark background.
-- **`omitWallets?: array<string>`** List of wallets to omit from the list of available wallets.
+- **`omitWallets?: array<string>`** List of wallet ids to omit from the list of available wallets.
 - **`onClickButton?: (event: MouseEvent) => void`** Called when intial button is clicked. Defaults opening the wallet modal.
 - **`onCloseModal?: (event: MouseEvent) => void`** Called when modal close icon or background is clicked. Defaults to closing the wallet modal.
 - **`onConnect?: (wallet: Wallet) => void`** Called when a wallet is connected.
@@ -113,7 +113,7 @@ const Example: FunctionComponent = () => {
 - **`disconnectButtonStyle?: CSSProperties`** Inline styles for the disconnect button.
 - **`fontFamily?: string`** Font family for the button text.
 - **`isInverted?: boolean`** `true` if text, icon, and hover styles should be adjusted for a dark background.
-- **`omitWallets?: array<string>`** List of wallets to omit from the list of available wallets.
+- **`omitWallets?: array<string>`** List of wallets ids to omit from the list of available wallets.
 - **`onConnect?: (wallet: Wallet) => void`** Called when a wallet is connected.
 - **`onDisconnect?: () => void`** Called when a wallet is disconnected.
 - **`onError?: (message: string) => void`** Called when an error is received from the wallet.
