@@ -1,5 +1,6 @@
 import { WalletInfo, SupportedWallet, Browser } from "common";
 import { isIOS, isAndroid, isMobile, browserName } from "react-device-detect";
+import { GetSupportedWalletOptions } from "./types";
 
 const supportedWallets: ReadonlyArray<WalletInfo> = [
   {
@@ -119,8 +120,11 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
 /**
  * @returns a list of Cardano wallets for the current device and
  * browser. Installed wallets appear before uninstalled wallets.
+ *
+ * @param omit optional list of wallets to omit from the returned list
+ * @returns a list of available wallet objects
  */
-const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
+const getSupportedWallets = (options?: GetSupportedWalletOptions): ReadonlyArray<WalletInfo> => {
   const installedWallets: Array<WalletInfo> = [];
   const uninstalledWallets: Array<WalletInfo> = [];
 
@@ -128,6 +132,8 @@ const getSupportedWallets = (): ReadonlyArray<WalletInfo> => {
     const currentBrowser = browserName as Browser;
     const isMobileWalletInstallable = wallet.isMobile && isMobile;
     const isBrowserExtensionWalletInstallable = wallet.browsers.includes(currentBrowser);
+
+    if (options?.omit?.includes(wallet.id)) return;
 
     if (typeof window !== "undefined" && window.cardano?.[wallet.id]) {
       installedWallets.push({

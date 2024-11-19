@@ -205,7 +205,11 @@ transaction as the argument, and an optional `partialSign` argument.
 
 An error message returned from the Cardano wallet, if one exists.
 
-**`getSupportedWallets: () => Array<WalletInfo>`**
+**`getSupportedWallets: (options?: GetSupportedWalletOptions) => Array<WalletInfo>`**
+
+The "GetSupportedWalletOptions" is an optional object with the following field:
+
+- `omit?: array<string>` Optional array of wallet id's to omit from the list of available wallets
 
 Returns an array of "WalletInfo" objects for Cardano wallet browser extensions.
 
@@ -252,7 +256,11 @@ Returns the wallet balance for a specific policy ID and optional hex encoded tok
 
 Returns the full signed transaction as a CBOR encoded hex string.
 
-**`getSupportedWallets: () => Array<WalletInfo>`**
+**`getSupportedWallets: (options?: GetSupportedWalletOptions) => Array<WalletInfo>`**
+
+The "GetSupportedWalletOptions" is an optional object with the following field:
+
+- `omit?: array<string>` Optional array of wallet id's to omit from the list of available wallets
 
 Returns an array of "WalletInfo" objects for Cardano wallet browser extensions.
 

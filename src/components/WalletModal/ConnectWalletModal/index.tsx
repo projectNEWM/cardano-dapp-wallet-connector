@@ -12,12 +12,13 @@ const ConnectWalletModal: FunctionComponent<WalletModalProps> = ({
   headerStyle = {},
   isInverted = false,
   backgroundOpacity = 0.5,
+  omitWallets,
   isOpen,
   onClose,
 }) => {
   const { connect } = useConnectWallet();
 
-  const supportedWallets = getSupportedWallets();
+  const supportedWallets = getSupportedWallets({ omit: omitWallets });
 
   const isAWalletInstalled = supportedWallets.find(({ isInstalled }) => {
     return isInstalled;

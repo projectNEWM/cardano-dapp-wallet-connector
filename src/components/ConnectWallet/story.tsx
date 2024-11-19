@@ -27,6 +27,7 @@ export const Styled = () => (
     disconnectButtonStyle={{
       border: "2px solid white",
     }}
+    omitWallets={["vespr"]}
     isInverted
   />
 );
