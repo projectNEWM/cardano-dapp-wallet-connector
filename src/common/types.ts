@@ -10,13 +10,14 @@ export enum SupportedWallet {
   vespr = "vespr",
   begin = "begin",
   lace = "lace",
+  tokeo = "tokeo",
 }
 
 export interface WalletInfo {
   readonly id: string;
   readonly name: string;
   readonly icon: string;
-  readonly extensionUrl: string;
+  readonly extensionUrl?: string;
   readonly websiteUrl: string;
   readonly isInstalled?: boolean;
   readonly browsers: ReadonlyArray<Browser>;
