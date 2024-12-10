@@ -115,6 +115,14 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     browsers: ["Chrome", "Brave", "Edge"],
     isMobile: false,
   },
+  {
+    id: SupportedWallet.tokeo,
+    name: "Tokeo",
+    icon: "https://res.cloudinary.com/newm/image/upload/v1733548441/tokeo-logo-icon_d9xzef.png",
+    websiteUrl: "https://www.tokeopay.io/",
+    browsers: [],
+    isMobile: true,
+  },
 ];
 
 /**
