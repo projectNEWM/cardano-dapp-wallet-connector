@@ -1,7 +1,6 @@
 export enum SupportedWallet {
   eternl = "eternl",
   gerowallet = "gerowallet",
-  nami = "nami",
   cardwallet = "cardwallet",
   typhon = "typhoncip30",
   yoroi = "yoroi",

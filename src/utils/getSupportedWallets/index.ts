@@ -17,15 +17,6 @@ const supportedWallets: ReadonlyArray<WalletInfo> = [
     isMobile: true,
   },
   {
-    id: SupportedWallet.nami,
-    name: "Nami",
-    icon: "https://res.cloudinary.com/newm/image/upload/v1706668811/nami-logo_reuohl.svg",
-    extensionUrl: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
-    websiteUrl: "https://namiwallet.io/",
-    browsers: ["Chrome", "Brave", "Edge"],
-    isMobile: false,
-  },
-  {
     id: SupportedWallet.eternl,
     name: "Eternl",
     icon: "https://res.cloudinary.com/newm/image/upload/v1706668366/eternl-logo_serw55.png",
