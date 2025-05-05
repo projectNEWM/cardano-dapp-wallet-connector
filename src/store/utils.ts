@@ -34,46 +34,44 @@ export const makeObservable = <T>(target: T) => {
 };
 
 /**
- * Checks for up to 5 seconds that currently stored wallet is available on the window and enabled.
+ * Checks for up to 5 seconds that currently stored wallet is available on the window.
  */
-export const checkForEnabledWallet = async () => {
+export const getWallet = async () => {
   let retryCount = 0;
 
   while (retryCount < 10) {
-    const isEnabled = await getIsWalletAvailable();
+    const wallet = await getAvailableWallet();
 
-    if (isEnabled) return true;
+    if (wallet) return wallet;
 
     retryCount++;
 
     await sleep(500);
   }
 
-  return false;
+  return null;
 };
 
 /**
- * Check that a wallet name was stored in local storage, is available in the
- * cardano window object, and is ready to enable automatically.
+ * Check that a wallet name was stored in local storage and is available
+ * in the cardano window object.
  */
-const getIsWalletAvailable = async () => {
+const getAvailableWallet = async () => {
   const initialWalletName = localStorage.getItem(storageKey);
 
   if (!initialWalletName) {
-    return false;
+    return null;
   }
 
   if (!window.cardano) {
-    return false;
+    return null;
   }
 
   if (!window.cardano[initialWalletName]) {
-    return false;
+    return null;
   }
 
-  const isEnabled = await window.cardano[initialWalletName].isEnabled();
-
-  return isEnabled;
+  return window.cardano[initialWalletName];
 };
 
 /**
