@@ -1,4 +1,5 @@
-import { EnabledWallet, EnabledWalletApi, asyncTimeout, storageKey } from "common";
+import { EnabledWallet, storageKey } from "common";
+import { merge } from "lodash";
 
 const enableWallet = async (name?: string): Promise<EnabledWallet> => {
   if (!window.cardano) {
@@ -24,18 +25,10 @@ const enableWallet = async (name?: string): Promise<EnabledWallet> => {
     );
   }
 
-  // allow for longer timeout if wallet connection needs approval
-  const isEnabled = await selectedWallet.isEnabled();
-  const timeoutDelay = isEnabled ? 120 : 10;
-
-  const enabledWalletAPI = await asyncTimeout<EnabledWalletApi>(
-    selectedWallet.enable,
-    `Enabling wallet timed out after ${timeoutDelay} seconds`,
-    timeoutDelay * 1000,
-  );
+  const enabledWalletAPI = await selectedWallet.enable();
 
   // combine enabled and selected wallet APIs so all fields are available
-  const enabledWallet = Object.assign(Object.create(enabledWalletAPI), selectedWallet);
+  const enabledWallet = merge({}, selectedWallet, enabledWalletAPI);
 
   // set active wallet name in local storage
   window.localStorage.setItem(storageKey, walletName);

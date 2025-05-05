@@ -10,7 +10,7 @@ import {
   getWalletTokenBalance,
 } from "utils";
 import { UseConnectWalletResult } from "./types";
-import { checkForEnabledWallet, useStore } from "store";
+import { getWallet, useStore } from "store";
 import { APIErrorMessage, storageKey } from "common";
 import { getInitialWalletName } from "utils/helpers";
 import {
@@ -293,15 +293,17 @@ const useConnectWallet = (): UseConnectWalletResult => {
     const initialWalletName = getInitialWalletName();
 
     if (initialWalletName && state.isConnected && !state.enabledWallet) {
-      const isWalletConnected = await checkForEnabledWallet();
+      const wallet = await getWallet();
+      const isEnabled = await wallet?.isEnabled();
 
-      if (!isWalletConnected) {
+      if (!isEnabled) {
         setState({
           enabledWallet: null,
           isConnected: false,
           isLoading: false,
           error: "Unable to find connected wallet.",
         });
+
         return;
       }
 

@@ -33,6 +33,7 @@
     "bech32": "^2.0.0",
     "buffer": "^6.0.3",
     "cbor-web": "^8.1.0",
+    "lodash": "^4.17.21",
     "react-device-detect": "^2.2.2"
   },
   "peerDependencies": {
