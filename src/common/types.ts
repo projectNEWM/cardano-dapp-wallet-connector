@@ -40,6 +40,7 @@ export interface UnenabledWallet {
 }
 
 export interface EnabledWalletApi {
+  readonly id: string;
   readonly experimental: {
     readonly appVersion: {
       readonly major: number;
@@ -63,9 +64,9 @@ export interface EnabledWalletApi {
   readonly submitTx: (tx: string) => Promise<Any>;
 }
 
-type FullWalletAPI = UnenabledWallet & EnabledWalletApi;
-export interface EnabledWallet extends FullWalletAPI {
-  readonly id: string;
+export interface EnabledWallet extends EnabledWalletApi {
+  readonly name: string;
+  readonly icon: string;
 }
 
 export enum NetworkMode {
