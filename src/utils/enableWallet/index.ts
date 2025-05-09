@@ -1,5 +1,4 @@
 import { EnabledWallet, storageKey } from "common";
-import { merge } from "lodash";
 
 const enableWallet = async (name?: string): Promise<EnabledWallet> => {
   if (!window.cardano) {
@@ -25,10 +24,10 @@ const enableWallet = async (name?: string): Promise<EnabledWallet> => {
     );
   }
 
-  const enabledWalletAPI = await selectedWallet.enable();
-
-  // combine enabled and selected wallet APIs so all fields are available
-  const enabledWallet = merge({}, selectedWallet, enabledWalletAPI);
+  // enable wallet and add additional fields
+  const enabledWallet = await selectedWallet.enable();
+  enabledWallet.name = selectedWallet.name;
+  enabledWallet.icon = selectedWallet.icon;
 
   // set active wallet name in local storage
   window.localStorage.setItem(storageKey, walletName);
