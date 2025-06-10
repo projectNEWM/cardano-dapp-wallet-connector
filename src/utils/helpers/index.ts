@@ -63,11 +63,11 @@ export const mergeSignatureMaps = (
     }
 
     // Existing signatures, create a object of unique signatures from both maps
-    existingValue.forEach(([k, v]) => {
+    value.forEach(([k, v]) => {
       const encodedKey = encode(k).toString("hex");
       uniqueSignatureObj[encodedKey] = v;
     });
-    value.forEach(([k, v]) => {
+    existingValue.forEach(([k, v]) => {
       const encodedKey = encode(k).toString("hex");
       uniqueSignatureObj[encodedKey] = v;
     });
