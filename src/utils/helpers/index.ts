@@ -1,6 +1,7 @@
 import { bech32 } from "bech32";
 import { NetworkMode, storageKey } from "common";
 import { Buffer } from "buffer";
+import { encode, decode } from "cbor-web";
 
 export const addressFromHex = (hex: string) => {
   const networkId = hex[1] === "0" ? NetworkMode.testNet : NetworkMode.mainNet;
@@ -31,29 +32,55 @@ export const getInitialWalletName = () => {
 };
 
 /**
- * Merges the keys and values from two signature maps into a single map.
+ * Merges the keys and values from two signature maps into a single map. Ensures
+ * no duplicate signatures in the event that a wallet included existing transaction
+ * signatures in the sign transaction return value.
  *
  * @returns map with entries from both signature maps
  */
 export const mergeSignatureMaps = (
-  a: Map<number, Array<Array<number>>>,
-  b: Map<number, Array<Array<number>>>,
-): Map<number, Array<Array<number>>> => {
-  const merged = new Map();
+  a: Map<number, Array<Array<Array<number>>>>,
+  b: Map<number, Array<Array<Array<number>>>>,
+): Map<number, Array<Array<Array<number>>> | Set<Array<Array<number>>>> => {
+  const result = new Map<number, Array<Array<Array<number>>> | Set<Array<Array<number>>>>();
 
+  // Set result to initial map
   a.forEach((value, key) => {
-    merged.set(key, value);
+    result.set(key, value);
   });
 
+  // Iterate through second map and update result with unique signatures from each
   b.forEach((value, key) => {
-    const existingValue = merged.get(key);
+    const uniqueSignatureObj: Record<string, Array<number>> = {};
+    const uniqueSignatureSet = new Set<Array<Array<number>>>();
 
+    const existingValue = result.get(key);
+
+    // No existing signatures, insert new signatures and continue
     if (!existingValue) {
-      merged.set(key, value);
-    } else {
-      merged.set(key, [...existingValue, ...value]);
+      result.set(key, value);
+      return;
     }
+
+    // Existing signatures, create a object of unique signatures from both maps
+    value.forEach(([k, v]) => {
+      const encodedKey = encode(k).toString("hex");
+      uniqueSignatureObj[encodedKey] = v;
+    });
+    existingValue.forEach(([k, v]) => {
+      const encodedKey = encode(k).toString("hex");
+      uniqueSignatureObj[encodedKey] = v;
+    });
+
+    // Convert unique signature object to a set
+    Object.entries(uniqueSignatureObj).forEach(([k, v]) => {
+      const decodedKey = decode(k);
+      uniqueSignatureSet.add([decodedKey, v]);
+    });
+
+    // Update result with combined signature array
+    result.set(key, uniqueSignatureSet);
   });
 
-  return merged;
+  return result;
 };
