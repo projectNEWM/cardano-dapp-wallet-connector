@@ -1,6 +1,6 @@
 {
   "name": "@newm.io/cardano-dapp-wallet-connector",
-  "version": "1.5.3",
+  "version": "1.5.4-beta.1",
   "description": "Cardano dApp wallet connector package",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,6 +15,7 @@
     "build-storybook": "storybook build",
     "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
     "deploy": "npm run build && npm publish --access public",
+    "deploy-beta": "npm run build && npm publish --access public --tag beta",
     "update-link": "npm run clean && npm run build && npm rm @newm.io/cardano-dapp-wallet-connector -g && npm link"
   },
   "repository": {
