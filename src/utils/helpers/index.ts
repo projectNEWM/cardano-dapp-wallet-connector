@@ -109,7 +109,14 @@ export const extendWallet = (enabledWallet: any, name: string, icon: string): En
         return Reflect.get(target, prop, receiver);
       },
       set(target, prop, value, receiver) {
-        throw new TypeError(`Cannot add property ${String(prop)}, object is not extensible`);
+        if (prop === "name" || prop === "icon") {
+          throw new TypeError(`Cannot set property ${String(prop)}, object is not extensible`);
+        }
+        return Reflect.set(target, prop, value, receiver);
+      },
+      has(target, prop) {
+        if (prop === "name" || prop === "icon") return true;
+        return Reflect.has(target, prop);
       },
     }) as EnabledWallet;
   }
