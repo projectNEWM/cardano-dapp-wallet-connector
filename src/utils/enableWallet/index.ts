@@ -1,4 +1,5 @@
 import { EnabledWallet, storageKey } from "common";
+import { extendWallet } from "../helpers";
 
 const enableWallet = async (name?: string): Promise<EnabledWallet> => {
   if (!window.cardano) {
@@ -24,17 +25,16 @@ const enableWallet = async (name?: string): Promise<EnabledWallet> => {
     );
   }
 
-  // enable wallet and add additional fields
+  // enable wallet and extend with additional fields
   const enabledWallet = await selectedWallet.enable();
-  enabledWallet.name = selectedWallet.name;
-  enabledWallet.icon = selectedWallet.icon;
+  const extendedWallet = extendWallet(enabledWallet, selectedWallet.name, selectedWallet.icon);
 
   // set active wallet name in local storage
   window.localStorage.setItem(storageKey, walletName);
   // dispatch event so hook can register changes
   window.dispatchEvent(new Event(storageKey));
 
-  return enabledWallet;
+  return extendedWallet;
 };
 
 export default enableWallet;

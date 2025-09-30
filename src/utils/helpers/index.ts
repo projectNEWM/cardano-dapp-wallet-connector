@@ -1,5 +1,5 @@
 import { bech32 } from "bech32";
-import { NetworkMode, storageKey } from "common";
+import { EnabledWallet, NetworkMode, storageKey } from "common";
 import { Buffer } from "buffer";
 import { encode, decode } from "cbor-web";
 
@@ -83,4 +83,34 @@ export const mergeSignatureMaps = (
   });
 
   return result;
+};
+
+/**
+ * Extends the enabled wallet by adding 'name' and 'icon' properties.
+ * If the wallet is extensible, adds them directly.
+ * If not, uses a Proxy to add them virtually without mutation.
+ * @param enabledWallet The wallet object returned from enable()
+ * @param name The wallet name
+ * @param icon The wallet icon
+ * @returns The extended wallet with name and icon
+ */
+export const extendWallet = (enabledWallet: any, name: string, icon: string): EnabledWallet => {
+  if (Object.isExtensible(enabledWallet)) {
+    // Direct extension: simpler and faster when possible
+    enabledWallet.name = name;
+    enabledWallet.icon = icon;
+    return enabledWallet;
+  } else {
+    // Fallback to Proxy for non-extensible objects
+    return new Proxy(enabledWallet, {
+      get(target, prop, receiver) {
+        if (prop === "name") return name;
+        if (prop === "icon") return icon;
+        return Reflect.get(target, prop, receiver);
+      },
+      set(target, prop, value, receiver) {
+        throw new TypeError(`Cannot add property ${String(prop)}, object is not extensible`);
+      },
+    }) as EnabledWallet;
+  }
 };
