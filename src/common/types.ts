@@ -10,6 +10,7 @@ export enum SupportedWallet {
   begin = "begin",
   lace = "lace",
   tokeo = "tokeo",
+  oneAm = "1am",
 }
 
 export interface WalletInfo {
